@@ -1,39 +1,92 @@
 import {
   Column,
-  AfterLoad,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  BeforeInsert,
-  BeforeUpdate,
 } from 'typeorm';
-import { Role } from '../../roles/entities/role.entity';
-import { Status } from '../../statuses/entities/status.entity';
-import { FileEntity } from '../../files/entities/file.entity';
-import * as bcrypt from 'bcryptjs';
+// import { Role } from '../../roles/entities/role.entity';
+// import { Status } from '../../statuses/entities/status.entity';
+// import { FileEntity } from '../../files/entities/file.entity';
+// import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
-import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
-import { Exclude, Expose } from 'class-transformer';
+// import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
+// import { Exclude, Expose } from 'class-transformer';
+
+export enum enrollType {
+  'local',
+  'google',
+  'raverly',
+}
+export enum role {
+  'customer',
+  'seller',
+}
+
+export enum gender {
+  'male',
+  'female',
+  'none',
+}
 
 @Entity()
 export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true, nullable: true })
+  @Column({ nullable: true })
+  name: string;
+
+  @Column()
+  age: number;
+
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
+  password: string;
+
+  @Column()
+  raverly_id: number;
+
+  @Column()
+  raverly_token: string;
+
+  @Column()
+  enroll_type: enrollType;
+
+  @Column()
+  birth: Date;
+
+  @Column()
+  gender: Date;
+
+  @Column()
+  blog_url: string;
+
+  @Column()
+  role: role;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
+}
+
+/*
+참고하라고 냄겨둠
+ @Column({ unique: true, nullable: true })
   @Expose({ groups: ['me', 'admin'] })
   email: string | null;
 
   @Column({ nullable: true })
   @Exclude({ toPlainOnly: true })
   password: string;
-
-  @Exclude({ toPlainOnly: true })
-  public previousPassword: string;
 
   @AfterLoad()
   public loadPreviousPassword(): void {
@@ -85,13 +138,4 @@ export class User extends EntityHelper {
   @Index()
   @Exclude({ toPlainOnly: true })
   hash: string | null;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
-}
+*/
