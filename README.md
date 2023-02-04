@@ -2,7 +2,6 @@
 
 docker compose up -d mysql
 
-1. cp env-example .env
 2. npm install
 3. npm run migration:run
 4. npm run seed:run

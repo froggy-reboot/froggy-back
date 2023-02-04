@@ -33,14 +33,14 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateProfileDto: UpdateUserDto) {
-    return this.usersRepository.save(
-      this.usersRepository.create({
-        id,
-        ...updateProfileDto,
-      }),
-    );
-  }
+  // update(id: number, updateProfileDto: UpdateUserDto) {
+  //   return this.usersRepository.save(
+  //     this.usersRepository.create({
+  //       id,
+  //       ...updateProfileDto,
+  //     }),
+  //   );
+  // }
 
   async softDelete(id: number): Promise<void> {
     await this.usersRepository.softDelete(id);
