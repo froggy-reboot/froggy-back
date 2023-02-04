@@ -8,6 +8,14 @@ docker compose up -d mysql
 4. npm run seed:run
 5. npm run start:dev
 
+### db 세팅
+
+database/migrations/CreateUser.ts에 있는 쿼리 실행
+npm run migration:run
+
+테이블 드랍
+npm run schema:drop
+
 ## Description
 
 NestJS REST API boilerplate for typical project
