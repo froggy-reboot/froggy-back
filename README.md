@@ -12,7 +12,7 @@ docker compose up -d mysql
 database/migrations/CreateUser.ts에 있는 쿼리 실행
 npm run migration:run
 
-테이블 드랍
+테이블 드랍, 모든 테이블 드랍되니 조심 !
 npm run schema:drop
 
 ## Description

@@ -21,18 +21,50 @@ import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class AuthService {
   constructor(
-    // private jwtService: JwtService,
+    private jwtService: JwtService,
     private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
   ) {}
 
-  async validateLogin(loginDto: AuthEmailLoginDto): Promise<{ user: User }> {
+  async validateLogin(
+    loginDto: AuthEmailLoginDto,
+  ): Promise<{ token: string; user: User }> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
     });
 
-    return {
-      user,
-    };
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          errors: {
+            email: 'notFound',
+          },
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
+
+    if (isValidPassword) {
+      const token = await this.jwtService.sign({
+        id: user.id,
+      });
+      return { token, user: user };
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          errors: {
+            password: 'incorrectPassword',
+          },
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
   }
 
   // async validateSocialLogin(
@@ -93,10 +125,7 @@ export class AuthService {
   // }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
-    const hash = crypto
-      .createHash('sha256')
-      .update(randomStringGenerator())
-      .digest('hex');
+    const hash = await bcrypt.hash(dto.password, 15);
 
     const user = await this.usersService.create({
       name: dto.name,
