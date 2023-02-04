@@ -1,4 +1,20 @@
-# NestJS REST API boilerplate 🇺🇦
+# 실행 방법
+
+docker compose up -d mysql
+
+1. cp env-example .env
+2. npm install
+3. npm run migration:run
+4. npm run seed:run
+5. npm run start:dev
+
+### db 세팅
+
+database/migrations/CreateUser.ts에 있는 쿼리 실행
+npm run migration:run
+
+테이블 드랍
+npm run schema:drop
 
 ## Description
 
@@ -90,7 +106,7 @@ If you want to automatically update dependencies, you can connect [Renovate](htt
 Generate migration
 
 ```bash
-npm run migration:generate -- src/database/migrations/CreateNameTable 
+npm run migration:generate -- src/database/migrations/CreateNameTable
 ```
 
 Run migration
