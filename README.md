@@ -2,11 +2,10 @@
 
 docker compose up -d mysql
 
-1. cp env-example .env
-2. npm install
-3. npm run migration:run
-4. npm run seed:run
-5. npm run start:dev
+1. npm install
+2. npm run migration:run
+3. npm run seed:run
+4. npm run start:dev
 
 ### db 세팅
 
