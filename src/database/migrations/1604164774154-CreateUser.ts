@@ -7,9 +7,9 @@ export class CreateUser1604164774154 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE api.user (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        name varchar(40) NOT NULL,
+        name varchar(40) NOT NULL UNIQUE,
         age int,
-        email varchar(320) NOT NULL,
+        email varchar(320) NOT NULL ,
         password varchar(80) NOT NULL,
         raverly_id varchar(50),
         raverly_token varchar(100),

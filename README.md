@@ -2,17 +2,24 @@
 
 docker compose up -d mysql
 
+<<<<<<< HEAD
 1. npm install
 2. npm run migration:run
 3. npm run seed:run
 4. npm run start:dev
+=======
+2. npm install
+3. npm run migration:run
+4. npm run seed:run
+5. npm run start:dev
+>>>>>>> upstream/main
 
 ### db 세팅
 
 database/migrations/CreateUser.ts에 있는 쿼리 실행
 npm run migration:run
 
-테이블 드랍
+테이블 드랍, 모든 테이블 드랍되니 조심 !
 npm run schema:drop
 
 ## Description

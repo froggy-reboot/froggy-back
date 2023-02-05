@@ -18,14 +18,11 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/roles/roles.decorator';
-import { RoleEnum } from 'src/roles/roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/roles/roles.guard';
 import { infinityPagination } from 'src/utils/infinity-pagination';
 
 @ApiBearerAuth()
-@Roles(RoleEnum.admin)
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 @ApiTags('Users')
 @Controller({
@@ -35,9 +32,6 @@ import { infinityPagination } from 'src/utils/infinity-pagination';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @SerializeOptions({
-    groups: ['admin'],
-  })
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createProfileDto: CreateUserDto) {
@@ -75,14 +69,14 @@ export class UsersController {
     return this.usersService.findOne({ id: +id });
   }
 
-  @SerializeOptions({
-    groups: ['admin'],
-  })
-  @Patch(':id')
-  @HttpCode(HttpStatus.OK)
-  update(@Param('id') id: number, @Body() updateProfileDto: UpdateUserDto) {
-    return this.usersService.update(id, updateProfileDto);
-  }
+  // @SerializeOptions({
+  //   groups: ['admin'],
+  // })
+  // @Patch(':id')
+  // @HttpCode(HttpStatus.OK)
+  // update(@Param('id') id: number, @Body() updateProfileDto: UpdateUserDto) {
+  //   return this.usersService.update(id, updateProfileDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: number) {
