@@ -35,7 +35,7 @@ export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   name: string;
 
   @Column()
@@ -53,7 +53,7 @@ export class User extends EntityHelper {
   @Column()
   raverly_token: string;
 
-  @Column()
+  @Column({ nullable: false })
   enroll_type: enrollType;
 
   @Column()

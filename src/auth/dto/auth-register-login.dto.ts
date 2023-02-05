@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEnum,
   isNotEmpty,
   IsNotEmpty,
   MinLength,
@@ -12,6 +13,10 @@ import { enrollType } from 'src/users/entities/user.entity';
 
 export class AuthRegisterLoginDto {
   @ApiProperty({ example: 'test1@example.com' })
+  @Validate(IsNotExist, ['User'], {
+    message: 'emailAlreadyExists',
+  })
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
@@ -19,9 +24,8 @@ export class AuthRegisterLoginDto {
   @MinLength(6)
   password: string;
 
+  @ApiProperty({ enum: enrollType, example: 'local' })
   @IsNotEmpty()
-  name: string;
-
-  @IsNotEmpty()
+  @IsEnum(enrollType)
   enroll_type: enrollType;
 }
