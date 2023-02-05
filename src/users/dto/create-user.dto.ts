@@ -4,10 +4,6 @@ import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 import { enrollType } from '../entities/user.entity';
 
 export class CreateUserDto {
-  @IsNotEmpty()
-  @ApiProperty({ example: 'leedasom' })
-  name: string;
-
   @ApiProperty({ example: 'test1@example.com' })
   @IsNotEmpty()
   @IsEmail()
@@ -16,7 +12,7 @@ export class CreateUserDto {
   })
   email: string;
 
-  @ApiProperty({ example: 'froggy2bute123' })
+  @ApiProperty({ example: 'qwer1234' })
   @IsNotEmpty()
   @MinLength(6)
   password: string;
