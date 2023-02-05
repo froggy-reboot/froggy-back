@@ -36,14 +36,18 @@ export class UsersController {
   //   return this.usersService.create(createProfileDto);
   // }
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne({ id: +id });
+  }
+
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: number,
     @Body() updateProfileDto: UpdateUserDto,
   ) {
-    console.log(updateProfileDto);
-
     return this.usersService.update(id, updateProfileDto);
   }
 
