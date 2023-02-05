@@ -15,19 +15,19 @@ import { EntityHelper } from 'src/utils/entity-helper';
 // import { Exclude, Expose } from 'class-transformer';
 
 export enum enrollType {
-  'local',
-  'google',
-  'raverly',
+  local = 'local',
+  google = 'google',
+  raverly = 'raverly',
 }
 export enum role {
-  'customer',
-  'seller',
+  customer = 'customer',
+  seller = 'seller',
 }
 
 export enum gender {
-  'male',
-  'female',
-  'none',
+  male = 'male',
+  female = 'female',
+  none = 'none',
 }
 
 @Entity()
@@ -35,7 +35,7 @@ export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   name: string;
 
   @Column()

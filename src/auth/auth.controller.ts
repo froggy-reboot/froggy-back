@@ -29,16 +29,16 @@ import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 export class AuthController {
   constructor(public service: AuthService) {}
 
-  @Post('email/login')
-  @HttpCode(HttpStatus.OK)
-  public async login(@Body() loginDto: AuthEmailLoginDto) {
-    return this.service.validateLogin(loginDto);
-  }
-
   @Post('email/register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
     return this.service.register(createUserDto);
+  }
+
+  @Post('email/login')
+  @HttpCode(HttpStatus.OK)
+  public async login(@Body() loginDto: AuthEmailLoginDto) {
+    return this.service.validateLogin(loginDto);
   }
 
   // @Post('email/confirm')
