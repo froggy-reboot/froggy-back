@@ -15,6 +15,7 @@ export class UsersService {
   ) {}
 
   create(createProfileDto: CreateUserDto) {
+    console.log(createProfileDto);
     return this.usersRepository.save(
       this.usersRepository.create(createProfileDto),
     );
@@ -33,14 +34,14 @@ export class UsersService {
     });
   }
 
-  // update(id: number, updateProfileDto: UpdateUserDto) {
-  //   return this.usersRepository.save(
-  //     this.usersRepository.create({
-  //       id,
-  //       ...updateProfileDto,
-  //     }),
-  //   );
-  // }
+  update(id: number, updateProfileDto: UpdateUserDto) {
+    return this.usersRepository.save(
+      this.usersRepository.create({
+        id,
+        ...updateProfileDto,
+      }),
+    );
+  }
 
   async softDelete(id: number): Promise<void> {
     await this.usersRepository.softDelete(id);
