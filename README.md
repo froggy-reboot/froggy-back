@@ -2,10 +2,12 @@
 
 docker compose up -d mysql
 
-2. npm install
-3. npm run migration:run
-4. npm run seed:run
-5. npm run start:dev
+
+1. npm install
+2. npm run migration:run
+3. npm run seed:run
+4. npm run start:dev
+
 
 ### db 세팅
 
@@ -151,3 +153,6 @@ docker compose -f docker-compose.ci.yaml --env-file .env -p ci up --build --exit
 ```bash
 docker run --rm jordi/ab -n 100 -c 100 -T application/json -H "Authorization: Bearer USER_TOKEN" -v 2 http://<server_ip>:3000/api/v1/users
 ```
+
+## API DOCS
+visit http://localhost:3000/docs
