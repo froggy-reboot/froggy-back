@@ -25,6 +25,9 @@ import { ForgotModule } from './forgot/forgot.module';
 import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
+import { AuthNaverController } from './auth-naver/auth-naver.controller';
+import { AuthNaverService } from './auth-naver/auth-naver.service';
+import { AuthNaverModule } from './auth-naver/auth-naver.module';
 
 @Module({
   imports: [
@@ -78,6 +81,9 @@ import { DataSource } from 'typeorm';
     ForgotModule,
     MailModule,
     HomeModule,
+    AuthNaverModule,
   ],
+  controllers: [AuthNaverController],
+  providers: [AuthNaverService],
 })
 export class AppModule {}
