@@ -28,8 +28,6 @@ export class AuthGoogleService {
     return {
       id: data.sub,
       email: data.email,
-      firstName: data.given_name,
-      lastName: data.family_name,
     };
   }
 }
