@@ -18,6 +18,7 @@ export enum enrollType {
   local = 'local',
   google = 'google',
   raverly = 'raverly',
+  naver = 'naver',
 }
 export enum role {
   customer = 'customer',
@@ -60,7 +61,7 @@ export class User extends EntityHelper {
   birth: Date;
 
   @Column()
-  gender: Date;
+  gender: gender;
 
   @Column()
   blog_url: string;
