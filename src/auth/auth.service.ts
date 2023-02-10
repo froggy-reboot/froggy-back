@@ -100,12 +100,6 @@ export class AuthService {
 
   //     user = await this.usersService.create({
   //       email: socialEmail,
-  //       firstName: socialData.firstName,
-  //       lastName: socialData.lastName,
-  //       socialId: socialData.id,
-  //       provider: authProvider,
-  //       role,
-  //       status,
   //     });
 
   //     user = await this.usersService.findOne({

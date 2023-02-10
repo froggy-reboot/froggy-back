@@ -15,7 +15,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { AuthFacebookModule } from './auth-facebook/auth-facebook.module';
-// import { AuthGoogleModule } from './auth-google/auth-google.module';
+import { AuthGoogleModule } from './auth-google/auth-google.module';
 // import { AuthTwitterModule } from './auth-twitter/auth-twitter.module';
 import { I18nModule } from 'nestjs-i18n/dist/i18n.module';
 import { HeaderResolver } from 'nestjs-i18n';
@@ -76,7 +76,7 @@ import { AuthNaverModule } from './auth-naver/auth-naver.module';
     FilesModule,
     AuthModule,
     // AuthFacebookModule,
-    // AuthGoogleModule,
+    AuthGoogleModule,
     // AuthTwitterModule,
     ForgotModule,
     MailModule,
