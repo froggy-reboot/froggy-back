@@ -24,7 +24,6 @@ export class AuthGoogleService {
     });
 
     const data = ticket.getPayload();
-
     return {
       id: data.sub,
       email: data.email,

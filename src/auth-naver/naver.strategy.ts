@@ -25,7 +25,7 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   ) {
     try {
       console.log(profile);
-
+      console.log(accessToken);
       const jwt = 'placeholderJWT';
       const user = {
         jwt,
