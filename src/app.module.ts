@@ -10,13 +10,18 @@ import fileConfig from './config/file.config';
 import facebookConfig from './config/facebook.config';
 import googleConfig from './config/google.config';
 import twitterConfig from './config/twitter.config';
+import naverConfig from './config/naver.config';
+
 import * as path from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 // import { AuthFacebookModule } from './auth-facebook/auth-facebook.module';
 import { AuthGoogleModule } from './auth-google/auth-google.module';
 // import { AuthTwitterModule } from './auth-twitter/auth-twitter.module';
+import { AuthNaverModule } from './auth-naver/auth-naver.module';
+
 import { I18nModule } from 'nestjs-i18n/dist/i18n.module';
 import { HeaderResolver } from 'nestjs-i18n';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
@@ -25,9 +30,6 @@ import { ForgotModule } from './forgot/forgot.module';
 import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
-import { AuthNaverController } from './auth-naver/auth-naver.controller';
-import { AuthNaverService } from './auth-naver/auth-naver.service';
-import { AuthNaverModule } from './auth-naver/auth-naver.module';
 
 @Module({
   imports: [
@@ -42,6 +44,7 @@ import { AuthNaverModule } from './auth-naver/auth-naver.module';
         facebookConfig,
         googleConfig,
         twitterConfig,
+        naverConfig,
       ],
       envFilePath: ['.env'],
     }),
@@ -77,13 +80,11 @@ import { AuthNaverModule } from './auth-naver/auth-naver.module';
     AuthModule,
     // AuthFacebookModule,
     AuthGoogleModule,
+    AuthNaverModule,
     // AuthTwitterModule,
     ForgotModule,
     MailModule,
     HomeModule,
-    AuthNaverModule,
   ],
-  controllers: [AuthNaverController],
-  providers: [AuthNaverService],
 })
 export class AppModule {}
