@@ -38,8 +38,7 @@ export class AuthGoogleController {
   @UseGuards(AuthGuard('google'))
   async callback(@Req() req, @Res() res) {
     // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
-
-    return req.user;
+    res.redirect('http://localhost:4000');
   }
 
   // @Post('login')

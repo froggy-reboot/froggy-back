@@ -25,16 +25,20 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     request: any,
     accessToken: string,
     refreshToken: string,
-    profile,
+    profile: any,
     done: any,
   ) {
     try {
       console.log(profile);
-      const jwt = 'placeholderJWT';
-      const user = {
-        jwt,
+
+      const { email } = profile;
+
+      return {
+        provider: 'google',
+        email: email,
+        refreshToken,
+        accessToken,
       };
-      done(null, user);
     } catch (err) {
       console.error(err);
       done(err, false);

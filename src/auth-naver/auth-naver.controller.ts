@@ -16,11 +16,6 @@ export class AuthNaverController {
     public authNaverService: AuthNaverService,
   ) {}
 
-  @Get()
-  test() {
-    return { aa: 'aaa' };
-  }
-
   @Get('register')
   @UseGuards(AuthGuard('naver'))
   register(@Body() loginDto: AuthNaverLoginDto) {
@@ -33,6 +28,6 @@ export class AuthNaverController {
   async callback(@Req() req, @Res() res) {
     // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
 
-    return req.user;
+    res.redirect('http://localhost:4000');
   }
 }
