@@ -1,18 +1,10 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthNaverService } from './auth-naver.service';
 import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
 
-@Controller()
 @ApiTags('Auth')
 @Controller({
   path: 'auth/naver',
@@ -23,6 +15,11 @@ export class AuthNaverController {
     public authService: AuthService,
     public authNaverService: AuthNaverService,
   ) {}
+
+  @Get()
+  test() {
+    return { aa: 'aaa' };
+  }
 
   @Get('register')
   @UseGuards(AuthGuard('naver'))

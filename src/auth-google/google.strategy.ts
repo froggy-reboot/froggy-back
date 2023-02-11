@@ -30,7 +30,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   ) {
     try {
       console.log(profile);
-
       const jwt = 'placeholderJWT';
       const user = {
         jwt,
