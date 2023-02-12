@@ -13,7 +13,7 @@ import validationOptions from './utils/validation-options';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  const configService = app.get(ConfigService);
+  const configService = app.get<ConfigService>(ConfigService);
 
   app.enableShutdownHooks();
   app.setGlobalPrefix(configService.get('app.apiPrefix'), {
