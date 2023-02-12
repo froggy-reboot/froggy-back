@@ -120,6 +120,18 @@ export class AuthService {
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
     const hash = await bcrypt.hash(dto.password, 15);
+    const exUser = await this.usersService.findOne({
+      email: dto.email,
+    });
+    if (exUser) {
+      throw new HttpException(
+        {
+          status: HttpStatus.CONFLICT,
+          error: `email already exist`,
+        },
+        HttpStatus.CONFLICT,
+      );
+    }
 
     const user = await this.usersService.create({
       email: dto.email,

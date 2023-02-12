@@ -13,9 +13,6 @@ import { enrollType } from 'src/users/entities/user.entity';
 
 export class AuthRegisterLoginDto {
   @ApiProperty({ example: 'test1@example.com' })
-  @Validate(IsNotExist, ['User'], {
-    message: 'emailAlreadyExists',
-  })
   @IsNotEmpty()
   @IsEmail()
   email: string;
