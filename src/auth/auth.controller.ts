@@ -12,7 +12,7 @@ import {
   SerializeOptions,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 import { AuthForgotPasswordDto } from './dto/auth-forgot-password.dto';
 import { AuthConfirmEmailDto } from './dto/auth-confirm-email.dto';
@@ -31,6 +31,8 @@ export class AuthController {
 
   @Post('email/register')
   @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({ status: 200, description: '회원가입 성공' })
+  @ApiResponse({ status: 409, description: '이미 존재하는 이메일' })
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
     return this.service.register(createUserDto);
   }
