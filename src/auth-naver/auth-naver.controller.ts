@@ -1,6 +1,16 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards
+} from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AuthService } from 'src/auth/auth.service';
 import { AuthNaverService } from './auth-naver.service';
 import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
@@ -16,8 +26,11 @@ export class AuthNaverController {
     public authNaverService: AuthNaverService,
   ) {}
 
-  @Post('register')
+  @Get('register')
   @UseGuards(AuthGuard('naver'))
+  @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({ status: 200, description: '회원가입 성공' })
+  @ApiResponse({ status: 409, description: '이미 존재하는 이메일' })
   register(@Body() loginDto: AuthNaverLoginDto) {
     const socialData = this.authNaverService.getProfileByToken(loginDto);
     // return this.authService.validateSocialLogin('google', socialData);
