@@ -7,15 +7,15 @@ import {
   Post,
   Req,
   Res,
-  UseGuards
-} from "@nestjs/common";
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthNaverService } from './auth-naver.service';
 import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
 
-@ApiTags('Auth')
+@ApiTags('네이버 회원가입')
 @Controller({
   path: 'auth/naver',
   version: '1',
