@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AuthService } from 'src/auth/auth.service';
 import { AuthGoogleService } from './auth-google.service';
 import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
@@ -26,8 +26,11 @@ export class AuthGoogleController {
     public authGoogleService: AuthGoogleService,
   ) {}
 
-  @Post('register')
+  @Get('register')
   @UseGuards(AuthGuard('google'))
+  @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({ status: 200, description: '회원가입 성공' })
+  @ApiResponse({ status: 409, description: '이미 존재하는 이메일' })
   register(@Body() loginDto: AuthGoogleLoginDto) {
     const socialData = this.authGoogleService.getProfileByToken(loginDto);
 
