@@ -26,7 +26,7 @@ export class AuthGoogleController {
     public authGoogleService: AuthGoogleService,
   ) {}
 
-  @Get('register')
+  @Post('register')
   @UseGuards(AuthGuard('google'))
   register(@Body() loginDto: AuthGoogleLoginDto) {
     const socialData = this.authGoogleService.getProfileByToken(loginDto);

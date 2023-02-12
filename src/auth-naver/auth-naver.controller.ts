@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
@@ -16,7 +16,7 @@ export class AuthNaverController {
     public authNaverService: AuthNaverService,
   ) {}
 
-  @Get('register')
+  @Post('register')
   @UseGuards(AuthGuard('naver'))
   register(@Body() loginDto: AuthNaverLoginDto) {
     const socialData = this.authNaverService.getProfileByToken(loginDto);
