@@ -21,7 +21,7 @@ import { AuthUpdateDto } from './dto/auth-update.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 
-@ApiTags('Auth')
+@ApiTags('로컬 회원가입')
 @Controller({
   path: 'auth',
   version: '1',
