@@ -5,11 +5,16 @@ export class CreateUser1604164774154 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
+      `alter database api
+      default character set utf8mb4
+      collate utf8mb4_general_ci;`,
+    );
+    await queryRunner.query(
       `CREATE TABLE api.user (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         email varchar(320) NOT NULL UNIQUE,
         password varchar(80) NOT NULL,
-        nickname varchar(40),
+        nickname varchar(40) NOT NULL UNIQUE,
         name varchar(40) ,
         age int,
         raverly_id varchar(50),
@@ -25,12 +30,6 @@ export class CreateUser1604164774154 implements MigrationInterface {
       );
       `,
     );
-    // await queryRunner.query(
-    //   `CREATE TABLE "file" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "path" character varying NOT NULL, CONSTRAINT "PK_36b46d232307066b3a2c9ea3a1d" PRIMARY KEY ("id"))`,
-    // );
-    // await queryRunner.query(
-    //   `CREATE TABLE "role" ("id" integer NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_b36bcfe02fc8de3c57a8b2391c2" PRIMARY KEY ("id"))`,
-    // );
     // await queryRunner.query(
     //   `CREATE TABLE "status" ("id" integer NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_e12743a7086ec826733f54e1d95" PRIMARY KEY ("id"))`,
     // );
