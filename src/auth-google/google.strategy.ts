@@ -12,7 +12,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientSecret: configService.get('google.clientSecret'),
       callbackURL: configService.get('google.callbackUrl'),
       passReqToCallback: true,
-      scope: ['profile'],
+      scope: ['profile', 'email'],
     });
   }
   // @nestjs/passport PassportStrategy를 상속
@@ -25,17 +25,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     request: any,
     accessToken: string,
     refreshToken: string,
-    profile: any,
+    profile: any, // any인게 맘에 안드는게 반환 스코프의 email만을 꺼내서 검사할 방법이 없을까
     done: any,
   ) {
     try {
+      // console.log(profile);
+      //profile.emails[0].value, 에 email이 담김
       console.log(profile);
-
-      const { email } = profile;
-
       return {
         provider: 'google',
-        email: email,
+        email: profile.emails[0].value,
         refreshToken,
         accessToken,
       };
