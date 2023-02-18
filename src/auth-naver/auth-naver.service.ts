@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
+import { enrollType } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthNaverService {
@@ -26,8 +27,10 @@ export class AuthNaverService {
     const data = ticket.getPayload();
 
     return {
-      id: data.sub,
+      // id: data.sub,
       email: data.email,
+      enroll_type: enrollType.naver,
+      password: null,
     };
   }
 }

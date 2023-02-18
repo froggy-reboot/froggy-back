@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { OAuth2Client } from 'google-auth-library';
-import { SocialInterface } from '../social/interfaces/social.interface';
-import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { OAuth2Client } from "google-auth-library";
+import { SocialInterface } from "../social/interfaces/social.interface";
+import { AuthGoogleLoginDto } from "./dto/auth-google-login.dto";
+import { enrollType } from "../users/entities/user.entity";
 
 @Injectable()
 export class AuthGoogleService {
@@ -25,8 +26,10 @@ export class AuthGoogleService {
 
     const data = ticket.getPayload();
     return {
-      id: data.sub,
+      // id: data.sub,
       email: data.email,
+      enroll_type: enrollType.google,
+      password: null,
     };
   }
 }

@@ -14,6 +14,9 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthGoogleService } from './auth-google.service';
 import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
+import { AuthRegisterLoginDto } from '../auth/dto/auth-register-login.dto';
+import { SocialInterface } from '../social/interfaces/social.interface';
+import { enrollType } from '../users/entities/user.entity';
 
 @ApiTags('구글 회원가입')
 @Controller({
@@ -31,16 +34,29 @@ export class AuthGoogleController {
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 200, description: '회원가입 성공' })
   @ApiResponse({ status: 409, description: '이미 존재하는 이메일' })
-  register(@Body() loginDto: AuthGoogleLoginDto) {
-    const socialData = this.authGoogleService.getProfileByToken(loginDto);
-
+  getRegister(@Body() loginDto: AuthGoogleLoginDto) {
+    // const socialData = this.authGoogleService.getProfileByToken(loginDto);
+    // console.log(socialData);
+    // console.log(loginDto);
+    // return this.authService.register(createUserDto);
     // return this.authService.validateSocialLogin('google', socialData);
   }
 
   @Get('callback')
   @UseGuards(AuthGuard('google'))
-  async callback(@Req() req, @Res() res) {
+  async callback(
+    @Req() req,
+    @Res() res,
+  ) {
+    console.log(req.user);
     // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
+    const socialData: SocialInterface = {
+      enroll_type : <enrollType>'google',
+      email : req.user.email,
+      password : null
+    }
+
+    await this.authService.validateSocialLogin('google', socialData);
     res.redirect('http://localhost:4000');
   }
 
