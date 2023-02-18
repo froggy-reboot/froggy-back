@@ -31,7 +31,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     try {
       // console.log(profile);
       //profile.emails[0].value, 에 email이 담김
-      console.log(profile);
       return {
         provider: 'google',
         email: profile.emails[0].value,
