@@ -13,7 +13,7 @@ export class CreateUser1604164774154 implements MigrationInterface {
       `CREATE TABLE api.user (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         email varchar(320) NOT NULL UNIQUE,
-        password varchar(80) NOT NULL,
+        password varchar(80),
         nickname varchar(40) NOT NULL UNIQUE,
         name varchar(40) ,
         age int,

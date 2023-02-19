@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { FacebookInterface } from './interfaces/facebook.interface';
 import { AuthFacebookLoginDto } from './dto/auth-facebook-login.dto';
+import { enrollType } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthFacebookService {
@@ -34,8 +35,10 @@ export class AuthFacebookService {
     });
 
     return {
-      id: data.id,
+      // id: data.id,
       email: data.email,
+      enroll_type: enrollType.google,
+      password: null,
     };
   }
 }

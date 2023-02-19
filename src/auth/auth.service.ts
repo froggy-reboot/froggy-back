@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/entities/user.entity';
+import { enrollType, User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
@@ -67,56 +67,58 @@ export class AuthService {
     }
   }
 
-  // async validateSocialLogin(
-  //   authProvider: string,
-  //   socialData: SocialInterface,
-  // ): Promise<{ token: string; user: User }> {
-  //   let user: User;
-  //   const socialEmail = socialData.email?.toLowerCase();
+  async validateSocialLogin(
+    authProvider: string,
+    socialData: SocialInterface,
+  ): Promise<{ token: string; user: User }> {
+    let user: User;
+    const socialEmail = socialData.email?.toLowerCase();
 
-  //   const userByEmail = await this.usersService.findOne({
-  //     email: socialEmail,
-  //   });
+    const userByEmail = await this.usersService.findOne({
+      email: socialEmail,
+    });
 
-  //   user = await this.usersService.findOne({
-  //     socialId: socialData.id,
-  //     provider: authProvider,
-  //   });
+    // user = await this.usersService.findOne({
+    //   socialId: socialData.id,
+    //   provider: authProvider,
+    // });
 
-  //   if (user) {
-  //     if (socialEmail && !userByEmail) {
-  //       user.email = socialEmail;
-  //     }
-  //     await this.usersService.update(user.id, user);
-  //   } else if (userByEmail) {
-  //     user = userByEmail;
-  //   } else {
-  //     const role = plainToClass(Role, {
-  //       id: RoleEnum.user,
-  //     });
-  //     const status = plainToClass(Status, {
-  //       id: StatusEnum.active,
-  //     });
+    if (user) {
+      if (socialEmail && !userByEmail) {
+        user.email = socialEmail;
+      }
+      await this.usersService.update(user.id, user);
+    } else if (userByEmail) {
+      user = userByEmail;
+    } else {
+      const role = plainToClass(Role, {
+        id: RoleEnum.user,
+      });
+      const status = plainToClass(Status, {
+        id: StatusEnum.active,
+      });
 
-  //     user = await this.usersService.create({
-  //       email: socialEmail,
-  //     });
+      user = await this.usersService.create({
+        email: socialEmail,
+        password: socialData.password,
+        enroll_type: socialData.enroll_type,
+      });
 
-  //     user = await this.usersService.findOne({
-  //       id: user.id,
-  //     });
-  //   }
+      user = await this.usersService.findOne({
+        id: user.id,
+      });
+    }
 
-  //   const jwtToken = await this.jwtService.sign({
-  //     id: user.id,
-  //     role: user.role,
-  //   });
+    const jwtToken = await this.jwtService.sign({
+      id: user.id,
+      role: user.role,
+    });
 
-  //   return {
-  //     token: jwtToken,
-  //     user,
-  //   };
-  // }
+    return {
+      token: jwtToken,
+      user,
+    };
+  }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
     const hash = await bcrypt.hash(dto.password, 15);
