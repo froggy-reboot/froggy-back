@@ -70,6 +70,6 @@ export class AuthRavelryController {
     // };
     // await this.authService.validateSocialLogin(socialData);
     // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
-    res.redirect('http://localhost:4000');
+    res.redirect('https://localhost:4040');
   }
 }
