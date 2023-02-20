@@ -17,7 +17,7 @@ import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { enrollType } from '../users/entities/user.entity';
 
-@ApiTags('Auth')
+@ApiTags('네이버 회원가입')
 @Controller({
   path: 'auth/naver',
   version: '1',

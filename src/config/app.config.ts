@@ -7,6 +7,9 @@ export default registerAs('app', () => ({
   frontendDomain: process.env.FRONTEND_DOMAIN,
   backendDomain: process.env.BACKEND_DOMAIN,
   port: parseInt(process.env.APP_PORT || process.env.PORT, 10) || 4000,
+  httpsPort:
+    parseInt(process.env.APP_HTTPS_PORT || process.env.APP_HTTPS_PORT, 10) ||
+    4040,
   apiPrefix: process.env.API_PREFIX || 'api',
   fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
   headerLanguage: process.env.APP_HEADER_LANGUAGE || 'x-custom-lang',

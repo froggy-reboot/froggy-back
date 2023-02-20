@@ -68,7 +68,6 @@ export class AuthService {
   }
 
   async validateSocialLogin(
-    authProvider: string,
     socialData: SocialInterface,
   ): Promise<{ token: string; user: User }> {
     let user: User;
@@ -98,6 +97,7 @@ export class AuthService {
         id: StatusEnum.active,
       });
 
+      // 랜덤 아이디
       user = await this.usersService.create({
         email: socialEmail,
         password: socialData.password,
