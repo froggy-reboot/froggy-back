@@ -78,10 +78,10 @@ export class AuthService {
       email: socialEmail,
     });
 
-    // user = await this.usersService.findOne({
-    //   socialId: socialData.id,
-    //   provider: authProvider,
-    // });
+    user = await this.usersService.findOne({
+      email: socialEmail,
+      enroll_type: socialData.enroll_type,
+    });
 
     if (user) {
       if (socialEmail && !userByEmail) {
