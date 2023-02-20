@@ -24,13 +24,17 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     done: any,
   ) {
     try {
-      console.log(profile);
-      console.log(accessToken);
-      const jwt = 'placeholderJWT';
-      const user = {
-        jwt,
+      // console.log(profile);
+      // const jwt = 'placeholderJWT';
+      // const user = {
+      //   jwt,
+      // };
+      return {
+        provider: 'naver',
+        email: profile._json.email,
+        refreshToken,
+        accessToken,
       };
-      done(null, user);
     } catch (err) {
       console.error(err);
       done(err, false);
