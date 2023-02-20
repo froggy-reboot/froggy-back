@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { OAuth2Client } from "google-auth-library";
-import { SocialInterface } from "../social/interfaces/social.interface";
-import { AuthGoogleLoginDto } from "./dto/auth-google-login.dto";
-import { enrollType } from "../users/entities/user.entity";
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { OAuth2Client } from 'google-auth-library';
+import { SocialInterface } from '../social/interfaces/social.interface';
+import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
+import { enrollType } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthGoogleService {
