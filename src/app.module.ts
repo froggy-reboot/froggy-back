@@ -7,6 +7,7 @@ import authConfig from './config/auth.config';
 import appConfig from './config/app.config';
 import mailConfig from './config/mail.config';
 import fileConfig from './config/file.config';
+
 import facebookConfig from './config/facebook.config';
 import googleConfig from './config/google.config';
 import twitterConfig from './config/twitter.config';
@@ -18,9 +19,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // import { AuthFacebookModule } from './auth-facebook/auth-facebook.module';
-import { AuthGoogleModule } from './auth-google/auth-google.module';
 // import { AuthTwitterModule } from './auth-twitter/auth-twitter.module';
+import { AuthGoogleModule } from './auth-google/auth-google.module';
 import { AuthNaverModule } from './auth-naver/auth-naver.module';
+import { AuthRavelryModule } from './auth-ravelry/auth-ravelry.module';
 
 import { I18nModule } from 'nestjs-i18n/dist/i18n.module';
 import { HeaderResolver } from 'nestjs-i18n';
@@ -78,9 +80,10 @@ import { DataSource } from 'typeorm';
     UsersModule,
     FilesModule,
     AuthModule,
-    // AuthFacebookModule,
     AuthGoogleModule,
     AuthNaverModule,
+    AuthRavelryModule,
+    // AuthFacebookModule,
     // AuthTwitterModule,
     ForgotModule,
     MailModule,
