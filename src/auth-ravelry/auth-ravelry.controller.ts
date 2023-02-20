@@ -42,11 +42,11 @@ export class AuthRavelryController {
   async callback(@Req() req, @Res() res) {
     const accessToken = await this.authRaverlyService.getAccessToken(req);
 
-    const raverlyUserData =
+    const raverlyUserInfo =
       await this.authRaverlyService.getUserInfoByAccessToken(accessToken);
 
     const socialData: SocialInterface = this.authRaverlyService.genSocialData(
-      raverlyUserData,
+      raverlyUserInfo,
       accessToken,
     );
 
