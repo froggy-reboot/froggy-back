@@ -41,8 +41,6 @@ export class AuthGoogleController {
   @Get('callback')
   @UseGuards(AuthGuard('google'))
   async callback(@Req() req, @Res() res) {
-    console.log(req.user);
-    // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
     const socialData: SocialInterface = {
       enroll_type: enrollType.google,
       email: req.user.email,

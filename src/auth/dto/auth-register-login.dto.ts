@@ -22,6 +22,7 @@ export class AuthRegisterLoginDto {
   password: string;
 
   @ApiProperty({ example: '개구리1호' })
+  @IsNotEmpty()
   nickname: string;
 
   @ApiProperty({ enum: enrollType, example: 'local' })

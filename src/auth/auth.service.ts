@@ -77,47 +77,46 @@ export class AuthService {
       email: socialEmail,
     });
 
-    // user = await this.usersService.findOne({
-    //   socialId: socialData.id,
-    //   provider: authProvider,
-    // });
-
-    if (user) {
-      if (socialEmail && !userByEmail) {
-        user.email = socialEmail;
-      }
-      await this.usersService.update(user.id, user);
-    } else if (userByEmail) {
-      user = userByEmail;
+    let jwtToken;
+    if (userByEmail) {
+      jwtToken = this.genJwtToken(userByEmail, socialData);
     } else {
-      const role = plainToClass(Role, {
-        id: RoleEnum.user,
-      });
-      const status = plainToClass(Status, {
-        id: StatusEnum.active,
-      });
-
-      // 랜덤 아이디
-      user = await this.usersService.create({
-        email: socialEmail,
-        password: socialData.password,
-        enroll_type: socialData.enroll_type,
-      });
-
-      user = await this.usersService.findOne({
-        id: user.id,
-      });
+      jwtToken = await this.createUserAndGenJwtToken(socialData);
     }
-
-    const jwtToken = await this.jwtService.sign({
-      id: user.id,
-      role: user.role,
-    });
-
     return {
       token: jwtToken,
       user,
     };
+  }
+
+  async genJwtToken(userByEmail, socialData) {
+    if (userByEmail.enroll_type === socialData.enroll_type) {
+      const jwtToken = await this.jwtService.sign({
+        user: userByEmail,
+      });
+      return jwtToken;
+    } else {
+      //TODO: 소셜과 일반 로그인 연동
+    }
+  }
+
+  async createUserAndGenJwtToken(socialData): Promise<string> {
+    const randomNickname = await this.getUniqueNickName();
+    const createUserResult = await this.usersService.create({
+      email: socialData.email,
+      password: socialData.password,
+      enroll_type: socialData.enroll_type,
+      nickname: randomNickname,
+    });
+
+    const user = await this.usersService.findOne({
+      id: createUserResult.id,
+    });
+
+    const jwtToken = await this.jwtService.sign({
+      user: user,
+    });
+    return jwtToken;
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
@@ -139,6 +138,7 @@ export class AuthService {
       email: dto.email,
       enroll_type: dto.enroll_type,
       password: hash,
+      nickname: dto.nickname,
     });
   }
 
@@ -197,6 +197,8 @@ export class AuthService {
       '돼지',
       '연꽃',
       '치즈',
+      '곰',
+      '통닭',
     ];
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return noun;
@@ -218,6 +220,7 @@ export class AuthService {
       '바쁜',
       '들뜬',
       '굶주린',
+      '무던한',
     ];
     const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     return adjective;
