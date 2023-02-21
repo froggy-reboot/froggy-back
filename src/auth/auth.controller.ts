@@ -58,7 +58,7 @@ export class AuthController {
   public async checkIsEmailExist(
     @Body() checkEmailDto: AuthCheckIsExistEmailDto,
   ) {
-    const checkResult = this.service.checkExistEmail(checkEmailDto);
+    const checkResult = await this.service.checkExistEmail(checkEmailDto);
     const resJson = {
       isExistEmail: checkResult ? 'Y' : 'N',
     };
