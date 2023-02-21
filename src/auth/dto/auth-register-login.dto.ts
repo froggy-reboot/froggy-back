@@ -11,12 +11,6 @@ import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 import { Transform } from 'class-transformer';
 import { enrollType } from 'src/users/entities/user.entity';
 
-export class AuthCheckIsExistEmailDto {
-  @ApiProperty({ example: 'test1@example.com' })
-  @IsEmail()
-  email: string;
-}
-
 export class AuthRegisterLoginDto {
   @ApiProperty({ example: 'test1@example.com' })
   @IsNotEmpty()

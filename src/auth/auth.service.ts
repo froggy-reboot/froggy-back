@@ -148,19 +148,9 @@ export class AuthService {
     });
 
     if (userByEmail) {
-      return {
-        message: '이미 존재하는 이메일',
-        result: {
-          isExistEmail: 'Y',
-        },
-      };
+      return true;
     } else {
-      return {
-        message: '존재하지 않는 이메일',
-        result: {
-          isExistEmail: 'N',
-        },
-      };
+      return false;
     }
   }
 
