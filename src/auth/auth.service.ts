@@ -199,6 +199,10 @@ export class AuthService {
       '치즈',
       '곰',
       '통닭',
+      '감자',
+      '고구마',
+      '라면',
+      '사자',
     ];
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return noun;
@@ -221,6 +225,9 @@ export class AuthService {
       '들뜬',
       '굶주린',
       '무던한',
+      '무난한',
+      '용감한',
+      '무모한',
     ];
     const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     return adjective;

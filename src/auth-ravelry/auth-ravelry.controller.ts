@@ -32,7 +32,10 @@ export class AuthRavelryController {
 
   @Get('register')
   @HttpCode(HttpStatus.CREATED)
-  @ApiResponse({ status: 200, description: '회원가입 성공' })
+  @ApiResponse({
+    status: 200,
+    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+  })
   async register(@Req() req, @Res() res) {
     const authorizationUri = await this.authRaverlyService.getRedirectUrl();
     res.redirect(authorizationUri);
