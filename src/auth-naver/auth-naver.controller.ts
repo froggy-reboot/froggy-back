@@ -47,7 +47,7 @@ export class AuthNaverController {
     };
     console.log(socialData);
 
-    await this.authService.validateSocialLogin('naver', socialData);
+    await this.authService.validateSocialLogin(socialData);
     res.redirect('http://localhost:4000');
   }
 }

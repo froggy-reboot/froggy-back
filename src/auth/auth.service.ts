@@ -142,6 +142,28 @@ export class AuthService {
     });
   }
 
+  async checkExistEmail(dto) {
+    const userByEmail = await this.usersService.findOne({
+      email: dto.email,
+    });
+
+    if (userByEmail) {
+      return {
+        message: '이미 존재하는 이메일',
+        result: {
+          isExistEmail: 'Y',
+        },
+      };
+    } else {
+      return {
+        message: '존재하지 않는 이메일',
+        result: {
+          isExistEmail: 'N',
+        },
+      };
+    }
+  }
+
   // async confirmEmail(hash: string): Promise<void> {
   //   const user = await this.usersService.findOne({
   //     hash,

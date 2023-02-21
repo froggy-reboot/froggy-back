@@ -19,7 +19,10 @@ import { AuthConfirmEmailDto } from './dto/auth-confirm-email.dto';
 import { AuthResetPasswordDto } from './dto/auth-reset-password.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
+import {
+  AuthCheckIsExistEmailDto,
+  AuthRegisterLoginDto,
+} from './dto/auth-register-login.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -43,6 +46,14 @@ export class AuthController {
     return this.service.validateLogin(loginDto);
   }
 
+  @Get('email/isExist')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: 200, description: '이메일 존재 여부 조회 완료' })
+  public async checkIsEmailExist(
+    @Body() checkEmailDto: AuthCheckIsExistEmailDto,
+  ) {
+    return this.service.checkExistEmail(checkEmailDto);
+  }
   // @Post('email/confirm')
   // @HttpCode(HttpStatus.OK)
   // async confirmEmail(@Body() confirmEmailDto: AuthConfirmEmailDto) {
