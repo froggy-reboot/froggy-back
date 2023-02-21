@@ -164,6 +164,75 @@ export class AuthService {
     }
   }
 
+  async getUniqueNickName(): Promise<string> {
+    let uniqueNickname;
+    while (true) {
+      const tmpNickname = this.genRandomNickName();
+      const user = await this.usersService.findOne({
+        nickname: tmpNickname,
+      });
+      if (!user) {
+        uniqueNickname = tmpNickname;
+        break;
+      }
+    }
+    return uniqueNickname;
+  }
+
+  genRandomNickName(): string {
+    const adjective = this.getAdjectives();
+    const noun = this.getNoun();
+    const number = this.getRandomNumber(1, 999);
+
+    return `${adjective}${noun}${number}`;
+  }
+  getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  getNoun() {
+    const nouns = [
+      '사과',
+      '바나나',
+      '딸기',
+      '개미',
+      '코끼리',
+      '여우',
+      '기린',
+      '하마',
+      '이구아나',
+      '해파리',
+      '개구리',
+      '복숭아',
+      '돼지',
+      '연꽃',
+      '치즈',
+    ];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return noun;
+  }
+  getAdjectives() {
+    const adjectives = [
+      '멋진',
+      '미친',
+      '즐거운',
+      '성격급한',
+      '졸린',
+      '심심한',
+      '화난',
+      '여유로운',
+      '노란',
+      '붉은',
+      '감동한',
+      '우울한',
+      '바쁜',
+      '들뜬',
+      '굶주린',
+    ];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    return adjective;
+  }
+
   // async confirmEmail(hash: string): Promise<void> {
   //   const user = await this.usersService.findOne({
   //     hash,

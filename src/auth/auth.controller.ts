@@ -54,6 +54,21 @@ export class AuthController {
   ) {
     return this.service.checkExistEmail(checkEmailDto);
   }
+
+  @Get('random-nickname')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: 200, description: '랜덤 닉네임 조회 완료' })
+  public async getRandomNickname() {
+    const nickname = await this.service.getUniqueNickName();
+    const resJson = {
+      code: 200,
+      message: '랜덤 닉네임',
+      result: { nickname: nickname },
+    };
+
+    return resJson;
+  }
+
   // @Post('email/confirm')
   // @HttpCode(HttpStatus.OK)
   // async confirmEmail(@Body() confirmEmailDto: AuthConfirmEmailDto) {

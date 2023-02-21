@@ -49,7 +49,7 @@ export class User extends EntityHelper {
   password: string;
 
   @Column()
-  raverly_id: number;
+  nickname: string;
 
   @Column()
   raverly_token: string;
