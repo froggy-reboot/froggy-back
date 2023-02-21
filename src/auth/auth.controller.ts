@@ -24,6 +24,7 @@ import {
   AuthCheckIsExistEmailDto,
   AuthCheckIsExistEmailResDto,
 } from './dto/auth-email-isExist.dto';
+import { AuthRandomNickNameResDto } from './dto/auth-random-nickname.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -68,11 +69,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
+    type: AuthRandomNickNameResDto,
     description: '랜덤 닉네임 조회 완료',
   })
-  public async getRandomNickname() {
+  public async getRandomNickname(): Promise<AuthRandomNickNameResDto> {
     const nickname = await this.service.getUniqueNickName();
-
     const resJson = { nickname };
     return resJson;
   }
