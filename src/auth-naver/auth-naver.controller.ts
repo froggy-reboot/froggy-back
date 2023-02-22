@@ -30,6 +30,10 @@ export class AuthNaverController {
 
   @Get('register')
   @UseGuards(AuthGuard('naver'))
+  @ApiResponse({
+    status: 200,
+    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+  })
   @HttpCode(HttpStatus.CREATED)
   register() {
     // const socialData = this.authNaverService.getProfileByToken(loginDto);
@@ -47,7 +51,7 @@ export class AuthNaverController {
     };
     console.log(socialData);
 
-    await this.authService.validateSocialLogin('naver', socialData);
+    await this.authService.validateSocialLogin(socialData);
     res.redirect('http://localhost:4000');
   }
 }

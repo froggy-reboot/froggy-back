@@ -77,47 +77,46 @@ export class AuthService {
       email: socialEmail,
     });
 
-    user = await this.usersService.findOne({
-      email: socialEmail,
-      enroll_type: socialData.enroll_type,
-    });
-
-    if (user) {
-      if (socialEmail && !userByEmail) {
-        user.email = socialEmail;
-      }
-      await this.usersService.update(user.id, user);
-    } else if (userByEmail) {
-      user = userByEmail;
+    let jwtToken;
+    if (userByEmail) {
+      jwtToken = this.genJwtToken(userByEmail, socialData);
     } else {
-      const role = plainToClass(Role, {
-        id: RoleEnum.user,
-      });
-      const status = plainToClass(Status, {
-        id: StatusEnum.active,
-      });
-
-      // 랜덤 아이디
-      user = await this.usersService.create({
-        email: socialEmail,
-        password: socialData.password,
-        enroll_type: socialData.enroll_type,
-      });
-
-      user = await this.usersService.findOne({
-        id: user.id,
-      });
+      jwtToken = await this.createUserAndGenJwtToken(socialData);
     }
-
-    const jwtToken = await this.jwtService.sign({
-      id: user.id,
-      role: user.role,
-    });
-
     return {
       token: jwtToken,
       user,
     };
+  }
+
+  async genJwtToken(userByEmail, socialData) {
+    if (userByEmail.enroll_type === socialData.enroll_type) {
+      const jwtToken = await this.jwtService.sign({
+        user: userByEmail,
+      });
+      return jwtToken;
+    } else {
+      //TODO: 소셜과 일반 로그인 연동
+    }
+  }
+
+  async createUserAndGenJwtToken(socialData): Promise<string> {
+    const randomNickname = await this.getUniqueNickName();
+    const createUserResult = await this.usersService.create({
+      email: socialData.email,
+      password: socialData.password,
+      enroll_type: socialData.enroll_type,
+      nickname: randomNickname,
+    });
+
+    const user = await this.usersService.findOne({
+      id: createUserResult.id,
+    });
+
+    const jwtToken = await this.jwtService.sign({
+      user: user,
+    });
+    return jwtToken;
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
@@ -139,7 +138,99 @@ export class AuthService {
       email: dto.email,
       enroll_type: dto.enroll_type,
       password: hash,
+      nickname: dto.nickname,
     });
+  }
+
+  async checkExistEmail(dto) {
+    const userByEmail = await this.usersService.findOne({
+      email: dto.email,
+    });
+
+    if (userByEmail) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async getUniqueNickName(): Promise<string> {
+    let uniqueNickname;
+    while (true) {
+      const tmpNickname = this.genRandomNickName();
+      const user = await this.usersService.findOne({
+        nickname: tmpNickname,
+      });
+      if (!user) {
+        uniqueNickname = tmpNickname;
+        break;
+      }
+    }
+    return uniqueNickname;
+  }
+
+  genRandomNickName(): string {
+    const adjective = this.getAdjectives();
+    const noun = this.getNoun();
+    const number = this.getRandomNumber(1, 999);
+
+    return `${adjective}${noun}${number}`;
+  }
+  getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  getNoun() {
+    const nouns = [
+      '사과',
+      '바나나',
+      '딸기',
+      '개미',
+      '코끼리',
+      '여우',
+      '기린',
+      '하마',
+      '이구아나',
+      '해파리',
+      '개구리',
+      '복숭아',
+      '돼지',
+      '연꽃',
+      '치즈',
+      '곰',
+      '통닭',
+      '감자',
+      '고구마',
+      '라면',
+      '사자',
+    ];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return noun;
+  }
+  getAdjectives() {
+    const adjectives = [
+      '멋진',
+      '미친',
+      '즐거운',
+      '성격급한',
+      '졸린',
+      '심심한',
+      '화난',
+      '여유로운',
+      '노란',
+      '붉은',
+      '감동한',
+      '우울한',
+      '바쁜',
+      '들뜬',
+      '굶주린',
+      '무던한',
+      '무난한',
+      '용감한',
+      '무모한',
+    ];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    return adjective;
   }
 
   // async confirmEmail(hash: string): Promise<void> {

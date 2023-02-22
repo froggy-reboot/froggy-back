@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthGoogleService } from './auth-google.service';
 import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
@@ -28,6 +28,10 @@ export class AuthGoogleController {
   ) {}
 
   @Get('register')
+  @ApiResponse({
+    status: 200,
+    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+  })
   @UseGuards(AuthGuard('google'))
   @HttpCode(HttpStatus.CREATED)
   getRegister() {
@@ -41,8 +45,6 @@ export class AuthGoogleController {
   @Get('callback')
   @UseGuards(AuthGuard('google'))
   async callback(@Req() req, @Res() res) {
-    console.log(req.user);
-    // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
     const socialData: SocialInterface = {
       enroll_type: enrollType.google,
       email: req.user.email,

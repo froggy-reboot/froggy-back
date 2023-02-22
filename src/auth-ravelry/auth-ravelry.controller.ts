@@ -32,7 +32,10 @@ export class AuthRavelryController {
 
   @Get('register')
   @HttpCode(HttpStatus.CREATED)
-  @ApiResponse({ status: 200, description: '회원가입 성공' })
+  @ApiResponse({
+    status: 200,
+    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+  })
   async register(@Req() req, @Res() res) {
     const authorizationUri = await this.authRaverlyService.getRedirectUrl();
     res.redirect(authorizationUri);
@@ -40,36 +43,17 @@ export class AuthRavelryController {
 
   @Get('callback')
   async callback(@Req() req, @Res() res) {
-    // const config = {
-    //   client: {
-    //     id: process.env.RAVELRY_CLIENT_ID,
-    //     secret: process.env.RAVELRY_CLIENT_SECRET,
-    //   },
-    //   auth: {
-    //     tokenHost: 'https://www.ravelry.com/',
-    //     tokenPath: 'oauth2/token',
-    //     authorizePath: 'oauth2/auth',
-    //   },
-    // };
+    const accessToken = await this.authRaverlyService.getAccessToken(req);
 
-    // const tokenParams = {
-    //   code: '<code>',
-    //   redirect_uri: process.env.RAVELRY_CALL_BACK_URL,
-    //   scope: '[profile-only]',
-    // };
+    const raverlyUserInfo =
+      await this.authRaverlyService.getUserInfoByAccessToken(accessToken);
 
-    // const httpOptions = {};
+    const socialData: SocialInterface = this.authRaverlyService.genSocialData(
+      raverlyUserInfo,
+      accessToken,
+    );
 
-    // const client = new AuthorizationCode(config);
-    // const accessToken = await client.getToken(tokenParams, httpOptions);
-
-    // const socialData: SocialInterface = {
-    //   enroll_type: <enrollType>'raverly',
-    //   email: req.user.email,
-    //   password: null,
-    // };
-    // await this.authService.validateSocialLogin(socialData);
-    // const socialData = await this.authGoogleService.getProfileByToken(loginDto);
+    await this.authService.validateSocialLogin(socialData);
     res.redirect('https://localhost:4040');
   }
 }

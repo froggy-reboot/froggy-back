@@ -20,4 +20,8 @@ export class CreateUserDto {
   @ApiProperty({ example: 'local' })
   @IsNotEmpty()
   enroll_type: enrollType;
+
+  @ApiProperty({ example: '멋진기린321' })
+  @IsNotEmpty()
+  nickname: string;
 }

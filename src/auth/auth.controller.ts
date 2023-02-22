@@ -20,6 +20,11 @@ import { AuthResetPasswordDto } from './dto/auth-reset-password.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
+import {
+  AuthCheckIsExistEmailDto,
+  AuthCheckIsExistEmailResDto,
+} from './dto/auth-email-isExist.dto';
+import { AuthRandomNickNameResDto } from './dto/auth-random-nickname.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -41,6 +46,36 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   public async login(@Body() loginDto: AuthEmailLoginDto) {
     return this.service.validateLogin(loginDto);
+  }
+
+  @Get('email/isExist')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    description: '이미 존재하는 이메일: Y, 존재하지 않는 이메일:N ',
+    type: AuthCheckIsExistEmailResDto,
+  })
+  public async checkIsEmailExist(
+    @Body() checkEmailDto: AuthCheckIsExistEmailDto,
+  ) {
+    const checkResult = await this.service.checkExistEmail(checkEmailDto);
+    const resJson = {
+      isExistEmail: checkResult ? 'Y' : 'N',
+    };
+    return resJson;
+  }
+
+  @Get('random-nickname')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    type: AuthRandomNickNameResDto,
+    description: '랜덤 닉네임 조회 완료',
+  })
+  public async getRandomNickname(): Promise<AuthRandomNickNameResDto> {
+    const nickname = await this.service.getUniqueNickName();
+    const resJson = { nickname };
+    return resJson;
   }
 
   // @Post('email/confirm')
