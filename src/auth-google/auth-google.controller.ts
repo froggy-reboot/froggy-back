@@ -51,7 +51,7 @@ export class AuthGoogleController {
       password: null,
     };
 
-    await this.authService.validateSocialLogin('google', socialData);
+    await this.authService.validateSocialLogin(socialData);
     res.redirect('http://localhost:4000');
   }
 
