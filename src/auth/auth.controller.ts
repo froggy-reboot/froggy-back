@@ -78,6 +78,13 @@ export class AuthController {
     return resJson;
   }
 
+  @Get('social/login')
+  @ApiResponse({
+    status: 200,
+    type: AuthRandomNickNameResDto,
+    description: '소셜 로그인 로그인 로직',
+  })
+  public async socialLogin() {}
   // @Post('email/confirm')
   // @HttpCode(HttpStatus.OK)
   // async confirmEmail(@Body() confirmEmailDto: AuthConfirmEmailDto) {

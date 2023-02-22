@@ -1,0 +1,49 @@
+
+
+enum enroll_type {
+  local
+  google
+  raverly
+  naver
+}
+
+enum gender {
+  male
+  female
+  none
+}
+
+enum role { 
+  customer
+  seller
+}
+
+enum bool {
+  Y
+  N
+}
+
+Table "user" {
+  id int [pk, not null, increment]
+  name varchar(40)
+  "age" int
+  "email" varchar(320) [not null , unique]  
+  "password" varchar(80) [not null]
+  "raverly_token" varchar(100) 
+  "raverly_refresh_token" varchar(100) 
+  "enroll_type" enroll_type
+  "birth" datetime
+  "gender" gender
+  "blog_url" varchar(2084)
+  "role" role
+  "isIntegrated" bool
+  "isCertified" bool
+  "createdAt" datetime
+  "updatedAt" datetime
+  "deletedAt" datetime
+}
+
+
+Table "article" {
+  id int [pk, not null, increment]
+}

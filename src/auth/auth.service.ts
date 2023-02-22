@@ -203,6 +203,24 @@ export class AuthService {
       '고구마',
       '라면',
       '사자',
+      '토끼',
+      '애벌레',
+      '푸딩',
+      '장미',
+      '젤리',
+      '커피',
+      '망고',
+      '수박',
+      '조랑말',
+      '거북이',
+      '눈사람',
+      '문어',
+      '햄스터',
+      '리트리버',
+      '털뭉치',
+      '털실',
+      '고양이',
+      '목도리',
     ];
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return noun;
@@ -210,7 +228,6 @@ export class AuthService {
   getAdjectives() {
     const adjectives = [
       '멋진',
-      '미친',
       '즐거운',
       '성격급한',
       '졸린',
@@ -228,6 +245,10 @@ export class AuthService {
       '무난한',
       '용감한',
       '무모한',
+      '깜찍한',
+      '따분한',
+      '시원한',
+      '멍한',
     ];
     const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     return adjective;
