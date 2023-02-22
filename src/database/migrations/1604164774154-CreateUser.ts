@@ -25,7 +25,7 @@ export class CreateUser1604164774154 implements MigrationInterface {
         blog_url varchar(2084),
         role ENUM ('customer', 'seller'),
         isIntegrated ENUM ('Y','N'),
-        isCertified ENUM ('Y', 'N),
+        isCertified ENUM ('Y', 'N'),
         created_at datetime,
         updated_at datetime,
         deleted_at datetime

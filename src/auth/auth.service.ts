@@ -15,6 +15,7 @@ import { AuthProvidersEnum } from './auth-providers.enum';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
+import { ShowUserDto } from 'src/users/dto/show-user.dto';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -69,7 +70,7 @@ export class AuthService {
 
   async validateSocialLogin(
     socialData: SocialInterface,
-  ): Promise<{ token: string; user: User }> {
+  ): Promise<{ userId: number }> {
     let user: User;
     const socialEmail = socialData.email?.toLowerCase();
 
@@ -77,16 +78,14 @@ export class AuthService {
       email: socialEmail,
     });
 
-    let jwtToken;
-    if (userByEmail) {
-      jwtToken = this.genJwtToken(userByEmail, socialData);
+    let userId;
+    if (!userByEmail) {
+      const createdSocialUser = await this.createSocialUser(socialData);
+      userId = createdSocialUser.id;
     } else {
-      jwtToken = await this.createUserAndGenJwtToken(socialData);
+      userId = userByEmail.id;
     }
-    return {
-      token: jwtToken,
-      user,
-    };
+    return userId;
   }
 
   async genJwtToken(userByEmail, socialData) {
@@ -100,7 +99,7 @@ export class AuthService {
     }
   }
 
-  async createUserAndGenJwtToken(socialData): Promise<string> {
+  async createSocialUser(socialData): Promise<User> {
     const randomNickname = await this.getUniqueNickName();
     const createUserResult = await this.usersService.create({
       email: socialData.email,
@@ -113,10 +112,7 @@ export class AuthService {
       id: createUserResult.id,
     });
 
-    const jwtToken = await this.jwtService.sign({
-      user: user,
-    });
-    return jwtToken;
+    return user;
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
@@ -140,6 +136,21 @@ export class AuthService {
       password: hash,
       nickname: dto.nickname,
     });
+  }
+
+  async getAccessTokenAndUserById(userId) {
+    const user = await this.usersService.findOne({
+      id: userId,
+    });
+
+    const jwtToken = await this.jwtService.sign({
+      user: user,
+    });
+
+    return {
+      jwtToken,
+      user,
+    };
   }
 
   async checkExistEmail(dto) {

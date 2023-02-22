@@ -53,7 +53,7 @@ export class AuthRavelryController {
       accessToken,
     );
 
-    await this.authService.validateSocialLogin(socialData);
-    res.redirect('https://localhost:4040');
+    const userId = await this.authService.validateSocialLogin(socialData);
+    res.redirect(`https://localhost:4040/${userId}`);
   }
 }

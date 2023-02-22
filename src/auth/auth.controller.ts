@@ -10,6 +10,7 @@ import {
   Patch,
   Delete,
   SerializeOptions,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -25,6 +26,7 @@ import {
   AuthCheckIsExistEmailResDto,
 } from './dto/auth-email-isExist.dto';
 import { AuthRandomNickNameResDto } from './dto/auth-random-nickname.dto';
+import { AuthSocialLoginResDto } from './dto/auth-social-login.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -81,10 +83,22 @@ export class AuthController {
   @Get('social/login')
   @ApiResponse({
     status: 200,
-    type: AuthRandomNickNameResDto,
+    type: AuthSocialLoginResDto,
     description: '소셜 로그인 로그인 로직',
   })
-  public async socialLogin() {}
+  public async socialLogin(@Query('userId') userId) {
+    const getAccessTokenAndUserByIdResult =
+      await this.service.getAccessTokenAndUserById(userId);
+
+    const { jwtToken, user } = getAccessTokenAndUserByIdResult;
+
+    const resJson: AuthSocialLoginResDto = {
+      jwtToken: jwtToken,
+      user: user,
+    };
+
+    return resJson;
+  }
   // @Post('email/confirm')
   // @HttpCode(HttpStatus.OK)
   // async confirmEmail(@Body() confirmEmailDto: AuthConfirmEmailDto) {
