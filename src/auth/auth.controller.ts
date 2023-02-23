@@ -27,6 +27,7 @@ import {
 } from './dto/auth-email-isExist.dto';
 import { AuthRandomNickNameResDto } from './dto/auth-random-nickname.dto';
 import { AuthSocialLoginResDto } from './dto/auth-social-login.dto';
+import { ShowUserDto } from 'src/users/dto/show-user.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -80,18 +81,17 @@ export class AuthController {
     return resJson;
   }
 
-  @Get('social/login')
+  @Post('social/login')
   @ApiResponse({
     status: 200,
     type: AuthSocialLoginResDto,
     description: '소셜 로그인 로그인 로직',
   })
-  public async socialLogin(@Query('userId') userId) {
+  public async socialLogin(@Body() userId: number) {
     const getAccessTokenAndUserByIdResult =
       await this.service.getAccessTokenAndUserById(userId);
 
     const { jwtToken, user } = getAccessTokenAndUserByIdResult;
-
     const resJson: AuthSocialLoginResDto = {
       jwtToken: jwtToken,
       user: user,

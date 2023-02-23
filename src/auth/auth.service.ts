@@ -191,80 +191,6 @@ export class AuthService {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  getNoun() {
-    const nouns = [
-      '사과',
-      '바나나',
-      '딸기',
-      '개미',
-      '코끼리',
-      '여우',
-      '기린',
-      '하마',
-      '이구아나',
-      '해파리',
-      '개구리',
-      '복숭아',
-      '돼지',
-      '연꽃',
-      '치즈',
-      '곰',
-      '통닭',
-      '감자',
-      '고구마',
-      '라면',
-      '사자',
-      '토끼',
-      '애벌레',
-      '푸딩',
-      '장미',
-      '젤리',
-      '커피',
-      '망고',
-      '수박',
-      '조랑말',
-      '거북이',
-      '눈사람',
-      '문어',
-      '햄스터',
-      '리트리버',
-      '털뭉치',
-      '털실',
-      '고양이',
-      '목도리',
-    ];
-    const noun = nouns[Math.floor(Math.random() * nouns.length)];
-    return noun;
-  }
-  getAdjectives() {
-    const adjectives = [
-      '멋진',
-      '즐거운',
-      '성격급한',
-      '졸린',
-      '심심한',
-      '화난',
-      '여유로운',
-      '노란',
-      '붉은',
-      '감동한',
-      '우울한',
-      '바쁜',
-      '들뜬',
-      '굶주린',
-      '무던한',
-      '무난한',
-      '용감한',
-      '무모한',
-      '깜찍한',
-      '따분한',
-      '시원한',
-      '멍한',
-    ];
-    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    return adjective;
-  }
-
   // async confirmEmail(hash: string): Promise<void> {
   //   const user = await this.usersService.findOne({
   //     hash,
@@ -398,4 +324,91 @@ export class AuthService {
   // async softDelete(user: User): Promise<void> {
   //   await this.usersService.softDelete(user.id);
   // }
+
+  getNoun() {
+    const nouns = [
+      '사과',
+      '바나나',
+      '딸기',
+      '개미',
+      '코끼리',
+      '여우',
+      '기린',
+      '하마',
+      '이구아나',
+      '해파리',
+      '개구리',
+      '복숭아',
+      '돼지',
+      '연꽃',
+      '치즈',
+      '곰',
+      '통닭',
+      '감자',
+      '고구마',
+      '라면',
+      '사자',
+      '토끼',
+      '애벌레',
+      '푸딩',
+      '장미',
+      '젤리',
+      '커피',
+      '망고',
+      '수박',
+      '조랑말',
+      '거북이',
+      '눈사람',
+      '문어',
+      '햄스터',
+      '리트리버',
+      '털뭉치',
+      '털실',
+      '고양이',
+      '목도리',
+      '장갑',
+      '양말',
+      '조끼',
+      '인형',
+      '로봇',
+      '브로콜리',
+      '귤',
+    ];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return noun;
+  }
+  getAdjectives() {
+    const adjectives = [
+      '멋진',
+      '즐거운',
+      '성격급한',
+      '졸린',
+      '심심한',
+      '화난',
+      '여유로운',
+      '노란',
+      '붉은',
+      '감동한',
+      '우울한',
+      '바쁜',
+      '들뜬',
+      '굶주린',
+      '무던한',
+      '무난한',
+      '용감한',
+      '무모한',
+      '깜찍한',
+      '따분한',
+      '시원한',
+      '멍한',
+      '상큼한',
+      '달콤한',
+      '상쾌한',
+      '미묘한',
+      '기묘한',
+      '유용한',
+    ];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    return adjective;
+  }
 }
