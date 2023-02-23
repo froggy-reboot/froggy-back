@@ -24,6 +24,16 @@ async function bootstrap() {
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
+  // const corsOptions = {
+  //   methods: 'GET',
+  //   preflightContinue: true,
+  //   optionsSuccessStatus: 204,
+  //   credentials: true,
+  //   origin: ['http://localhost:8100/'],
+  // };
+
+  app.enableCors();
+
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const configService = app.get<ConfigService>(ConfigService);
 
