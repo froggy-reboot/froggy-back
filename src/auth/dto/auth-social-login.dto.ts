@@ -30,3 +30,9 @@ export class AuthSocialLoginResDto {
   @ApiProperty({ type: () => User })
   user: ShowUserDto;
 }
+export class AuthSocialLoginUrlDto {
+  @ApiProperty({
+    example: 'https://accounts.google.com/signin/oauth/error/v2....',
+  })
+  redirectUrl: string;
+}

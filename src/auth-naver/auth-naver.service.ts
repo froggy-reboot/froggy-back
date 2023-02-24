@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
 import { SocialInterface } from '../social/interfaces/social.interface';
@@ -7,30 +7,13 @@ import { enrollType } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthNaverService {
-  private naver: OAuth2Client;
+  constructor(private configService: ConfigService) {}
 
-  constructor(private configService: ConfigService) {
-    this.naver = new OAuth2Client(
-      configService.get('naver.clientId'),
-      configService.get('naver.clientSecret'),
-    );
-  }
+  getRedirectUrl(): string {
+    const callbackUrl = this.configService.get('naver.callbackUrl');
+    const clinetId = this.configService.get('naver.clientId');
+    const redirectUrl = `https://nid.naver.com/oauth2.0/authorize?session=false&property=user&response_type=code&redirect_uri=${callbackUrl}&scope=profile&client_id=${clinetId}`;
 
-  async getProfileByToken(
-    loginDto: AuthNaverLoginDto,
-  ): Promise<SocialInterface> {
-    const ticket = await this.naver.verifyIdToken({
-      idToken: loginDto.idToken,
-      audience: [this.configService.get('naver.clientId')],
-    });
-
-    const data = ticket.getPayload();
-
-    return {
-      // id: data.sub,
-      email: data.email,
-      enroll_type: enrollType.naver,
-      password: null,
-    };
+    return redirectUrl;
   }
 }
