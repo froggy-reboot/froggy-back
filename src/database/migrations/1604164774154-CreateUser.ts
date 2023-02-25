@@ -32,6 +32,10 @@ export class CreateUser1604164774154 implements MigrationInterface {
       );
       `,
     );
+    await queryRunner.query(
+      `ALTER TABLE api.'user' MODIFY COLUMN isCertified enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'N' NULL COMMENT '이메일 인증 여부';`,
+    );
+
     // await queryRunner.query(
     //   `CREATE TABLE "status" ("id" integer NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_e12743a7086ec826733f54e1d95" PRIMARY KEY ("id"))`,
     // );

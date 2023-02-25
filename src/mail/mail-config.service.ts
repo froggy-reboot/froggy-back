@@ -11,11 +11,13 @@ export class MailConfigService implements MailerOptionsFactory {
   createMailerOptions(): MailerOptions {
     return {
       transport: {
-        host: this.configService.get('mail.host'),
-        port: this.configService.get('mail.port'),
-        ignoreTLS: this.configService.get('mail.ignoreTLS'),
-        secure: this.configService.get('mail.secure'),
-        requireTLS: this.configService.get('mail.requireTLS'),
+        // host: this.configService.get('mail.host'),
+        // port: this.configService.get('mail.port'),
+        host: 'smtp.gmail.com',
+        port: 587,
+        // ignoreTLS: this.configService.get('mail.ignoreTLS'),
+        // secure: this.configService.get('mail.secure'),
+        // requireTLS: this.configService.get('mail.requireTLS'),
         auth: {
           user: this.configService.get('mail.user'),
           pass: this.configService.get('mail.password'),

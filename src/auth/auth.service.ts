@@ -16,6 +16,7 @@ import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
 import { ShowUserDto } from 'src/users/dto/show-user.dto';
+import { MailService } from 'src/mail/mail.service';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -24,6 +25,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
+    private mailService: MailService,
   ) {}
 
   async validateLogin(
@@ -136,6 +138,19 @@ export class AuthService {
       password: hash,
       nickname: dto.nickname,
     });
+
+    const hash4MailCertify = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
+    await this.mailService.userSignUp({
+      to: user.email,
+      data: {
+        hash: hash4MailCertify,
+      },
+    });
+    return;
   }
 
   async getAccessTokenAndUserById(userId) {
