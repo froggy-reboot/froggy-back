@@ -53,6 +53,6 @@ export class AuthNaverController {
     console.log(socialData);
 
     const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`https://localhost:4000/${userId}`);
+    res.redirect(`https://localhost:3000/${userId}`);
   }
 }

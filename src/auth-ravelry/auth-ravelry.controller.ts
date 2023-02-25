@@ -15,6 +15,7 @@ const {
 
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
+import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { AuthRavelryService } from './auth-ravelry.service';
@@ -34,11 +35,12 @@ export class AuthRavelryController {
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({
     status: 200,
-    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+    type: AuthSocialLoginUrlDto,
+    description: 'Ravelry 로그인 창 url을 보내줍니다.',
   })
   async register(@Req() req, @Res() res) {
     const authorizationUri = await this.authRaverlyService.getRedirectUrl();
-    res.redirect(authorizationUri);
+    return authorizationUri;
   }
 
   @Get('callback')
@@ -54,6 +56,6 @@ export class AuthRavelryController {
     );
 
     const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`https://localhost:4040/${userId}`);
+    res.redirect(`https://localhost:3000/${userId}`);
   }
 }
