@@ -47,6 +47,18 @@ export class AuthService {
       );
     }
 
+    if (user.is_certified === 'N') {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNAUTHORIZED,
+          errors: {
+            email: 'uncertified',
+          },
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
     const isValidPassword = await bcrypt.compare(
       loginDto.password,
       user.password,

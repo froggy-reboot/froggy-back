@@ -17,7 +17,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
+import {
+  AuthEmailLoginDto,
+  AuthEmailLoginResDto,
+} from './dto/auth-email-login.dto';
 import { AuthForgotPasswordDto } from './dto/auth-forgot-password.dto';
 import { AuthConfirmEmailDto } from './dto/auth-confirm-email.dto';
 import { AuthResetPasswordDto } from './dto/auth-reset-password.dto';
@@ -49,6 +52,16 @@ export class AuthController {
   }
 
   @Post('email/login')
+  @ApiResponse({
+    status: 200,
+    type: AuthEmailLoginResDto,
+    description: '로그인 성공',
+  })
+  @ApiResponse({
+    status: 422,
+    description: '회원가입 되지 않은 이메일 또는 비밀번호 오류',
+  })
+  @ApiResponse({ status: 401, description: '인증되지 않은 이메일' })
   @HttpCode(HttpStatus.OK)
   public async login(@Body() loginDto: AuthEmailLoginDto) {
     return this.service.validateLogin(loginDto);
