@@ -32,6 +32,7 @@ import { ForgotModule } from './forgot/forgot.module';
 import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
+import { ArticlesModule } from './articles/articles.module';
 
 @Module({
   imports: [
@@ -88,6 +89,7 @@ import { DataSource } from 'typeorm';
     ForgotModule,
     MailModule,
     HomeModule,
+    ArticlesModule,
   ],
 })
 export class AppModule {}
