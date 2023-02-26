@@ -31,6 +31,6 @@ export class Article extends EntityHelper {
   deleted_at: Date;
 
   @ManyToOne(() => User, (user) => user.id)
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'writer_id' })
   user: User;
 }
