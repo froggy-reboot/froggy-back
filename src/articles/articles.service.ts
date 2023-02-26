@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Article } from './entities/article.entity';
 
 @Injectable()
 export class ArticlesService {
+  constructor(
+    @InjectRepository(Article)
+    private articleRepository: Repository<Article>,
+  ) {}
   create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+    return this.articleRepository.save(
+      this.articleRepository.create(createArticleDto),
+    );
   }
 
   findAll() {
