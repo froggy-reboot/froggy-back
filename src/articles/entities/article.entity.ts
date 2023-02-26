@@ -3,10 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Article extends EntityHelper {
@@ -26,4 +29,8 @@ export class Article extends EntityHelper {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @ManyToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'id' })
+  user: User;
 }

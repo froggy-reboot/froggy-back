@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,6 +12,7 @@ import {
 // import { FileEntity } from '../../files/entities/file.entity';
 // import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
+import { Article } from '../../articles/entities/article.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
@@ -77,6 +79,9 @@ export class User extends EntityHelper {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @OneToMany(() => Article, (article) => article.writer_id)
+  articleId: Article[];
 }
 
 /*
