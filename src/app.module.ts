@@ -32,8 +32,6 @@ import { ForgotModule } from './forgot/forgot.module';
 import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
-import { ArticlesController } from './articles/articles.controller';
-import { ArticlesModule } from './articles/articles.module';
 import { ArticlesModule } from './articles/articles.module';
 
 @Module({
@@ -93,6 +91,5 @@ import { ArticlesModule } from './articles/articles.module';
     HomeModule,
     ArticlesModule,
   ],
-  controllers: [ArticlesController],
 })
 export class AppModule {}
