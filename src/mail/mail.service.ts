@@ -17,15 +17,17 @@ export class MailService {
     await this.mailerService.sendMail({
       to: mailData.to,
       subject: await this.i18n.t('common.confirmEmail'),
-      text: `${this.configService.get('app.frontendDomain')}/confirm-email/${
-        mailData.data.hash
-      } ${await this.i18n.t('common.confirmEmail')}`,
+      text: `${this.configService.get(
+        'app.backendDomain',
+      )}/api/v1/auth/email/confirm/${mailData.data.hash} ${await this.i18n.t(
+        'common.confirmEmail',
+      )}`,
       template: 'activation',
       context: {
         title: await this.i18n.t('common.confirmEmail'),
-        url: `${this.configService.get('app.frontendDomain')}/confirm-email/${
-          mailData.data.hash
-        }`,
+        url: `${this.configService.get(
+          'app.backendDomain',
+        )}/api/v1/auth/email/confirm/${mailData.data.hash}`,
         actionTitle: await this.i18n.t('common.confirmEmail'),
         app_name: this.configService.get('app.name'),
         text1: await this.i18n.t('confirm-email.text1'),

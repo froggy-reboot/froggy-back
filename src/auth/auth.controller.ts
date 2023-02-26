@@ -11,6 +11,9 @@ import {
   Delete,
   SerializeOptions,
   Query,
+  Param,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -68,6 +71,13 @@ export class AuthController {
     return resJson;
   }
 
+  @Get('email/confirm/:hash')
+  @HttpCode(HttpStatus.OK)
+  async confirmEmail(@Param('hash') hash, @Req() req, @Res() res) {
+    await this.service.confirmEmail(hash);
+    res.redirect(`https://localhost:3000`);
+  }
+
   @Get('random-nickname')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -99,11 +109,6 @@ export class AuthController {
 
     return resJson;
   }
-  // @Post('email/confirm')
-  // @HttpCode(HttpStatus.OK)
-  // async confirmEmail(@Body() confirmEmailDto: AuthConfirmEmailDto) {
-  //   return this.service.confirmEmail(confirmEmailDto.hash);
-  // }
 
   // @Post('forgot/password')
   // @HttpCode(HttpStatus.OK)

@@ -60,4 +60,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(role)
   role?: role | null;
+
+  @IsOptional()
+  is_certified?: string;
 }

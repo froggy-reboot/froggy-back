@@ -132,17 +132,18 @@ export class AuthService {
       );
     }
 
+    const hash4MailCertify = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
     const user = await this.usersService.create({
       email: dto.email,
       enroll_type: dto.enroll_type,
       password: hash,
       nickname: dto.nickname,
+      certify_hash: hash4MailCertify,
     });
-
-    const hash4MailCertify = crypto
-      .createHash('sha256')
-      .update(randomStringGenerator())
-      .digest('hex');
 
     await this.mailService.userSignUp({
       to: user.email,
@@ -206,27 +207,23 @@ export class AuthService {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  // async confirmEmail(hash: string): Promise<void> {
-  //   const user = await this.usersService.findOne({
-  //     hash,
-  //   });
+  async confirmEmail(hash: string): Promise<void> {
+    const user = await this.usersService.findOne({
+      certify_hash: hash,
+    });
 
-  //   if (!user) {
-  //     throw new HttpException(
-  //       {
-  //         status: HttpStatus.NOT_FOUND,
-  //         error: `notFound`,
-  //       },
-  //       HttpStatus.NOT_FOUND,
-  //     );
-  //   }
-
-  //   user.hash = null;
-  //   user.status = plainToClass(Status, {
-  //     id: StatusEnum.active,
-  //   });
-  //   await user.save();
-  // }
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: `notFound`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    await this.usersService.update(user.id, { is_certified: 'Y' });
+    return;
+  }
 
   // async forgotPassword(email: string): Promise<void> {
   //   const user = await this.usersService.findOne({

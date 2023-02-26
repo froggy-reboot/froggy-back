@@ -76,6 +76,15 @@ export class User extends EntityHelper {
   @Column()
   role: role;
 
+  @Column()
+  is_integrated: string;
+
+  @Column()
+  is_certified: string;
+
+  @Column()
+  certify_hash: string;
+
   @CreateDateColumn()
   created_at: Date;
 

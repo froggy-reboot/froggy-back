@@ -30,4 +30,7 @@ export class CreateUserDto {
   @ApiProperty({ example: '멋진기린321' })
   @IsNotEmpty()
   nickname: string;
+
+  @IsOptional()
+  certify_hash?: string;
 }

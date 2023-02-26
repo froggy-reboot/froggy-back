@@ -24,16 +24,14 @@ export class CreateUser1604164774154 implements MigrationInterface {
         gender ENUM ('male', 'female', 'none'),
         blog_url varchar(2084),
         role ENUM ('customer', 'seller'),
-        isIntegrated ENUM ('Y','N'),
-        isCertified ENUM ('Y', 'N'),
+        is_integrated ENUM ('Y','N'),
+        is_certified ENUM ('Y', 'N') DEFAULT 'N' NULL COMMENT '이메일 인증 여부',
+        certify_hash varchar(300),
         created_at datetime,
         updated_at datetime,
         deleted_at datetime
       );
       `,
-    );
-    await queryRunner.query(
-      `ALTER TABLE api.'user' MODIFY COLUMN isCertified enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'N' NULL COMMENT '이메일 인증 여부';`,
     );
 
     // await queryRunner.query(
