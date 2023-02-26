@@ -12,6 +12,7 @@ import {
 // import { FileEntity } from '../../files/entities/file.entity';
 // import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
+import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
@@ -48,13 +49,19 @@ export class User extends EntityHelper {
   email: string;
 
   @Column({ nullable: true })
+  @Exclude()
   password: string;
 
   @Column()
   nickname: string;
 
   @Column()
+  @Exclude()
   raverly_token: string;
+
+  @Column()
+  @Exclude()
+  raverly_refresh_token: string;
 
   @Column({ nullable: false })
   enroll_type: enrollType;
@@ -70,6 +77,15 @@ export class User extends EntityHelper {
 
   @Column()
   role: role;
+
+  @Column()
+  is_integrated: string;
+
+  @Column()
+  is_certified: string;
+
+  @Column()
+  certify_hash: string;
 
   @CreateDateColumn()
   created_at: Date;

@@ -19,17 +19,21 @@ export class CreateUser1604164774154 implements MigrationInterface {
         age int,
         raverly_token varchar(100),
         raverly_refresh_token varchar(100),
-        enroll_type ENUM ('local', 'google', 'raverly') NOT NULL,
+        enroll_type ENUM ('local', 'google', 'raverly','naver') NOT NULL,
         birth datetime,
         gender ENUM ('male', 'female', 'none'),
         blog_url varchar(2084),
         role ENUM ('customer', 'seller'),
+        is_integrated ENUM ('Y','N'),
+        is_certified ENUM ('Y', 'N') DEFAULT 'N' NULL COMMENT '이메일 인증 여부',
+        certify_hash varchar(300),
         created_at datetime,
         updated_at datetime,
         deleted_at datetime
       );
       `,
     );
+
     // await queryRunner.query(
     //   `CREATE TABLE "status" ("id" integer NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_e12743a7086ec826733f54e1d95" PRIMARY KEY ("id"))`,
     // );

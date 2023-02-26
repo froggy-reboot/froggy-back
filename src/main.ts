@@ -17,12 +17,20 @@ import * as http from 'http';
 
 async function bootstrap() {
   const httpsOptions = {
-    key: fs.readFileSync('./config/create-cert-key.pem'),
-    cert: fs.readFileSync('./config/create-cert.pem'),
+    // key: fs.readFileSync('./config/create-cert-key.pem'),
+    // cert: fs.readFileSync('./config/create-cert.pem'),
   };
 
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+
+  const corsOptions = {
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    origin: ['http://localhost:3000'],
+  };
+
+  app.enableCors(corsOptions);
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const configService = app.get<ConfigService>(ConfigService);

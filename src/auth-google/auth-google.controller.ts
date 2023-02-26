@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Redirect,
   Req,
   Res,
   UseGuards,
@@ -15,6 +16,7 @@ import { AuthGoogleService } from './auth-google.service';
 import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { enrollType } from '../users/entities/user.entity';
+import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 
 @ApiTags('구글 회원가입')
 @Controller({
@@ -29,12 +31,14 @@ export class AuthGoogleController {
 
   @Get('register')
   @ApiResponse({
-    status: 200,
-    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+    status: 301,
+    type: AuthSocialLoginUrlDto,
+    description: 'google 로그인 창 url을 보내줍니다.',
   })
-  @UseGuards(AuthGuard('google'))
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   getRegister() {
+    const redirectUrl = this.authGoogleService.getRedirectUrl();
+    return redirectUrl;
     // const socialData = this.authGoogleService.getProfileByToken(loginDto);
     // console.log(socialData);
     // console.log(loginDto);
@@ -51,8 +55,8 @@ export class AuthGoogleController {
       password: null,
     };
 
-    await this.authService.validateSocialLogin(socialData);
-    res.redirect('http://localhost:4000');
+    const userId = await this.authService.validateSocialLogin(socialData);
+    res.redirect(`https://localhost:3000/${userId}`);
   }
 
   // @Post('login')

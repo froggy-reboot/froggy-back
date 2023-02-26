@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, MinLength, Validate } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  MinLength,
+  Validate,
+} from 'class-validator';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 import { enrollType } from '../entities/user.entity';
 
@@ -24,4 +30,7 @@ export class CreateUserDto {
   @ApiProperty({ example: '멋진기린321' })
   @IsNotEmpty()
   nickname: string;
+
+  @IsOptional()
+  certify_hash?: string;
 }

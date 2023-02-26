@@ -16,6 +16,7 @@ import { AuthNaverService } from './auth-naver.service';
 import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { enrollType } from '../users/entities/user.entity';
+import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 
 @ApiTags('네이버 회원가입')
 @Controller({
@@ -29,15 +30,15 @@ export class AuthNaverController {
   ) {}
 
   @Get('register')
-  @UseGuards(AuthGuard('naver'))
   @ApiResponse({
     status: 200,
-    description: '로그인 진행중 페이지로 redirect 시켜줍니다.',
+    type: AuthSocialLoginUrlDto,
+    description: 'naver 로그인 창 url을 보내줍니다.',
   })
   @HttpCode(HttpStatus.CREATED)
   register() {
-    // const socialData = this.authNaverService.getProfileByToken(loginDto);
-    // return this.authService.validateSocialLogin('google', socialData);
+    const redirectUrl = this.authNaverService.getRedirectUrl();
+    return redirectUrl;
   }
 
   @Get('callback')
@@ -51,7 +52,7 @@ export class AuthNaverController {
     };
     console.log(socialData);
 
-    await this.authService.validateSocialLogin(socialData);
-    res.redirect('http://localhost:4000');
+    const userId = await this.authService.validateSocialLogin(socialData);
+    res.redirect(`https://localhost:3000/${userId}`);
   }
 }

@@ -1,9 +1,4 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateUserDto } from './create-user.dto';
-
-import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../../roles/entities/role.entity';
 import {
   IsDate,
   IsEmail,
@@ -18,9 +13,15 @@ import {
 import { Status } from '../../statuses/entities/status.entity';
 import { IsNotExist } from '../../utils/validators/is-not-exists.validator';
 import { IsExist } from '../../utils/validators/is-exists.validator';
-import { gender, role } from '../entities/user.entity';
+import { enrollType, gender, role } from '../entities/user.entity';
 
-export class UpdateUserDto {
+export class ShowUserDto {
+  @ApiProperty({ example: '32' })
+  id: number;
+
+  @ApiProperty({ example: 'frog123@google.com' })
+  email?: string | null;
+
   @ApiProperty({ example: 'jerald' })
   @IsString()
   @IsOptional()
@@ -31,15 +32,9 @@ export class UpdateUserDto {
   @IsOptional()
   age?: number | null;
 
-  @ApiProperty()
-  @IsNumber()
-  @IsOptional()
-  raverly_id?: number | null;
-
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  raverly_token?: string | null;
+  @ApiProperty({ example: 'local' })
+  @IsNotEmpty()
+  enroll_type: enrollType;
 
   @ApiProperty({ type: Date })
   @IsDate()
@@ -60,7 +55,4 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(role)
   role?: role | null;
-
-  @IsOptional()
-  is_certified?: string;
 }

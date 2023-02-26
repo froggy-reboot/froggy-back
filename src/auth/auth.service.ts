@@ -15,6 +15,8 @@ import { AuthProvidersEnum } from './auth-providers.enum';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
+import { ShowUserDto } from 'src/users/dto/show-user.dto';
+import { MailService } from 'src/mail/mail.service';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -23,6 +25,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
+    private mailService: MailService,
   ) {}
 
   async validateLogin(
@@ -69,7 +72,7 @@ export class AuthService {
 
   async validateSocialLogin(
     socialData: SocialInterface,
-  ): Promise<{ token: string; user: User }> {
+  ): Promise<{ userId: number }> {
     let user: User;
     const socialEmail = socialData.email?.toLowerCase();
 
@@ -77,16 +80,14 @@ export class AuthService {
       email: socialEmail,
     });
 
-    let jwtToken;
-    if (userByEmail) {
-      jwtToken = this.genJwtToken(userByEmail, socialData);
+    let userId;
+    if (!userByEmail) {
+      const createdSocialUser = await this.createSocialUser(socialData);
+      userId = createdSocialUser.id;
     } else {
-      jwtToken = await this.createUserAndGenJwtToken(socialData);
+      userId = userByEmail.id;
     }
-    return {
-      token: jwtToken,
-      user,
-    };
+    return userId;
   }
 
   async genJwtToken(userByEmail, socialData) {
@@ -100,7 +101,7 @@ export class AuthService {
     }
   }
 
-  async createUserAndGenJwtToken(socialData): Promise<string> {
+  async createSocialUser(socialData): Promise<User> {
     const randomNickname = await this.getUniqueNickName();
     const createUserResult = await this.usersService.create({
       email: socialData.email,
@@ -113,10 +114,7 @@ export class AuthService {
       id: createUserResult.id,
     });
 
-    const jwtToken = await this.jwtService.sign({
-      user: user,
-    });
-    return jwtToken;
+    return user;
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
@@ -134,12 +132,41 @@ export class AuthService {
       );
     }
 
+    const hash4MailCertify = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
     const user = await this.usersService.create({
       email: dto.email,
       enroll_type: dto.enroll_type,
       password: hash,
       nickname: dto.nickname,
+      certify_hash: hash4MailCertify,
     });
+
+    await this.mailService.userSignUp({
+      to: user.email,
+      data: {
+        hash: hash4MailCertify,
+      },
+    });
+    return;
+  }
+
+  async getAccessTokenAndUserById(userId) {
+    const user = await this.usersService.findOne({
+      id: userId,
+    });
+
+    const jwtToken = await this.jwtService.sign({
+      user: user,
+    });
+
+    return {
+      jwtToken,
+      user,
+    };
   }
 
   async checkExistEmail(dto) {
@@ -180,80 +207,23 @@ export class AuthService {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  getNoun() {
-    const nouns = [
-      '사과',
-      '바나나',
-      '딸기',
-      '개미',
-      '코끼리',
-      '여우',
-      '기린',
-      '하마',
-      '이구아나',
-      '해파리',
-      '개구리',
-      '복숭아',
-      '돼지',
-      '연꽃',
-      '치즈',
-      '곰',
-      '통닭',
-      '감자',
-      '고구마',
-      '라면',
-      '사자',
-    ];
-    const noun = nouns[Math.floor(Math.random() * nouns.length)];
-    return noun;
+  async confirmEmail(hash: string): Promise<void> {
+    const user = await this.usersService.findOne({
+      certify_hash: hash,
+    });
+
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: `notFound`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    await this.usersService.update(user.id, { is_certified: 'Y' });
+    return;
   }
-  getAdjectives() {
-    const adjectives = [
-      '멋진',
-      '미친',
-      '즐거운',
-      '성격급한',
-      '졸린',
-      '심심한',
-      '화난',
-      '여유로운',
-      '노란',
-      '붉은',
-      '감동한',
-      '우울한',
-      '바쁜',
-      '들뜬',
-      '굶주린',
-      '무던한',
-      '무난한',
-      '용감한',
-      '무모한',
-    ];
-    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    return adjective;
-  }
-
-  // async confirmEmail(hash: string): Promise<void> {
-  //   const user = await this.usersService.findOne({
-  //     hash,
-  //   });
-
-  //   if (!user) {
-  //     throw new HttpException(
-  //       {
-  //         status: HttpStatus.NOT_FOUND,
-  //         error: `notFound`,
-  //       },
-  //       HttpStatus.NOT_FOUND,
-  //     );
-  //   }
-
-  //   user.hash = null;
-  //   user.status = plainToClass(Status, {
-  //     id: StatusEnum.active,
-  //   });
-  //   await user.save();
-  // }
 
   // async forgotPassword(email: string): Promise<void> {
   //   const user = await this.usersService.findOne({
@@ -366,4 +336,91 @@ export class AuthService {
   // async softDelete(user: User): Promise<void> {
   //   await this.usersService.softDelete(user.id);
   // }
+
+  getNoun() {
+    const nouns = [
+      '사과',
+      '바나나',
+      '딸기',
+      '개미',
+      '코끼리',
+      '여우',
+      '기린',
+      '하마',
+      '이구아나',
+      '해파리',
+      '개구리',
+      '복숭아',
+      '돼지',
+      '연꽃',
+      '치즈',
+      '곰',
+      '통닭',
+      '감자',
+      '고구마',
+      '라면',
+      '사자',
+      '토끼',
+      '애벌레',
+      '푸딩',
+      '장미',
+      '젤리',
+      '커피',
+      '망고',
+      '수박',
+      '조랑말',
+      '거북이',
+      '눈사람',
+      '문어',
+      '햄스터',
+      '리트리버',
+      '털뭉치',
+      '털실',
+      '고양이',
+      '목도리',
+      '장갑',
+      '양말',
+      '조끼',
+      '인형',
+      '로봇',
+      '브로콜리',
+      '귤',
+    ];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return noun;
+  }
+  getAdjectives() {
+    const adjectives = [
+      '멋진',
+      '즐거운',
+      '성격급한',
+      '졸린',
+      '심심한',
+      '화난',
+      '여유로운',
+      '노란',
+      '붉은',
+      '감동한',
+      '우울한',
+      '바쁜',
+      '들뜬',
+      '굶주린',
+      '무던한',
+      '무난한',
+      '용감한',
+      '무모한',
+      '깜찍한',
+      '따분한',
+      '시원한',
+      '멍한',
+      '상큼한',
+      '달콤한',
+      '상쾌한',
+      '미묘한',
+      '기묘한',
+      '유용한',
+    ];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    return adjective;
+  }
 }
