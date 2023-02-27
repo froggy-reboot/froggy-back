@@ -90,6 +90,7 @@ export class AuthService {
 
     const userByEmail = await this.usersService.findOne({
       email: socialEmail,
+      enroll_type: socialData.enroll_type,
     });
 
     let userId;

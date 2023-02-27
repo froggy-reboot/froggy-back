@@ -12,8 +12,7 @@ export class AuthKakaoService {
   getRedirectUrl(): string {
     const callbackUrl = this.configService.get('kakao.callbackUrl');
     const clinetId = this.configService.get('kakao.clientId');
-    const redirectUrl = `https://nid.naver.com/oauth2.0/authorize?session=false&property=user&response_type=code&redirect_uri=${callbackUrl}&scope=profile&client_id=${clinetId}`;
-
+    const redirectUrl = `https://accounts.kakao.com/login/?continue=https://kauth.kakao.com/oauth/authorize?scope=account_email&response_type=code&redirect_uri=${callbackUrl}&through_account=true&client_id=${clinetId}#login`;
     return redirectUrl;
   }
 }

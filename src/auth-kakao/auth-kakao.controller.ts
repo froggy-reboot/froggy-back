@@ -35,12 +35,10 @@ export class AuthKakaoController {
     type: AuthSocialLoginUrlDto,
     description: 'kakao 로그인 창 url을 보내줍니다.',
   })
-  @UseGuards(AuthGuard('kakao'))
   @HttpCode(HttpStatus.CREATED)
   register() {
-    // const redirectUrl = this.authKakaoService.getRedirectUrl();
-    // return redirectUrl;
-    return;
+    const redirectUrl = this.authKakaoService.getRedirectUrl();
+    return redirectUrl;
   }
 
   @Get('callback')
