@@ -35,7 +35,6 @@ export class AuthNaverController {
     type: AuthSocialLoginUrlDto,
     description: 'naver 로그인 창 url을 보내줍니다.',
   })
-  @UseGuards(AuthGuard('naver'))
   @HttpCode(HttpStatus.CREATED)
   register() {
     // const redirectUrl = this.authNaverService.getRedirectUrl();
