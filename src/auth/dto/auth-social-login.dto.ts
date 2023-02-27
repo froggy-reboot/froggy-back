@@ -36,3 +36,9 @@ export class AuthSocialLoginUrlDto {
   })
   redirectUrl: string;
 }
+export class AuthSocialLoginIngResDto {
+  @ApiProperty({
+    example: '33',
+  })
+  userId: number;
+}
