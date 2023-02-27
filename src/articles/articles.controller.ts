@@ -5,13 +5,15 @@ import {
   Body,
   Patch,
   Param,
-  Delete, HttpCode, HttpStatus
-} from "@nestjs/common";
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto } from "../users/dto/update-user.dto";
+import { IPaginationOptions } from '../utils/types/pagination-options';
 
 @ApiTags('게시판')
 @Controller({
@@ -27,8 +29,8 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  findAll(@Body() paginationOptions: IPaginationOptions) {
+    return this.articlesService.findManyWithPagination(paginationOptions);
   }
 
   @Get(':id')
