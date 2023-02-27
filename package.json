@@ -80,6 +80,7 @@
     "@types/node": "16.18.11",
     "@types/passport-anonymous": "1.0.3",
     "@types/passport-jwt": "3.0.8",
+    "@types/passport-kakao": "^1.0.0",
     "@types/supertest": "2.0.12",
     "@types/twitter": "1.7.1",
     "@typescript-eslint/eslint-plugin": "5.48.2",
