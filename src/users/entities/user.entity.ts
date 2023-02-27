@@ -22,6 +22,7 @@ export enum enrollType {
   google = 'google',
   raverly = 'raverly',
   naver = 'naver',
+  kakao = 'kakao',
 }
 export enum role {
   customer = 'customer',

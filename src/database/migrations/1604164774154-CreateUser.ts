@@ -19,7 +19,7 @@ export class CreateUser1604164774154 implements MigrationInterface {
         age int,
         raverly_token varchar(100),
         raverly_refresh_token varchar(100),
-        enroll_type ENUM ('local', 'google', 'raverly','naver') NOT NULL,
+        enroll_type ENUM ('local', 'google', 'raverly','naver', 'kakao') NOT NULL,
         birth datetime,
         gender ENUM ('male', 'female', 'none'),
         blog_url varchar(2084),

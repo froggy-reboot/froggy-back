@@ -8,7 +8,7 @@ import appConfig from './config/app.config';
 import mailConfig from './config/mail.config';
 import fileConfig from './config/file.config';
 
-import facebookConfig from './config/facebook.config';
+import kakaoConfig from './config/kakao.config';
 import googleConfig from './config/google.config';
 import twitterConfig from './config/twitter.config';
 import naverConfig from './config/naver.config';
@@ -33,6 +33,7 @@ import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
 import { ArticlesModule } from './articles/articles.module';
+import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
 
 @Module({
   imports: [
@@ -44,7 +45,7 @@ import { ArticlesModule } from './articles/articles.module';
         appConfig,
         mailConfig,
         fileConfig,
-        facebookConfig,
+        kakaoConfig,
         googleConfig,
         twitterConfig,
         naverConfig,
@@ -84,7 +85,7 @@ import { ArticlesModule } from './articles/articles.module';
     AuthGoogleModule,
     AuthNaverModule,
     AuthRavelryModule,
-    // AuthFacebookModule,
+    AuthKakaoModule,
     // AuthTwitterModule,
     ForgotModule,
     MailModule,

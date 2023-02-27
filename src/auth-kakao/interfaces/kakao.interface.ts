@@ -1,4 +1,4 @@
-export interface FacebookInterface {
+export interface KakaoInterface {
   id: string;
   first_name?: string;
   last_name?: string;
