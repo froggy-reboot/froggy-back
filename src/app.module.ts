@@ -34,6 +34,7 @@ import { HomeModule } from './home/home.module';
 import { DataSource } from 'typeorm';
 import { ArticlesModule } from './articles/articles.module';
 import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -91,6 +92,7 @@ import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
     MailModule,
     HomeModule,
     ArticlesModule,
+    CommentsModule,
   ],
 })
 export class AppModule {}
