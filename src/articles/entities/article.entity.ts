@@ -21,6 +21,8 @@ export class Article extends EntityHelper {
   @Column({ nullable: false, default: 0 })
   liked: number;
   @Column({ nullable: false })
+  nickname: string;
+  @Column({ nullable: false })
   title: string;
   @Column({ nullable: false })
   content: string;

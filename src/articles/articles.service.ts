@@ -17,10 +17,6 @@ export class ArticlesService {
     );
   }
 
-  findAll() {
-    return `This action returns all articles`;
-  }
-
   findManyWithPagination(paginationOptions: IPaginationOptions) {
     return this.articleRepository.find({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
