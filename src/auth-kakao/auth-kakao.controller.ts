@@ -12,47 +12,46 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
-import { AuthNaverService } from './auth-naver.service';
-import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
-import { SocialInterface } from '../social/interfaces/social.interface';
-import { enrollType } from '../users/entities/user.entity';
 import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
+import { SocialInterface } from 'src/social/interfaces/social.interface';
+import { enrollType } from 'src/users/entities/user.entity';
+import { AuthKakaoService } from './auth-kakao.service';
+import { AuthKakaoLoginDto } from './dto/auth-kakao-login.dto';
 
-@ApiTags('네이버 회원가입')
+@ApiTags('Auth')
 @Controller({
-  path: 'auth/naver',
+  path: 'auth/kakao',
   version: '1',
 })
-export class AuthNaverController {
+export class AuthKakaoController {
   constructor(
     public authService: AuthService,
-    public authNaverService: AuthNaverService,
+    public authKakaoService: AuthKakaoService,
   ) {}
 
   @Get('register')
   @ApiResponse({
     status: 200,
     type: AuthSocialLoginUrlDto,
-    description: 'naver 로그인 창 url을 보내줍니다.',
+    description: 'kakao 로그인 창 url을 보내줍니다.',
   })
   @HttpCode(HttpStatus.CREATED)
   register() {
-    const redirectUrl = this.authNaverService.getRedirectUrl();
+    const redirectUrl = this.authKakaoService.getRedirectUrl();
     return redirectUrl;
   }
 
   @Get('callback')
-  @UseGuards(AuthGuard('naver'))
+  @UseGuards(AuthGuard('kakao'))
   async callback(@Req() req, @Res() res) {
     // console.log(req.user);
     const socialData: SocialInterface = {
-      enroll_type: enrollType.naver,
+      enroll_type: enrollType.kakao,
       email: req.user.email,
       password: null,
     };
-    console.log(socialData);
 
     const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`http://localhost:3000/${userId}`);
+    res.redirect(`https://localhost:3000/${userId}`);
   }
 }
