@@ -12,7 +12,6 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('articles')
 @ApiTags('게시판')
 @Controller({
   path: 'articles',
