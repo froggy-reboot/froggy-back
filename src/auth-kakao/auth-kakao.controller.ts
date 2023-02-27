@@ -18,7 +18,7 @@ import { enrollType } from 'src/users/entities/user.entity';
 import { AuthKakaoService } from './auth-kakao.service';
 import { AuthKakaoLoginDto } from './dto/auth-kakao-login.dto';
 
-@ApiTags('Auth')
+@ApiTags('카카오 회원가입')
 @Controller({
   path: 'auth/kakao',
   version: '1',
