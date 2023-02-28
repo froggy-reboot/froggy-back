@@ -5,13 +5,16 @@ import {
   Body,
   Patch,
   Param,
-  Delete, HttpCode, HttpStatus
-} from "@nestjs/common";
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto } from "../users/dto/update-user.dto";
+import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { IPaginationOptions } from '../utils/types/pagination-options';
+import { Article } from './entities/article.entity';
 
 @ApiTags('게시판')
 @Controller({
@@ -27,11 +30,20 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    description: 'Article의 배열 json'
+  })
+  findAll(@Body() paginationOptions: IPaginationOptions) {
+    return this.articlesService.findManyWithPagination(paginationOptions);
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    type: Article,
+  })
   findOne(@Param('id') id: string) {
     return this.articlesService.findOne(+id);
   }
