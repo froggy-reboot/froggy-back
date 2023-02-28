@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { User } from '../../users/entities/user.entity';
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Article extends EntityHelper {
