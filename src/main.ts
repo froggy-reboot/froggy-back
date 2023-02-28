@@ -3,17 +3,18 @@ import {
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import validationOptions from './utils/validation-options';
-import * as fs from 'fs';
 import * as express from 'express';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import * as https from 'https';
 import * as http from 'http';
+import { join } from 'path';
 
 async function bootstrap() {
   const httpsOptions = {
@@ -22,7 +23,10 @@ async function bootstrap() {
   };
 
   const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule,
+    new ExpressAdapter(server),
+  );
 
   const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -60,7 +64,8 @@ async function bootstrap() {
   //   .createServer(httpsOptions, server)
   //   .listen(configService.get('app.httpsPort'));
   https.createServer(httpsOptions, server).listen(4040);
-
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
   app.init();
 }
 void bootstrap();

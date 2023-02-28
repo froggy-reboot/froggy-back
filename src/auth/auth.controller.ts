@@ -14,6 +14,7 @@ import {
   Param,
   Req,
   Res,
+  Render,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -88,10 +89,11 @@ export class AuthController {
   }
 
   @Get('email/confirm/:hash')
+  @Render('certify-complete')
   @HttpCode(HttpStatus.OK)
   async confirmEmail(@Param('hash') hash, @Req() req, @Res() res) {
     await this.service.confirmEmail(hash);
-    res.render(``);
+    return;
   }
 
   @Get('random-nickname')
