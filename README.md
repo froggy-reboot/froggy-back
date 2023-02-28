@@ -2,16 +2,17 @@
 
 docker compose up -d mysql
 
-
 1. npm install
 2. npm run migration:run
 3. npm run seed:run
 4. npm run start:dev
 
-
 ### db 세팅
 
-database/migrations/CreateUser.ts에 있는 쿼리 실행
+현재 entity를 읽어와 이에 해당하는 쿼리 생성해줌
+npm run migration:generate -- src/database/migrations/파일이름
+
+database/migrations/에 있는 쿼리 실행
 npm run migration:run
 
 테이블 드랍, 모든 테이블 드랍되니 조심 !
@@ -155,4 +156,5 @@ docker run --rm jordi/ab -n 100 -c 100 -T application/json -H "Authorization: Be
 ```
 
 ## API DOCS
+
 visit http://localhost:3000/docs

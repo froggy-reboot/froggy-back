@@ -91,7 +91,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async confirmEmail(@Param('hash') hash, @Req() req, @Res() res) {
     await this.service.confirmEmail(hash);
-    res.redirect(`https://localhost:3000`);
+    res.render(``);
   }
 
   @Get('random-nickname')

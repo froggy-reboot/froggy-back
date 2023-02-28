@@ -35,57 +35,62 @@ export enum gender {
   none = 'none',
 }
 
+export enum customBool {
+  Y = 'Y',
+  N = 'N',
+}
+
 @Entity()
 export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  name: string;
-
-  @Column()
-  age: number;
-
-  @Column({ nullable: true })
+  @Column('varchar', { length: 320, nullable: false })
   email: string;
 
-  @Column({ nullable: true })
+  @Column('varchar', { length: 80, nullable: true })
   @Exclude()
   password: string;
 
-  @Column()
+  @Column('varchar', { length: 40, nullable: true })
+  name: string;
+
+  @Column({ type: 'int', nullable: true })
+  age: number;
+
+  @Column('varchar', { length: 40, nullable: false })
   nickname: string;
 
-  @Column()
+  @Column('varchar', { length: 100, nullable: true })
   @Exclude()
   raverly_token: string;
 
-  @Column()
+  @Column('varchar', { length: 100, nullable: true })
   @Exclude()
   raverly_refresh_token: string;
 
-  @Column({ nullable: false })
+  @Column({ type: 'enum', enum: enrollType, nullable: false })
   enroll_type: enrollType;
 
-  @Column()
+  @Column({ nullable: true })
   birth: Date;
 
-  @Column()
+  @Column({ type: 'enum', enum: gender, nullable: true })
   gender: gender;
 
-  @Column()
+  @Column('varchar', { length: 2084, nullable: true })
   blog_url: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: role, nullable: true })
   role: role;
 
-  @Column()
+  @Column({ type: 'enum', enum: customBool, nullable: false, default: 'N' })
   is_integrated: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: customBool, nullable: false, default: 'N' })
   is_certified: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 300 })
   certify_hash: string;
 
   @CreateDateColumn()
