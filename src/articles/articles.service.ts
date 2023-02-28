@@ -29,7 +29,11 @@ export class ArticlesService {
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    return '';
+    return this.articleRepository.save(
+      this.articleRepository.create({
+        id,
+        ...updateArticleDto,
+      }));;
   }
 
   remove(id: number) {
