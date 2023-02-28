@@ -12,10 +12,10 @@ import {
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
-import { Article } from "./entities/article.entity";
-import { Repository } from "typeorm";
+import { Article } from './entities/article.entity';
+import { Repository } from 'typeorm';
 
 @ApiTags('게시판')
 @Controller({
@@ -34,7 +34,8 @@ export class ArticlesController {
   @ApiResponse({
     status: 200,
     type: Repository<Article>,
-    description: '[\n' +
+    description:
+      '[\n' +
       '    {\n' +
       '        "id": 11,\n' +
       '        "writer_id": 2,\n' +
