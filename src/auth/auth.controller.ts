@@ -67,7 +67,7 @@ export class AuthController {
     return this.service.validateLogin(loginDto);
   }
 
-  @Get('email/isExist')
+  @Get('email/isexist')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
