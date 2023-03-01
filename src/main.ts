@@ -15,11 +15,12 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as https from 'https';
 import * as http from 'http';
 import { join } from 'path';
+import * as fs from 'fs';
 
 async function bootstrap() {
   const httpsOptions = {
-    // key: fs.readFileSync('./config/create-cert-key.pem'),
-    // cert: fs.readFileSync('./config/create-cert.pem'),
+    cert: fs.readFileSync('./config/cert.pem'),
+    key: fs.readFileSync('./config/key.pem'),
   };
 
   const server = express();
@@ -60,10 +61,9 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   http.createServer(server).listen(configService.get('app.port'));
-  // https
-  //   .createServer(httpsOptions, server)
-  //   .listen(configService.get('app.httpsPort'));
-  https.createServer(httpsOptions, server).listen(4040);
+  https
+    .createServer(httpsOptions, server)
+    .listen(configService.get('app.httpsPort'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
   app.init();
