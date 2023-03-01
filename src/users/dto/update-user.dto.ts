@@ -18,7 +18,7 @@ import {
 import { Status } from '../../statuses/entities/status.entity';
 import { IsNotExist } from '../../utils/validators/is-not-exists.validator';
 import { IsExist } from '../../utils/validators/is-exists.validator';
-import { gender, role } from '../entities/user.entity';
+import { customBool, gender, role } from '../entities/user.entity';
 
 export class UpdateUserDto {
   @ApiProperty({ example: 'jerald' })
@@ -62,5 +62,5 @@ export class UpdateUserDto {
   role?: role | null;
 
   @IsOptional()
-  is_certified?: string;
+  is_certified?: customBool;
 }

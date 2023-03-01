@@ -33,6 +33,7 @@ export class AuthService {
   ): Promise<{ token: string; user: User }> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
+      enroll_type: enrollType.local,
     });
 
     if (!user) {

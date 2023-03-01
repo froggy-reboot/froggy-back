@@ -37,8 +37,8 @@ export class AuthNaverController {
   })
   @HttpCode(HttpStatus.CREATED)
   register() {
-    // const redirectUrl = this.authNaverService.getRedirectUrl();
-    // return redirectUrl;
+    const redirectUrl = this.authNaverService.getRedirectUrl();
+    return redirectUrl;
   }
 
   @Get('callback')
