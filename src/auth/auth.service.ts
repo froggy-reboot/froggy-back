@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { enrollType, User } from '../users/entities/user.entity';
+import { customBool, enrollType, User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
@@ -235,7 +235,7 @@ export class AuthService {
         HttpStatus.NOT_FOUND,
       );
     }
-    await this.usersService.update(user.id, { is_certified: 'Y' });
+    await this.usersService.update(user.id, { is_certified: customBool.Y });
     return;
   }
 
