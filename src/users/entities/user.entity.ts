@@ -4,6 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +15,7 @@ import {
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
+import { RaverlyUser } from 'src/auth-ravelry/entities/ravelry-user.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
@@ -114,6 +116,9 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Article, (article) => article.writer_id)
   articleId: Article[];
+
+  @OneToOne(() => RaverlyUser, (raverlyUser) => raverlyUser.user_id)
+  user_id: RaverlyUser[];
 }
 
 /*
