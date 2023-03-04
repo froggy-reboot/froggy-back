@@ -2,13 +2,16 @@ import { EntityHelper } from '../../utils/entity-helper';
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn, JoinColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Article } from '../../articles/entities/article.entity';
 
+@Entity()
 export class Comment extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '1' })
@@ -35,7 +38,10 @@ export class Comment extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deleted_at: Date;
 
-  @ManyToOne(() => Article, (article) => article.id)
+  @ManyToOne(() => Article, (article) => article.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'post_id' })
   article: Article;
 }
