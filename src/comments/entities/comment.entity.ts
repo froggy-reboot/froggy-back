@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Article } from '../../articles/entities/article.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Comment extends EntityHelper {
@@ -44,4 +45,11 @@ export class Comment extends EntityHelper {
   })
   @JoinColumn({ name: 'post_id' })
   article: Article;
+
+  @ManyToOne(() => User, (user) => user.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'writer_id' })
+  user: User;
 }
