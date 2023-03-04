@@ -10,8 +10,13 @@ import {
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('comments')
+@ApiTags('게시판 댓글')
+@Controller({
+  path: 'comments',
+  version: '1',
+})
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
