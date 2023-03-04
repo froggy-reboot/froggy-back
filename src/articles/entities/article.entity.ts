@@ -42,7 +42,7 @@ export class Article extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deleted_at: Date;
 
-  @OneToMany(() => Comment, (comment) => comment.post_id)
+  @OneToMany(() => Comment, (comment) => comment.article)
   comments: Comment[];
 
   @ManyToOne(() => User, (user) => user.id)

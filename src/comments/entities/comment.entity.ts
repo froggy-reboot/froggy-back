@@ -39,7 +39,7 @@ export class Comment extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deleted_at: Date;
 
-  @ManyToOne(() => Article, (article) => article.id, {
+  @ManyToOne(() => Article, (article) => article.comments, {
     nullable: false,
     onDelete: 'CASCADE',
   })

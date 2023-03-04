@@ -5,21 +5,28 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IPaginationOptions } from '../../utils/types/pagination-options';
 
 @Injectable()
-export class ArticleRepository extends Repository<Article> {
+export class ArticlesRepository extends Repository<Article> {
   constructor(
     @InjectRepository(Article)
-    private readonly repository: Repository<Article>
+    private readonly repository: Repository<Article>,
   ) {
     super(repository.target, repository.manager, repository.queryRunner);
   }
 
   findArticleList(paginationOptions: IPaginationOptions) {
-
-    return this.createQueryBuilder('comment')
-      .select('count(*) as commentCount')
-      .groupBy('comment.post_id')
+    return this.repository
+      .createQueryBuilder('article')
+      .leftJoin('article.comments', 'comment')
+      .loadRelationCountAndMap('article.comment_count', 'article.comments')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
-      .getRawMany();
+      .getMany();
+  }
+
+  findArticle(id: number) {
+    return this.repository
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.comments', 'comment')
+      .getOne();
   }
 }
