@@ -19,8 +19,8 @@ export class ArticlesService {
 
   findManyWithPagination(paginationOptions: IPaginationOptions) {
     return this.articleRepository.find({
-      skip: (paginationOptions.page - 1) * paginationOptions.limit,
-      take: paginationOptions.limit,
+      skip: (paginationOptions.page - 1) * paginationOptions.limit, // offset
+      take: paginationOptions.limit, // limit
     });
   }
 

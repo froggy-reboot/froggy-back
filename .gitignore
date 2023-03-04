@@ -39,3 +39,6 @@ lerna-debug.log*
 .env
 /ormconfig.json
 /config
+/src/config
+/src/config/cert.pem
+/src/config/key.pem

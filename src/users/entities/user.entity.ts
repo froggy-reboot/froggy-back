@@ -14,6 +14,7 @@ import {
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
@@ -114,6 +115,9 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Article, (article) => article.writer_id)
   articleId: Article[];
+
+  @OneToMany(() => Comment, (comment) => comment.writer_id)
+  comments: Comment[];
 }
 
 /*

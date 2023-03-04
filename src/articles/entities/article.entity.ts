@@ -5,11 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { User } from '../../users/entities/user.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
@@ -40,6 +41,9 @@ export class Article extends EntityHelper {
   @DeleteDateColumn()
   @ApiProperty({ example: 'null' })
   deleted_at: Date;
+
+  @OneToMany(() => Comment, (comment) => comment.article)
+  comments: Comment[];
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'writer_id' })
