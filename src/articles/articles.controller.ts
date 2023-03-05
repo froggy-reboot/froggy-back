@@ -15,7 +15,7 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticlesRepository } from './repository/article.repository';
-import { ShowOneArticleDto } from './dto/show-article.dto';
+import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -37,7 +37,7 @@ export class ArticlesController {
   @ApiProperty({ type: IPaginationOptions })
   @ApiResponse({
     status: 200,
-    type: [ShowOneArticleDto],
+    type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
   findAll(@Body() paginationOptions: IPaginationOptions) {
@@ -50,9 +50,9 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Body() uid: string) {
     // return this.articlesService.findOne(+id);
-    return this.articlesRepository.findArticle(+id);
+    return this.articlesRepository.findArticle(+id, +uid);
   }
 
   @Patch(':id')
