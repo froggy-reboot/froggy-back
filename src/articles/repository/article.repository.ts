@@ -27,6 +27,7 @@ export class ArticlesRepository extends Repository<Article> {
     return this.repository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.comments', 'comment')
+      .loadRelationCountAndMap('article.comment_count', 'article.comments')
       .getOne();
   }
 }
