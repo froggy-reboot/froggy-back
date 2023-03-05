@@ -1,12 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsDate,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Repository } from 'typeorm';
+import { Comment } from '../../comments/entities/comment.entity';
 
-export class ShowArticleDto {
+export class ShowArticlesDto {}
+export class ShowOneArticleDto {
   @ApiProperty({ example: '1' })
   @IsNotEmpty()
   @IsNumber()
@@ -32,9 +30,16 @@ export class ShowArticleDto {
   @ApiProperty({ example: '본문입니다. 어떡하죠, 도와주세요.' })
   @IsNotEmpty()
   content: string;
+
+  @ApiProperty({
+    type: [Comment],
+  })
+  comments: Repository<Comment>;
+
   @ApiProperty({ example: 3 })
   @IsNotEmpty()
-  comments: number;
+  comment_count: number;
+
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   @IsDate()
   created_at: Date;
