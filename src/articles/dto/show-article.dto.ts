@@ -6,6 +6,9 @@ import { Comment } from '../../comments/entities/comment.entity';
 export class ShowArticlesDto {}
 export class ShowOneArticleDto {
   @ApiProperty({ example: '1' })
+  id: number;
+
+  @ApiProperty({ example: '1' })
   @IsNotEmpty()
   @IsNumber()
   writer_id: number;
