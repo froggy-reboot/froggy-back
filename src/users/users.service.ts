@@ -27,6 +27,14 @@ export class UsersService {
     });
   }
 
+  findById(id: number) {
+    return this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.id =:id', { id })
+      .select('user.nickname', 'writer_nickname')
+      .getRawOne();
+  }
+
   findOne(fields: EntityCondition<User>) {
     return this.usersRepository.findOne({
       where: fields,

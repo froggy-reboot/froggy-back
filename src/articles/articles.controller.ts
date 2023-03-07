@@ -16,6 +16,7 @@ import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
+import { UsersService } from '../users/users.service';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -25,6 +26,7 @@ import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 export class ArticlesController {
   constructor(
     private readonly articlesService: ArticlesService,
+    private readonly usersService: UsersService,
     private readonly articlesRepository: ArticlesRepository,
   ) {}
 
@@ -50,9 +52,17 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
-  findOne(@Param('id') id: string, @Body() uid: string) {
+  async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
-    return this.articlesRepository.findArticle(+id, +uid);
+    const article = await this.articlesRepository.findArticle(+id);
+    console.log(article);
+    const uid = article['writer_id'];
+    console.log(uid);
+    const userInfo = await this.usersService.findById(+uid);
+    console.log(userInfo);
+    article['user'] = userInfo;
+    console.log(article);
+    return article;
   }
 
   @Patch(':id')
