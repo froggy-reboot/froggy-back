@@ -56,6 +56,6 @@ export class AuthRavelryController {
     );
 
     const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`https://localhost:3000/${userId}`);
+    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
   }
 }
