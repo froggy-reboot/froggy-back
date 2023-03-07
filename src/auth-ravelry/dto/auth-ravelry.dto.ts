@@ -3,7 +3,7 @@ import { User } from 'aws-sdk/clients/budgets';
 import { NumberCapabilityList } from 'aws-sdk/clients/sns';
 import { IsNotEmpty } from 'class-validator';
 
-export class AuthRaverlyLoginDto {
+export class AuthRavelryLoginDto {
   @ApiProperty({ example: 'kajljidgasdfagda' })
   @IsNotEmpty()
   jwtToken: string;
@@ -12,7 +12,7 @@ export class AuthRaverlyLoginDto {
   @IsNotEmpty()
   socialUserId: number;
 }
-export class AuthRaverlyLoginResDto {
+export class AuthRavelryLoginResDto {
   @ApiProperty({ example: 'kajljidgasdfagda' })
   @IsNotEmpty()
   jwtToken: string;

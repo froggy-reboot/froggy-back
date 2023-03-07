@@ -83,13 +83,13 @@ export class AuthService {
     }
   }
 
-  async saveRaverlyUser() {
+  async saveRavelryUser() {
     // 1. 라이벌리 계정 정보 저장 확인
     // 2. 저장 안되어 있을 때 저장
     // 3. 저장 이후 userId 반환
   }
 
-  async linkRaverlyUser() {
+  async linkRavelryUser() {
     // 1. 라이벌리 user id 와 user jwt token 필요
   }
 

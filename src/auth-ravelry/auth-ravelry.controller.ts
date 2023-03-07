@@ -19,7 +19,7 @@ import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { AuthRavelryService } from './auth-ravelry.service';
-import { AuthRaverlyLoginDto } from './dto/auth-ravelry.dto';
+import { AuthRavelryLoginDto } from './dto/auth-ravelry.dto';
 
 @ApiTags('ravelry 회원가입')
 @Controller({
@@ -29,7 +29,7 @@ import { AuthRaverlyLoginDto } from './dto/auth-ravelry.dto';
 export class AuthRavelryController {
   constructor(
     public authService: AuthService,
-    public authRaverlyService: AuthRavelryService,
+    public authRavelryService: AuthRavelryService,
   ) {}
 
   @Get('register')
@@ -40,7 +40,7 @@ export class AuthRavelryController {
     description: 'Ravelry 로그인 창 url을 보내줍니다.',
   })
   async register(@Req() req, @Res() res) {
-    const authorizationUri = await this.authRaverlyService.getRedirectUrl();
+    const authorizationUri = await this.authRavelryService.getRedirectUrl();
     return authorizationUri;
   }
 
@@ -52,20 +52,23 @@ export class AuthRavelryController {
     description: 'Ravelry 로그인 창 url을 보내줍니다.',
   })
   async getRedirectUrl(@Req() req, @Res() res) {
-    const authorizationUri = await this.authRaverlyService.getRedirectUrl();
+    const authorizationUri = await this.authRavelryService.getRedirectUrl();
     return authorizationUri;
   }
 
   @Get('callback')
   async callback(@Req() req, @Res() res) {
-    const accessToken = await this.authRaverlyService.getAccessToken(req);
+    const accessToken = await this.authRavelryService.getAccessToken(req);
 
     const raverlyUserInfo =
-      await this.authRaverlyService.getUserInfoByAccessToken(accessToken);
+      await this.authRavelryService.getUserInfoByAccessToken(accessToken);
 
-    this.authRaverlyService.saveAuthRavelryUser(raverlyUserInfo, accessToken);
+    await this.authRavelryService.saveAuthRavelryUser(
+      raverlyUserInfo,
+      accessToken,
+    );
 
-    const socialData: SocialInterface = this.authRaverlyService.genSocialData(
+    const socialData: SocialInterface = this.authRavelryService.genSocialData(
       raverlyUserInfo,
       accessToken,
     );
@@ -81,7 +84,7 @@ export class AuthRavelryController {
     description: 'Ravelry계정과 계정을 연동해 줍니다.',
   })
   @HttpCode(HttpStatus.OK)
-  async linkRavelryToAnotherAccount(@Body() dto: AuthRaverlyLoginDto) {
+  async linkRavelryToAnotherAccount(@Body() dto: AuthRavelryLoginDto) {
     // await this.authRaverlyService.linkRavelryToAnotherAccount(dto);
   }
 }

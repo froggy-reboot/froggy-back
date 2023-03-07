@@ -17,7 +17,7 @@ export enum customBool {
 }
 
 @Entity()
-export class RaverlyUser extends EntityHelper {
+export class RavelryUser extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,11 +29,11 @@ export class RaverlyUser extends EntityHelper {
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
-  Token: string;
+  token: string;
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
-  Refresh_token: string;
+  refresh_token: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -47,6 +47,6 @@ export class RaverlyUser extends EntityHelper {
   @Column('varchar', { length: 40, nullable: false })
   username: string;
 
-  @OneToOne(() => User, (User) => User.raverlyUserId)
+  @OneToOne(() => User, (User) => User.ravelryUserId)
   User: User;
 }

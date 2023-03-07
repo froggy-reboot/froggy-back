@@ -37,7 +37,7 @@ export class AuthRavelryService {
     const tokenParams = {
       code: req.query.code,
       redirect_uri: process.env.RAVELRY_CALL_BACK_URL,
-      scope: 'patternstore-read offline',
+      scope: 'offline patternstore-read',
     };
 
     const getTokenResult = await client.getToken(tokenParams);
@@ -68,7 +68,6 @@ export class AuthRavelryService {
       raverlyId: raverlyUserInfo.id,
       token: accessToken,
       username: raverlyUserInfo.username,
-      refreshToken: raverlyUserInfo.refreshToken,
     });
   }
 

@@ -16,14 +16,14 @@ import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
 import { Comment } from '../../comments/entities/comment.entity';
-import { RaverlyUser } from 'src/ravelry-users/entities/ravelry-user.entity';
+import { RavelryUser } from 'src/ravelry-users/entities/ravelry-user.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
 export enum enrollType {
   local = 'local',
   google = 'google',
-  raverly = 'raverly',
+  ravelry = 'ravelry',
   naver = 'naver',
   kakao = 'kakao',
 }
@@ -85,10 +85,10 @@ export class User extends EntityHelper {
     nullable: false,
     default: customBool.N,
   })
-  is_raverly_integrated!: customBool;
+  is_ravelry_integrated!: customBool;
 
   @Column({ type: 'int', nullable: true })
-  raverlyUserId: number;
+  ravelryUserId: number;
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
@@ -117,8 +117,8 @@ export class User extends EntityHelper {
   @OneToMany(() => Article, (article) => article.writer_id)
   articleId: Article[];
 
-  @OneToOne(() => RaverlyUser, (RaverlyUser) => RaverlyUser.userId)
-  raverlyUser: RaverlyUser;
+  @OneToOne(() => RavelryUser, (RavelryUser) => RavelryUser.userId)
+  ravelryUser: RavelryUser;
 
   // @OneToMany(() => Comment, (comment) => comment.writer_id)
   // comments: Comment[];
