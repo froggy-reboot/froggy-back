@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { JwtService } from '@nestjs/jwt';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -14,7 +15,11 @@ const randomString = require('randomstring');
 
 @Injectable()
 export class AuthRavelryService {
-  constructor(private http: HttpService, private usersService: UsersService) {}
+  constructor(
+    private http: HttpService,
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
   async getRedirectUrl() {
     const client = this.getClient();
     const authorizationUri = client.authorizeURL({
@@ -60,9 +65,10 @@ export class AuthRavelryService {
   async linkRavelryToAnotherAccount(dto) {
     // TODO : user jwt 와 raverly_user_id 를 받아옴
     const { jwtToken, socialUserId } = dto;
+    // how to get user  from jwt token in nest js
+    const user = this.jwtService.verify(jwtToken);
 
-    // TODO : user에 raverly_userId 를 저장한다.
-    await this.usersService.findOne();
+    await this.usersService.update(user.id);
   }
 
   getClient() {
