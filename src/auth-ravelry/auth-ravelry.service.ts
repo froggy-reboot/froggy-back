@@ -55,6 +55,14 @@ export class AuthRavelryService {
     const { data } = await firstValueFrom(request);
     return data.user;
   }
+
+  async linkRavelryToAnotherAccount(dto) {
+    // TODO : user jwt 와 raverly_user_id 를 받아옴
+    const { jwtToken, socialUserId } = dto;
+
+    // TODO : user에 raverly_userId 를 저장한다.
+  }
+
   getClient() {
     const config = {
       client: {
