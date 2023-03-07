@@ -18,7 +18,7 @@ export class CommentsService {
   }
 
   findAll() {
-    return `This action returns all comments`;
+    return this.commentRepository.find();
   }
 
   findOne(id: number) {
