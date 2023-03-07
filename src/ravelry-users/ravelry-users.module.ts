@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { RavelryUsersService } from './ravelry-users.service';
 import { RavelryUsersController } from './ravelry-users.controller';
+import { RaverlyUser } from './entities/ravelry-user.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([RaverlyUser])],
   controllers: [RavelryUsersController],
-  providers: [RavelryUsersService]
+  providers: [RavelryUsersService],
+  exports: [RavelryUsersService],
 })
 export class RavelryUsersModule {}

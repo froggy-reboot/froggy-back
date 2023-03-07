@@ -15,8 +15,8 @@ import {
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
-import { RaverlyUser } from 'src/auth-ravelry/entities/ravelry-user.entity';
 import { Comment } from '../../comments/entities/comment.entity';
+import { RaverlyUser } from 'src/ravelry-users/entities/ravelry-user.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
@@ -88,7 +88,7 @@ export class User extends EntityHelper {
   is_raverly_integrated!: customBool;
 
   @Column({ type: 'int', nullable: true })
-  raverly_user_id: number;
+  raverlyUserId: number;
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
@@ -117,7 +117,7 @@ export class User extends EntityHelper {
   @OneToMany(() => Article, (article) => article.writer_id)
   articleId: Article[];
 
-  @OneToOne(() => RaverlyUser, (RaverlyUser) => RaverlyUser.user_id)
+  @OneToOne(() => RaverlyUser, (RaverlyUser) => RaverlyUser.userId)
   raverlyUser: RaverlyUser;
 
   // @OneToMany(() => Comment, (comment) => comment.writer_id)

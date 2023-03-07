@@ -52,7 +52,7 @@ export class ArticlesController {
   })
   findOne(@Param('id') id: string, @Body() uid: string) {
     // return this.articlesService.findOne(+id);
-    return this.articlesRepository.findArticle(+id, +uid);
+    // return this.articlesRepository.findArticle(+id, +uid);
   }
 
   @Patch(':id')

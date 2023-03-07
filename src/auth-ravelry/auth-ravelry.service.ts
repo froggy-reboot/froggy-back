@@ -6,6 +6,7 @@ import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -17,7 +18,7 @@ const randomString = require('randomstring');
 export class AuthRavelryService {
   constructor(
     private http: HttpService,
-    private usersService: UsersService,
+    private ravelryUsersService: RavelryUsersService,
     private jwtService: JwtService,
   ) {}
   async getRedirectUrl() {
@@ -62,14 +63,26 @@ export class AuthRavelryService {
     return data.user;
   }
 
-  async linkRavelryToAnotherAccount(dto) {
-    // TODO : user jwt 와 raverly_user_id 를 받아옴
-    const { jwtToken, socialUserId } = dto;
-    // how to get user  from jwt token in nest js
-    const user = this.jwtService.verify(jwtToken);
-
-    await this.usersService.update(user.id);
+  async saveAuthRavelryUser(raverlyUserInfo) {
+    // enroll_type: <enrollType>'raverly',
+    // email: raverlyEmail,
+    // password: null,
+    // raverly_token: accessToken,
+    // await this.ravelryUsersService.create(
+    //   token: raverlyUserInfo.accessToken,
+    //   raverlyId: raverlyUserInfo.id,
+    //   refreshToken: raverlyUserInfo.refreshToken,
+    // );
   }
+
+  // async linkRavelryToAnotherAccount(dto) {
+  //   // TODO : user jwt 와 raverly_user_id 를 받아옴
+  //   const { jwtToken, socialUserId } = dto;
+  //   // how to get user  from jwt token in nest js
+  //   const user = this.jwtService.verify(jwtToken);
+
+  //   await this.usersService.update(user.id);
+  // }
 
   getClient() {
     const config = {

@@ -30,7 +30,6 @@ export class AuthRavelryController {
   constructor(
     public authService: AuthService,
     public authRaverlyService: AuthRavelryService,
-    public socialUserService: SocialUserService,
   ) {}
 
   @Get('register')
@@ -64,6 +63,8 @@ export class AuthRavelryController {
     const raverlyUserInfo =
       await this.authRaverlyService.getUserInfoByAccessToken(accessToken);
 
+    this.authRaverlyService.saveAuthRavelryUser(raverlyUserInfo);
+
     const socialData: SocialInterface = this.authRaverlyService.genSocialData(
       raverlyUserInfo,
       accessToken,
@@ -77,10 +78,10 @@ export class AuthRavelryController {
   @ApiResponse({
     status: 200,
     type: AuthSocialLoginUrlDto,
-    description: 'Ravelry 로그인 창 url을 보내줍니다.',
+    description: 'Ravelry계정과 계정을 연동해 줍니다.',
   })
   @HttpCode(HttpStatus.OK)
   async linkRavelryToAnotherAccount(@Body() dto: AuthRaverlyLoginDto) {
-    await this.authRaverlyService.linkRavelryToAnotherAccount(dto);
+    // await this.authRaverlyService.linkRavelryToAnotherAccount(dto);
   }
 }

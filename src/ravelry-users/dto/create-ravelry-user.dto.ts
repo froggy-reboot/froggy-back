@@ -1,1 +1,7 @@
-export class CreateRavelryUserDto {}
+export class CreateRavelryUserDto {
+  raverlyId: string;
+
+  token: string;
+
+  refreshToken: string;
+}
