@@ -4,4 +4,6 @@ export class CreateRavelryUserDto {
   token: string;
 
   refreshToken: string;
+
+  username: string;
 }

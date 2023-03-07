@@ -44,6 +44,9 @@ export class RaverlyUser extends EntityHelper {
   @DeleteDateColumn()
   deleted_at: Date;
 
+  @Column('varchar', { length: 40, nullable: false })
+  username: string;
+
   @OneToOne(() => User, (User) => User.raverlyUserId)
   User: User;
 }

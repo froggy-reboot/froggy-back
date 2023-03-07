@@ -63,7 +63,7 @@ export class AuthRavelryController {
     const raverlyUserInfo =
       await this.authRaverlyService.getUserInfoByAccessToken(accessToken);
 
-    this.authRaverlyService.saveAuthRavelryUser(raverlyUserInfo);
+    this.authRaverlyService.saveAuthRavelryUser(raverlyUserInfo, accessToken);
 
     const socialData: SocialInterface = this.authRaverlyService.genSocialData(
       raverlyUserInfo,

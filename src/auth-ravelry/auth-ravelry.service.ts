@@ -37,7 +37,7 @@ export class AuthRavelryService {
     const tokenParams = {
       code: req.query.code,
       redirect_uri: process.env.RAVELRY_CALL_BACK_URL,
-      scope: 'patternstore-read',
+      scope: 'patternstore-read offline',
     };
 
     const getTokenResult = await client.getToken(tokenParams);
@@ -63,16 +63,13 @@ export class AuthRavelryService {
     return data.user;
   }
 
-  async saveAuthRavelryUser(raverlyUserInfo) {
-    // enroll_type: <enrollType>'raverly',
-    // email: raverlyEmail,
-    // password: null,
-    // raverly_token: accessToken,
-    // await this.ravelryUsersService.create(
-    //   token: raverlyUserInfo.accessToken,
-    //   raverlyId: raverlyUserInfo.id,
-    //   refreshToken: raverlyUserInfo.refreshToken,
-    // );
+  async saveAuthRavelryUser(raverlyUserInfo, accessToken) {
+    await this.ravelryUsersService.create({
+      raverlyId: raverlyUserInfo.id,
+      token: accessToken,
+      username: raverlyUserInfo.username,
+      refreshToken: raverlyUserInfo.refreshToken,
+    });
   }
 
   // async linkRavelryToAnotherAccount(dto) {
