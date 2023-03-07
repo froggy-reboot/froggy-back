@@ -4,6 +4,7 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -13,7 +14,7 @@ const randomString = require('randomstring');
 
 @Injectable()
 export class AuthRavelryService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private usersService: UsersService) {}
   async getRedirectUrl() {
     const client = this.getClient();
     const authorizationUri = client.authorizeURL({
@@ -61,6 +62,7 @@ export class AuthRavelryService {
     const { jwtToken, socialUserId } = dto;
 
     // TODO : user에 raverly_userId 를 저장한다.
+    await this.usersService.findOne();
   }
 
   getClient() {

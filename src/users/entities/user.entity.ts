@@ -15,7 +15,11 @@ import {
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
+<<<<<<< HEAD
 import { RaverlyUser } from 'src/auth-ravelry/entities/ravelry-user.entity';
+=======
+import { Comment } from '../../comments/entities/comment.entity';
+>>>>>>> bf0cf8122608fb42dc31416db61e0f53bea0646e
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
@@ -117,8 +121,13 @@ export class User extends EntityHelper {
   @OneToMany(() => Article, (article) => article.writer_id)
   articleId: Article[];
 
+<<<<<<< HEAD
   @OneToOne(() => RaverlyUser, (raverlyUser) => raverlyUser.user_id)
   user_id: RaverlyUser[];
+=======
+  @OneToMany(() => Comment, (comment) => comment.writer_id)
+  comments: Comment[];
+>>>>>>> bf0cf8122608fb42dc31416db61e0f53bea0646e
 }
 
 /*
