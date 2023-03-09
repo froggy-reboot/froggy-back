@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -16,6 +17,7 @@ import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('게시판 글')
 @Controller({

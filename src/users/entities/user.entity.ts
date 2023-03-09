@@ -85,7 +85,7 @@ export class User extends EntityHelper {
     nullable: false,
     default: customBool.N,
   })
-  is_ravelry_integrated!: customBool;
+  isRavelryIntegrated!: customBool;
 
   @Column({ type: 'int', nullable: true })
   ravelryUserId: number;

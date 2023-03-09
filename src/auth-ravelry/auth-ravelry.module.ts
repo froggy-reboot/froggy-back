@@ -6,6 +6,7 @@ import { AuthRavelryService } from './auth-ravelry.service';
 import { HttpModule } from '@nestjs/axios';
 import { RavelryUsersModule } from 'src/ravelry-users/ravelry-users.module';
 import { JwtModule } from '@nestjs/jwt';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
     AuthModule,
     HttpModule,
     RavelryUsersModule,
-    JwtModule,
+    UsersModule,
   ],
   controllers: [AuthRavelryController],
   providers: [AuthRavelryService],

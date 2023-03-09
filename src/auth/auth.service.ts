@@ -245,7 +245,7 @@ export class AuthService {
         HttpStatus.NOT_FOUND,
       );
     }
-    await this.usersService.update(user.id, { is_certified: customBool.Y });
+    await this.usersService.update(user.id, { isCertified: customBool.Y });
     return;
   }
 

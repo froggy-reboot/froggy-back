@@ -19,7 +19,7 @@ export class AuthRavelryService {
   constructor(
     private http: HttpService,
     private ravelryUsersService: RavelryUsersService,
-    private jwtService: JwtService,
+    private usersService: UsersService,
   ) {}
   async getRedirectUrl() {
     const client = this.getClient();
@@ -71,14 +71,10 @@ export class AuthRavelryService {
     });
   }
 
-  // async linkRavelryToAnotherAccount(dto) {
-  //   // TODO : user jwt 와 raverly_user_id 를 받아옴
-  //   const { jwtToken, socialUserId } = dto;
-  //   // how to get user  from jwt token in nest js
-  //   const user = this.jwtService.verify(jwtToken);
-
-  //   await this.usersService.update(user.id);
-  // }
+  async linkRavelryToAnotherAccount(user, dto) {
+    const { socialUserId } = dto;
+    await this.usersService.update(user.id, { ravelryUserId: socialUserId });
+  }
 
   getClient() {
     const config = {
