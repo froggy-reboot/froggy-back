@@ -4,6 +4,9 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
+import { JwtService } from '@nestjs/jwt';
+import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -13,7 +16,11 @@ const randomString = require('randomstring');
 
 @Injectable()
 export class AuthRavelryService {
-  constructor(private http: HttpService) {}
+  constructor(
+    private http: HttpService,
+    private ravelryUsersService: RavelryUsersService,
+    private usersService: UsersService,
+  ) {}
   async getRedirectUrl() {
     const client = this.getClient();
     const authorizationUri = client.authorizeURL({
@@ -30,7 +37,7 @@ export class AuthRavelryService {
     const tokenParams = {
       code: req.query.code,
       redirect_uri: process.env.RAVELRY_CALL_BACK_URL,
-      scope: 'patternstore-read',
+      scope: 'offline patternstore-read',
     };
 
     const getTokenResult = await client.getToken(tokenParams);
@@ -55,6 +62,20 @@ export class AuthRavelryService {
     const { data } = await firstValueFrom(request);
     return data.user;
   }
+
+  async saveAuthRavelryUser(raverlyUserInfo, accessToken) {
+    await this.ravelryUsersService.create({
+      raverlyId: raverlyUserInfo.id,
+      token: accessToken,
+      username: raverlyUserInfo.username,
+    });
+  }
+
+  async linkRavelryToAnotherAccount(user, dto) {
+    const { socialUserId } = dto;
+    await this.usersService.update(user.id, { ravelryUserId: socialUserId });
+  }
+
   getClient() {
     const config = {
       client: {

@@ -4,6 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,13 +16,14 @@ import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
 import { Comment } from '../../comments/entities/comment.entity';
+import { RavelryUser } from 'src/ravelry-users/entities/ravelry-user.entity';
 // import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 // import { Exclude, Expose } from 'class-transformer';
 
 export enum enrollType {
   local = 'local',
   google = 'google',
-  raverly = 'raverly',
+  ravelry = 'ravelry',
   naver = 'naver',
   kakao = 'kakao',
 }
@@ -83,15 +85,14 @@ export class User extends EntityHelper {
     nullable: false,
     default: customBool.N,
   })
-  is_raverly_integrated!: customBool;
+  isRavelryIntegrated!: customBool;
+
+  @Column({ type: 'int', nullable: true })
+  ravelryUserId: number;
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
-  raverly_token: string;
-
-  @Column('varchar', { length: 100, nullable: true })
-  @Exclude()
-  raverly_refresh_token: string;
+  refresh_token: string;
 
   @Column({
     type: 'enum',
@@ -118,6 +119,9 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+  
+  @OneToOne(() => RavelryUser, (RavelryUser) => RavelryUser.userId)
+  ravelryUser: RavelryUser;
 }
 
 /*

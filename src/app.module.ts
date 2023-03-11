@@ -35,6 +35,7 @@ import { DataSource } from 'typeorm';
 import { ArticlesModule } from './articles/articles.module';
 import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
 import { CommentsModule } from './comments/comments.module';
+import { RavelryUsersModule } from './ravelry-users/ravelry-users.module';
 
 @Module({
   imports: [
@@ -87,12 +88,12 @@ import { CommentsModule } from './comments/comments.module';
     AuthNaverModule,
     AuthRavelryModule,
     AuthKakaoModule,
-    // AuthTwitterModule,
     ForgotModule,
     MailModule,
     HomeModule,
     ArticlesModule,
     CommentsModule,
+    RavelryUsersModule,
   ],
 })
 export class AppModule {}
