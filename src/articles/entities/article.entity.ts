@@ -25,9 +25,7 @@ export class Article extends EntityHelper {
   @Column({ nullable: false, default: 0 })
   @ApiProperty({ example: '0' })
   liked: number;
-  @Column({ nullable: false })
-  @ApiProperty({ example: 'synodic' })
-  nickname: string;
+
   @Column({ nullable: false })
   @ApiProperty({ example: '제목입니다.' })
   title: string;

@@ -11,12 +11,6 @@ export class CreateArticleDto {
   liked: number;
 
   @ApiProperty({
-    example: 'synodic',
-  })
-  @IsNotEmpty()
-  nickname: string;
-
-  @ApiProperty({
     example: '제목입니다. 안녕하세요 저는 뜨개질을 하기 어려워해요',
   })
   @IsNotEmpty()

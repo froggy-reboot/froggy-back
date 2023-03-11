@@ -17,6 +17,15 @@ export class CommentsService {
     );
   }
 
+  findByArticleId(articleId: number) {
+    return this.commentRepository
+      .createQueryBuilder('comment')
+      .where({ articleId })
+      .leftJoin('comment.user', 'user')
+      .select(['article', 'user.nickname'])
+      .getMany();
+  }
+
   findAll() {
     return this.commentRepository.find();
   }

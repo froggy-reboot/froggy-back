@@ -25,10 +25,6 @@ export class Comment extends EntityHelper {
   writer_id: number;
 
   @Column({ nullable: false })
-  @ApiProperty({ example: 'synodic' })
-  nickname: string;
-
-  @Column({ nullable: false })
   @ApiProperty({ example: '내용입니다.' })
   content: string;
   @CreateDateColumn()
