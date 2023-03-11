@@ -13,8 +13,9 @@ export class ArticlesRepository extends Repository<Article> {
     super(repository.target, repository.manager, repository.queryRunner);
   }
 
-  findArticleList(paginationOptions: IPaginationOptions) {
-    return this.repository
+  async findArticleList(paginationOptions: IPaginationOptions) {
+    console.log(paginationOptions);
+    const articles = await this.repository
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname'])
@@ -23,6 +24,8 @@ export class ArticlesRepository extends Repository<Article> {
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
+    // console.log(articles);
+    return articles;
   }
 
   findArticle(id: number) {
