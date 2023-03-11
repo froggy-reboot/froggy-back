@@ -92,7 +92,7 @@ export class User extends EntityHelper {
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()
-  refresh_token: string;
+  refreshToken: string;
 
   @Column({
     type: 'enum',
