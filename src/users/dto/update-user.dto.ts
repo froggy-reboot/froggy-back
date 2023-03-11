@@ -19,6 +19,7 @@ import { Status } from '../../statuses/entities/status.entity';
 import { IsNotExist } from '../../utils/validators/is-not-exists.validator';
 import { IsExist } from '../../utils/validators/is-exists.validator';
 import { customBool, gender, role } from '../entities/user.entity';
+import { Column } from 'typeorm';
 
 export class UpdateUserDto {
   @ApiProperty({ example: 'jerald' })
@@ -30,16 +31,6 @@ export class UpdateUserDto {
   @IsNumber()
   @IsOptional()
   age?: number | null;
-
-  @ApiProperty()
-  @IsNumber()
-  @IsOptional()
-  raverly_id?: number | null;
-
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  raverly_token?: string | null;
 
   @ApiProperty({ type: Date })
   @IsDate()
@@ -61,6 +52,12 @@ export class UpdateUserDto {
   @IsEnum(role)
   role?: role | null;
 
+  @Column({ type: 'int', nullable: true })
+  ravelryUserId?: number;
+
   @IsOptional()
-  is_certified?: customBool;
+  isCertified?: customBool;
+
+  @IsOptional()
+  isRavelryIntegrated?: customBool;
 }

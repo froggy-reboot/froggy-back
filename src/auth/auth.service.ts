@@ -83,6 +83,16 @@ export class AuthService {
     }
   }
 
+  async saveRavelryUser() {
+    // 1. 라이벌리 계정 정보 저장 확인
+    // 2. 저장 안되어 있을 때 저장
+    // 3. 저장 이후 userId 반환
+  }
+
+  async linkRavelryUser() {
+    // 1. 라이벌리 user id 와 user jwt token 필요
+  }
+
   async validateSocialLogin(
     socialData: SocialInterface,
   ): Promise<{ userId: number }> {
@@ -235,7 +245,7 @@ export class AuthService {
         HttpStatus.NOT_FOUND,
       );
     }
-    await this.usersService.update(user.id, { is_certified: customBool.Y });
+    await this.usersService.update(user.id, { isCertified: customBool.Y });
     return;
   }
 
