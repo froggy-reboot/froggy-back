@@ -14,7 +14,8 @@
     "schema:drop": "npm run typeorm -- --dataSource=src/database/data-source.ts schema:drop",
     "seed:run": "ts-node -r tsconfig-paths/register ./src/database/seeds/run-seed.ts",
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "tsc -p tsconfig.build.json",
+    "gcp-build": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
@@ -26,7 +27,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "env-cmd jest --config ./test/jest-e2e.json"
+    "test:e2e": "env-cmd jest --config ./test/jest-e2e.json",
+    "postinstall": "npm install rimraf -g"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "1.8.1",
@@ -61,7 +63,7 @@
     "pg": "8.8.0",
     "randomstring": "^1.2.3",
     "reflect-metadata": "0.1.13",
-    "rimraf": "4.1.2",
+    "rimraf": "4.3.1",
     "rxjs": "7.8.0",
     "simple-oauth2": "^5.0.0",
     "source-map-support": "0.5.21",
@@ -121,6 +123,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "14.16.0"
   }
 }
