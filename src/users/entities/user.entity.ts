@@ -114,14 +114,14 @@ export class User extends EntityHelper {
   @DeleteDateColumn()
   deleted_at: Date;
 
-  @OneToMany(() => Article, (article) => article.writer_id)
-  articleId: Article[];
+  @OneToMany(() => Article, (article) => article.user)
+  articles: Article[];
 
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+  
   @OneToOne(() => RavelryUser, (RavelryUser) => RavelryUser.userId)
   ravelryUser: RavelryUser;
-
-  // @OneToMany(() => Comment, (comment) => comment.writer_id)
-  // comments: Comment[];
 }
 
 /*

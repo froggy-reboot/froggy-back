@@ -33,7 +33,8 @@ export class ArticlesService {
       this.articleRepository.create({
         id,
         ...updateArticleDto,
-      }));;
+      }),
+    );
   }
 
   remove(id: number) {

@@ -16,6 +16,8 @@ export class ArticlesRepository extends Repository<Article> {
   findArticleList(paginationOptions: IPaginationOptions) {
     return this.repository
       .createQueryBuilder('article')
+      .leftJoin('article.user', 'user')
+      .select(['article', 'user.nickname'])
       .leftJoin('article.comments', 'comment')
       .loadRelationCountAndMap('article.comment_count', 'article.comments')
       .limit(paginationOptions.limit)
@@ -24,10 +26,12 @@ export class ArticlesRepository extends Repository<Article> {
   }
 
   findArticle(id: number) {
-    return this.repository
+    const articleWithComments = this.repository
       .createQueryBuilder('article')
+      .where('article.id =:id', { id })
       .leftJoinAndSelect('article.comments', 'comment')
       .loadRelationCountAndMap('article.comment_count', 'article.comments')
       .getOne();
+    return articleWithComments;
   }
 }

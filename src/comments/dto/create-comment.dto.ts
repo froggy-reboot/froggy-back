@@ -10,12 +10,6 @@ export class CreateCommentDto {
   @IsNotEmpty()
   writer_id: number;
 
-  @ApiProperty({
-    example: 'synodic',
-  })
-  @IsNotEmpty()
-  nickname: string;
-
   @ApiProperty({ example: '잘 좀 하세요!!' })
   @IsNotEmpty()
   content: string;
