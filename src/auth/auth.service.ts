@@ -17,6 +17,7 @@ import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
 import { ShowUserDto } from 'src/users/dto/show-user.dto';
 import { MailService } from 'src/mail/mail.service';
+import { ConfigService } from '@nestjs/config';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -26,6 +27,7 @@ export class AuthService {
     private jwtService: JwtService,
     private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
     private mailService: MailService,
+    private configService: ConfigService,
   ) {}
 
   async validateLogin(
@@ -66,9 +68,17 @@ export class AuthService {
     );
 
     if (isValidPassword) {
-      const token = await this.jwtService.sign({
-        id: user.id,
-      });
+      const token = await this.jwtService.sign(
+        {
+          id: user.id,
+        },
+        {
+          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+          expiresIn: `${this.configService.get(
+            'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+          )}s`,
+        },
+      );
       return { token, user: user };
     } else {
       throw new HttpException(
@@ -117,7 +127,7 @@ export class AuthService {
   async genJwtToken(userByEmail, socialData) {
     if (userByEmail.enroll_type === socialData.enroll_type) {
       const jwtToken = await this.jwtService.sign({
-        user: userByEmail,
+        id: userByEmail.id,
       });
       return jwtToken;
     } else {

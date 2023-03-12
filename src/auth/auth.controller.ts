@@ -128,6 +128,25 @@ export class AuthController {
     return resJson;
   }
 
+  @Post('logout')
+  @ApiResponse({
+    status: 200,
+    type: AuthSocialLoginResDto,
+    description: '소셜 로그인 로그인 로직',
+  })
+  public async logout(@Body() dto: AuthSocialLoginIngResDto) {
+    const getAccessTokenAndUserByIdResult =
+      await this.service.getAccessTokenAndUserById(dto.userId);
+
+    const { jwtToken, user } = getAccessTokenAndUserByIdResult;
+    const resJson: AuthSocialLoginResDto = {
+      jwtToken: jwtToken,
+      user: user,
+    };
+
+    return resJson;
+  }
+
   // @Post('forgot/password')
   // @HttpCode(HttpStatus.OK)
   // async forgotPassword(@Body() forgotPasswordDto: AuthForgotPasswordDto) {
