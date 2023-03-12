@@ -14,20 +14,24 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('게시판 댓글')
 @Controller({
-  path: 'comments',
+  path: 'articles/:articleId/comments',
   version: '1',
 })
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
+  create(
+    @Param('articleId') articleId: number,
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    createCommentDto.post_id = articleId;
     return this.commentsService.create(createCommentDto);
   }
 
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
+  findAll(@Param('articleId') articleId: number) {
+    return this.commentsService.findByArticleId(articleId);
   }
 
   @Get(':id')
