@@ -10,5 +10,5 @@ export class IPaginationOptions {
   @ApiProperty({ example: 5 })
   @IsNumber()
   @Type(() => Number)
-  limit: number;
+  limit: number = 20;
 }
