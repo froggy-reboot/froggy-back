@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-boilerplate",
+  "name": "froggy",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -13,11 +13,11 @@
     "migration:revert": "npm run typeorm -- --dataSource=src/database/data-source.ts migration:revert",
     "schema:drop": "npm run typeorm -- --dataSource=src/database/data-source.ts schema:drop",
     "seed:run": "ts-node -r tsconfig-paths/register ./src/database/seeds/run-seed.ts",
-    "prebuild": "rimraf dist",
-    "build": "tsc -p tsconfig.build.json",
+    "prebuild": "rm -rf dist",
+    "build": "nest build",
     "gcp-build": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/main.js",
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -31,6 +31,7 @@
     "postinstall": "npm install rimraf -g"
   },
   "dependencies": {
+    "@nestjs/cli": "9.1.9",
     "@nestjs-modules/mailer": "1.8.1",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "9.2.1",
@@ -72,7 +73,6 @@
     "typeorm": "0.3.11"
   },
   "devDependencies": {
-    "@nestjs/cli": "9.1.9",
     "@nestjs/schematics": "9.0.4",
     "@nestjs/testing": "9.2.1",
     "@types/bcryptjs": "2.4.2",

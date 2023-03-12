@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { AxiosError } from 'axios';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -54,11 +53,7 @@ export class AuthRavelryService {
 
     const request = this.http
       .get('https://api.ravelry.com/current_user.json', requestConfig)
-      .pipe(
-        catchError((error: AxiosError) => {
-          throw 'ravelry get user error!';
-        }),
-      );
+      .pipe();
     const { data } = await firstValueFrom(request);
     return data.user;
   }
