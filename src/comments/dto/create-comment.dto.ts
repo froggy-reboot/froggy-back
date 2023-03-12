@@ -3,7 +3,6 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateCommentDto {
   @ApiProperty({ example: '11' })
-  @IsNotEmpty()
   post_id: number;
 
   @ApiProperty({ example: '1' })
