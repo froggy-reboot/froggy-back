@@ -19,7 +19,7 @@ export class Comment extends EntityHelper {
   id: number;
   @Column({ nullable: false })
   @ApiProperty({ example: '11' })
-  post_id: number;
+  article_id: number;
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
   writer_id: number;
@@ -39,7 +39,7 @@ export class Comment extends EntityHelper {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'post_id' })
+  @JoinColumn({ name: 'article_id' })
   article: Article;
 
   @ManyToOne(() => User, (user) => user.id, {

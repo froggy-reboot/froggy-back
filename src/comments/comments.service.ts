@@ -20,7 +20,7 @@ export class CommentsService {
   findByArticleId(articleId: number) {
     return this.commentRepository
       .createQueryBuilder('comment')
-      .where('comment.post_id = :id', { id: articleId })
+      .where('comment.article_id = :id', { id: articleId })
       .leftJoin('comment.user', 'user')
       .select(['comment.id', 'comment.content', 'user.id', 'user.nickname'])
       .getMany();

@@ -25,7 +25,7 @@ export class CommentsController {
     @Param('articleId') articleId: number,
     @Body() createCommentDto: CreateCommentDto,
   ) {
-    createCommentDto.post_id = articleId;
+    createCommentDto.article_id = articleId;
     return this.commentsService.create(createCommentDto);
   }
 
