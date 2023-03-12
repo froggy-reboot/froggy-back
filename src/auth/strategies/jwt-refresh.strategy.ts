@@ -7,15 +7,18 @@ import { ConfigService } from '@nestjs/config';
 
 // 만료된 jwt 401
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtRefreshStrategy extends PassportStrategy(
+  Strategy,
+  'jwt-refresh',
+) {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: configService.get('auth.secret'),
+      secretOrKey: configService.get('auth.refreshSecret'),
+      passReqToCallback: true,
     });
   }
 

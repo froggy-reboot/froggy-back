@@ -68,17 +68,10 @@ export class AuthService {
     );
 
     if (isValidPassword) {
-      const token = await this.jwtService.sign(
-        {
-          id: user.id,
-        },
-        {
-          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-          expiresIn: `${this.configService.get(
-            'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-          )}s`,
-        },
-      );
+      const { token, refreshToken } = await this.getTokens(user.id);
+
+      await this.usersService.update(user.id, { refreshToken: refreshToken });
+
       return { token, user: user };
     } else {
       throw new HttpException(
@@ -101,6 +94,12 @@ export class AuthService {
 
   async linkRavelryUser() {
     // 1. 라이벌리 user id 와 user jwt token 필요
+  }
+
+  async updateRefreshToken(userId, refreshToken: string) {
+    await this.usersService.update(userId, {
+      refreshToken: refreshToken,
+    });
   }
 
   async validateSocialLogin(
@@ -133,6 +132,37 @@ export class AuthService {
     } else {
       //TODO: 소셜과 일반 로그인 연동
     }
+  }
+
+  async getTokens(userId: number) {
+    const token = await this.jwtService.sign(
+      {
+        id: userId,
+      },
+      {
+        secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+        expiresIn: `${this.configService.get('AUTH_JWT_TOKEN_EXPIRES_IN')}`,
+      },
+    );
+
+    const refreshToken = await this.jwtService.sign(
+      {
+        id: userId,
+      },
+      {
+        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+        expiresIn: `${this.configService.get(
+          'AUTH_JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+        )}`,
+      },
+    );
+
+    const hashedRefreshToken = crypto
+      .createHash('sha256')
+      .update(refreshToken)
+      .digest('hex');
+
+    return { token, refreshToken: hashedRefreshToken };
   }
 
   async createSocialUser(socialData): Promise<User> {
@@ -257,6 +287,10 @@ export class AuthService {
     }
     await this.usersService.update(user.id, { isCertified: customBool.Y });
     return;
+  }
+
+  async logout(user) {
+    console.log(user);
   }
 
   // async forgotPassword(email: string): Promise<void> {

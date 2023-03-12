@@ -60,4 +60,7 @@ export class UpdateUserDto {
 
   @IsOptional()
   isRavelryIntegrated?: customBool;
+
+  @IsOptional()
+  refreshToken?: string;
 }

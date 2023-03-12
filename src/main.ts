@@ -19,7 +19,7 @@ import * as fs from 'fs';
 
 async function bootstrap() {
   const httpsOptions = {
-    cert: fs.readFileSync('./src/config/cert.pem'),
+    // cert: fs.readFileSync('./src/config/cert.pem'),
     // key: fs.readFileSync('./src/config/key.pem'),
   };
 

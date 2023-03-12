@@ -119,7 +119,7 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
-  
+
   @OneToOne(() => RavelryUser, (RavelryUser) => RavelryUser.userId)
   ravelryUser: RavelryUser;
 }

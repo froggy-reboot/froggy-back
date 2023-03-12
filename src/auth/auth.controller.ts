@@ -110,6 +110,8 @@ export class AuthController {
   }
 
   @Post('social/login')
+  @UseGuards(AuthGuard('jwt-refresh'))
+  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     type: AuthSocialLoginResDto,
@@ -128,23 +130,11 @@ export class AuthController {
     return resJson;
   }
 
-  @Post('logout')
-  @ApiResponse({
-    status: 200,
-    type: AuthSocialLoginResDto,
-    description: '소셜 로그인 로그인 로직',
-  })
-  public async logout(@Body() dto: AuthSocialLoginIngResDto) {
-    const getAccessTokenAndUserByIdResult =
-      await this.service.getAccessTokenAndUserById(dto.userId);
-
-    const { jwtToken, user } = getAccessTokenAndUserByIdResult;
-    const resJson: AuthSocialLoginResDto = {
-      jwtToken: jwtToken,
-      user: user,
-    };
-
-    return resJson;
+  @ApiBearerAuth()
+  @Get('logout')
+  @UseGuards(AuthGuard('jwt'))
+  logout(@Request() req) {
+    this.service.logout(req.user);
   }
 
   // @Post('forgot/password')
