@@ -2,7 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { customBool, enrollType, User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
-import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
+import {
+  AuthEmailLoginDto,
+  AuthEmailLoginResDto,
+} from './dto/auth-email-login.dto';
 import { AuthUpdateDto } from './dto/auth-update.dto';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { RoleEnum } from 'src/roles/roles.enum';
@@ -18,6 +21,7 @@ import { UsersService } from 'src/users/users.service';
 import { ShowUserDto } from 'src/users/dto/show-user.dto';
 import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
+import { AuthRefreshResDto } from './dto/auth-refresh.dto';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -32,7 +36,7 @@ export class AuthService {
 
   async validateLogin(
     loginDto: AuthEmailLoginDto,
-  ): Promise<{ token: string; user: User }> {
+  ): Promise<AuthEmailLoginResDto> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
       enroll_type: enrollType.local,
@@ -72,7 +76,7 @@ export class AuthService {
 
       await this.usersService.update(user.id, { refreshToken: refreshToken });
 
-      return { token, user: user };
+      return { token, refreshToken, user: user };
     } else {
       throw new HttpException(
         {
@@ -291,6 +295,37 @@ export class AuthService {
 
   async logout(user) {
     console.log(user);
+  }
+
+  async getUserByRefreshToken(refreshToken: string): Promise<User> {
+    const user = await this.usersService.findOne({
+      refreshToken,
+    });
+
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: `notFound`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return user;
+  }
+
+  async refreshJwtToken(refreshToken: string): Promise<AuthRefreshResDto> {
+    const user = await this.getUserByRefreshToken(refreshToken);
+    const { token, refreshToken: newRefreshToken } = await this.getTokens(
+      user.id,
+    );
+
+    await this.usersService.update(user.id, {
+      refreshToken: newRefreshToken,
+    });
+
+    return { token: token, refreshToken: newRefreshToken };
   }
 
   // async forgotPassword(email: string): Promise<void> {

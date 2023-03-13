@@ -21,4 +21,8 @@ export class AuthEmailLoginResDto {
   @ApiProperty({ example: 'kajljidgasdfagda' })
   @IsNotEmpty()
   token: string;
+
+  @ApiProperty({ example: 'kajljidgasdfagda' })
+  @IsNotEmpty()
+  refreshToken: string;
 }

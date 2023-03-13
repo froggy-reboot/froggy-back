@@ -38,6 +38,7 @@ import {
   AuthSocialLoginResDto,
 } from './dto/auth-social-login.dto';
 import { ShowUserDto } from 'src/users/dto/show-user.dto';
+import { AuthRefreshDto, AuthRefreshResDto } from './dto/auth-refresh.dto';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -128,6 +129,20 @@ export class AuthController {
     };
 
     return resJson;
+  }
+
+  @Post('refresh')
+  @ApiResponse({
+    status: 200,
+    type: AuthRefreshResDto,
+    description: 'refresh token을 이용하여 jwt token 발급',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'refresh token이 유효하지 않음',
+  })
+  async refresh(@Body() refreshDto: AuthRefreshDto) {
+    return this.service.refreshJwtToken(refreshDto.refreshToken);
   }
 
   @ApiBearerAuth()
