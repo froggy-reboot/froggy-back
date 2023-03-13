@@ -11,6 +11,7 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { IPaginationOptions } from '../utils/types/pagination-options';
 
 @ApiTags('게시판 댓글')
 @Controller({
@@ -30,8 +31,11 @@ export class CommentsController {
   }
 
   @Get()
-  findAll(@Param('articleId') articleId: number) {
-    return this.commentsService.findByArticleId(articleId);
+  findAll(
+    @Param('articleId') articleId: number,
+    @Body() paginationOptions: IPaginationOptions,
+  ) {
+    return this.commentsService.findByArticleId(articleId, paginationOptions);
   }
 
   @Get(':id')

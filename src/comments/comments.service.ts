@@ -4,6 +4,7 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Comment } from './entities/comment.entity';
+import { IPaginationOptions } from '../utils/types/pagination-options';
 
 @Injectable()
 export class CommentsService {
@@ -17,12 +18,14 @@ export class CommentsService {
     );
   }
 
-  findByArticleId(articleId: number) {
+  findByArticleId(articleId: number, paginationOptions: IPaginationOptions) {
     return this.commentRepository
       .createQueryBuilder('comment')
       .where('comment.article_id = :id', { id: articleId })
       .leftJoin('comment.user', 'user')
       .select(['comment.id', 'comment.content', 'user.id', 'user.nickname'])
+      .limit(paginationOptions.limit)
+      .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
   }
 
