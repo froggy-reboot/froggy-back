@@ -294,7 +294,7 @@ export class AuthService {
   }
 
   async logout(user) {
-    console.log(user);
+    await this.usersService.update(user.id, { refreshToken: '' });
   }
 
   async getUserByRefreshToken(refreshToken: string): Promise<User> {

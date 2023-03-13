@@ -90,6 +90,10 @@ export class AuthRavelryController {
     type: AuthSocialLoginUrlDto,
     description: 'Ravelry계정과 계정을 연동해 줍니다.',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'access token이 없거나 유효하지 않습니다.',
+  })
   @HttpCode(HttpStatus.OK)
   async linkRavelryToAnotherAccount(
     @Request() req,

@@ -145,11 +145,19 @@ export class AuthController {
     return this.service.refreshJwtToken(refreshDto.refreshToken);
   }
 
-  @ApiBearerAuth()
   @Get('logout')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    description: '로그아웃 성공',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'access token이 없거나 유효하지 않습니다.',
+  })
   logout(@Request() req) {
-    this.service.logout(req.user);
+    return this.service.logout(req.user);
   }
 
   // @Post('forgot/password')
