@@ -32,7 +32,7 @@ export class ArticlesRepository extends Repository<Article> {
     const articleWithComments = this.repository
       .createQueryBuilder('article')
       .where('article.id =:id', { id })
-      .leftJoinAndSelect('article.comments', 'comment')
+      // .leftJoinAndSelect('article.comments', 'comment')
       .loadRelationCountAndMap('article.comment_count', 'article.comments')
       .getOne();
     return articleWithComments;
