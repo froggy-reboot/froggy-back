@@ -21,8 +21,8 @@ export class ArticleImagesController {
   }
 
   @Get()
-  findAll() {
-    return this.articleImagesService.findAll();
+  findAll(@Param('articleId') articleId: string) {
+    return this.articleImagesService.findAll(+articleId);
   }
 
   @Get(':id')
