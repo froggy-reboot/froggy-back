@@ -30,12 +30,11 @@ export class CommentsController {
     return this.commentsService.create(createCommentDto);
   }
 
-  @Get()
-  findAll(
-    @Param('articleId') articleId: number,
-    @Body() paginationOptions: IPaginationOptions,
-  ) {
-    return this.commentsService.findByArticleId(articleId, paginationOptions);
+  @Get('/pages/:page')
+  findAll(@Param('articleId') articleId: number, @Param('page') page: number) {
+    const newPage: IPaginationOptions = new IPaginationOptions();
+    newPage.page = page;
+    return this.commentsService.findByArticleId(articleId, newPage);
   }
 
   @Get(':id')
