@@ -6,7 +6,7 @@ export class UpdateArticleDto extends PartialType(CreateArticleDto) {
   @ApiProperty({ example: '1' })
   @IsOptional()
   @IsNotEmpty()
-  writer_id: number;
+  writerId: number;
 
   @ApiProperty({ example: '0' })
   @IsOptional()

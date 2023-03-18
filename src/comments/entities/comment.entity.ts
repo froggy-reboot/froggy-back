@@ -14,7 +14,7 @@ import { Article } from '../../articles/entities/article.entity';
 import { User } from '../../users/entities/user.entity';
 import { CommentImage } from '../../comment-images/entities/comment-image.entity';
 
-@Entity()
+@Entity({ name: 'CommentImage' })
 export class Comment extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '1' })
@@ -26,7 +26,7 @@ export class Comment extends EntityHelper {
 
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
-  writer_id: number;
+  writerId: number;
 
   @Column({ nullable: false })
   @ApiProperty({ example: '내용입니다.' })
@@ -34,11 +34,11 @@ export class Comment extends EntityHelper {
 
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
-  created_at: Date;
+  createdAt: Date;
 
   @DeleteDateColumn()
   @ApiProperty({ example: 'null' })
-  deleted_at: Date;
+  deletedAt: Date;
 
   @ManyToOne(() => Article, (article) => article.comments, {
     nullable: false,
@@ -51,7 +51,7 @@ export class Comment extends EntityHelper {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'writer_id' })
+  @JoinColumn({ name: 'writerId' })
   user: User;
 
   @OneToMany(() => CommentImage, (commentImage) => commentImage.comment)

@@ -32,7 +32,7 @@ export class CommentsController {
     @Body() createCommentDto: CreateCommentDto,
     @UploadedFile() file,
   ) {
-    createCommentDto.article_id = articleId;
+    createCommentDto.articleId = articleId;
     return this.commentsService.create(createCommentDto, file);
   }
 
