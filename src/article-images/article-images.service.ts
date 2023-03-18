@@ -1,11 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { CreateArticleImageDto } from './dto/create-article-image.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FilesService } from 'src/files/files.service';
+import { Repository } from 'typeorm';
+import {
+  CreateArticleImageDto,
+  CreateArticleImagePreDto,
+} from './dto/create-article-image.dto';
 import { UpdateArticleImageDto } from './dto/update-article-image.dto';
+import { ArticleImage } from './entities/article-image.entity';
 
 @Injectable()
 export class ArticleImagesService {
-  create(createArticleImageDto: CreateArticleImageDto) {
-    return 'This action adds a new articleImage';
+  constructor(
+    @InjectRepository(ArticleImage)
+    private articleImagesRepository: Repository<ArticleImage>,
+  ) {}
+
+  create(createArticleImagePreDto: CreateArticleImagePreDto, file) {
+    if (!file) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          errors: {
+            file: 'selectFile',
+          },
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const path = file.location;
+    const createArticleDto = createArticleImagePreDto;
+    createArticleDto['url'] = path;
+    return this.articleImagesRepository.save(
+      this.articleImagesRepository.create(createArticleDto),
+    );
   }
 
   findAll() {

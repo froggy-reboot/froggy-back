@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ArticleImagesService } from './article-images.service';
 import { CreateArticleImageDto } from './dto/create-article-image.dto';
 import { UpdateArticleImageDto } from './dto/update-article-image.dto';
@@ -8,8 +16,8 @@ export class ArticleImagesController {
   constructor(private readonly articleImagesService: ArticleImagesService) {}
 
   @Post()
-  create(@Body() createArticleImageDto: CreateArticleImageDto) {
-    return this.articleImagesService.create(createArticleImageDto);
+  create(@Body() createArticleImagesDto: CreateArticleImageDto) {
+    // return this.articleImagesService.create(createArticleImagesDto, file);
   }
 
   @Get()
@@ -23,7 +31,10 @@ export class ArticleImagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticleImageDto: UpdateArticleImageDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateArticleImageDto: UpdateArticleImageDto,
+  ) {
     return this.articleImagesService.update(+id, updateArticleImageDto);
   }
 

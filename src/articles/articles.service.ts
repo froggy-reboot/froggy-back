@@ -5,16 +5,35 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
+import { FilesService } from 'src/files/files.service';
+import { ArticleImagesService } from 'src/article-images/article-images.service';
+import {
+  CreateArticleImageDto,
+  CreateArticleImagePreDto,
+} from 'src/article-images/dto/create-article-image.dto';
+import { customBool } from 'src/article-images/entities/article-image.entity';
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
+
+    private articleImagesService: ArticleImagesService,
   ) {}
-  create(createArticleDto: CreateArticleDto) {
-    return this.articleRepository.save(
+  async create(createArticleDto: CreateArticleDto, file) {
+    const result = await this.articleRepository.save(
       this.articleRepository.create(createArticleDto),
     );
+    console.log(result);
+
+    const createArticleImageDto: CreateArticleImagePreDto = {
+      articleId: result.id,
+      isComment: customBool.N,
+      order: 1,
+    };
+    if (file) {
+      this.articleImagesService.create(createArticleImageDto, file);
+    }
   }
 
   findManyWithPagination(paginationOptions: IPaginationOptions) {
