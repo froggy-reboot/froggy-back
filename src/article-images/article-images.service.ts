@@ -16,23 +16,8 @@ export class ArticleImagesService {
     private repository: Repository<ArticleImage>,
   ) {}
 
-  create(createArticleImagePreDto: CreateArticleImagePreDto, file) {
-    if (!file) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNPROCESSABLE_ENTITY,
-          errors: {
-            file: 'selectFile',
-          },
-        },
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
-
-    const path = file.location;
-    const createArticleDto = createArticleImagePreDto;
-    createArticleDto['url'] = path;
-    return this.repository.save(this.repository.create(createArticleDto));
+  create(createArticleImageDto: CreateArticleImageDto) {
+    return this.repository.save(this.repository.create(createArticleImageDto));
   }
 
   findAll(articleId: number) {
