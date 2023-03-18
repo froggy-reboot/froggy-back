@@ -37,14 +37,14 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto);
   }
 
-  @Get()
+  @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
   @ApiResponse({
     status: 200,
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
-  findAll(@Body() paginationOptions: IPaginationOptions) {
+  findAll(@Param() paginationOptions: IPaginationOptions) {
     // return this.articlesService.findManyWithPagination(paginationOptions);
     return this.articlesRepository.findArticleList(paginationOptions);
   }
