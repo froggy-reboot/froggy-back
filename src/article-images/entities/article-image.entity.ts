@@ -11,11 +11,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-export enum customBool {
-  Y = 'Y',
-  N = 'N',
-}
-
 @Entity({ name: 'articleImage' })
 export class ArticleImage extends EntityHelper {
   @PrimaryGeneratedColumn()
@@ -25,18 +20,6 @@ export class ArticleImage extends EntityHelper {
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
   articleId: number;
-
-  @Column({ nullable: true })
-  @ApiProperty({ example: '2' })
-  commentId: number;
-
-  @Column({
-    type: 'enum',
-    enum: customBool,
-    nullable: false,
-    default: customBool.N,
-  })
-  isComment: customBool;
 
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
@@ -57,10 +40,7 @@ export class ArticleImage extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deletedAt: Date;
 
-  @ManyToOne(() => Article, (article) => article.comments, {
-    nullable: false,
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Article, (article) => article.images)
   @JoinColumn({ name: 'articleId' })
   article: Article;
 }
