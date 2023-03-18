@@ -14,7 +14,7 @@ import { Article } from '../../articles/entities/article.entity';
 import { User } from '../../users/entities/user.entity';
 import { CommentImage } from '../../comment-images/entities/comment-image.entity';
 
-@Entity({ name: 'CommentImage' })
+@Entity({ name: 'comment' })
 export class Comment extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '1' })

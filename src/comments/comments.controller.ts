@@ -8,13 +8,16 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('게시판 댓글')
 @Controller({
@@ -25,14 +28,18 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
   create(
+    @Request() req,
     @Param('articleId') articleId: number,
     @Body() createCommentDto: CreateCommentDto,
     @UploadedFile() file,
   ) {
     createCommentDto.articleId = articleId;
+    createCommentDto.writerId = req.user.id;
     return this.commentsService.create(createCommentDto, file);
   }
 

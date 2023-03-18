@@ -6,8 +6,7 @@ export class CreateCommentDto {
   articleId: number;
 
   @ApiProperty({ example: '1' })
-  @IsNotEmpty()
-  writerId: number;
+  writerId?: number;
 
   @ApiProperty({ example: '잘 좀 하세요!!' })
   @IsNotEmpty()
