@@ -73,7 +73,7 @@ export class User extends EntityHelper {
   @Column({ type: 'enum', enum: gender, nullable: true })
   gender!: gender;
 
-  @Column({ type: 'string', nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   profile_img: string;
 
   @Column('varchar', { length: 2084, nullable: true })
