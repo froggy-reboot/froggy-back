@@ -36,6 +36,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
 import { CommentsModule } from './comments/comments.module';
 import { RavelryUsersModule } from './ravelry-users/ravelry-users.module';
+import { ArticleImagesModule } from './article-images/article-images.module';
 
 @Module({
   imports: [
@@ -94,6 +95,7 @@ import { RavelryUsersModule } from './ravelry-users/ravelry-users.module';
     ArticlesModule,
     CommentsModule,
     RavelryUsersModule,
+    ArticleImagesModule,
   ],
 })
 export class AppModule {}

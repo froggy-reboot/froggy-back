@@ -12,6 +12,7 @@ import { EntityHelper } from 'src/utils/entity-helper';
 import { User } from '../../users/entities/user.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { ArticleImage } from 'src/article-images/entities/article-image.entity';
 
 export enum articleType {
   everything = '자유',
@@ -55,6 +56,9 @@ export class Article extends EntityHelper {
 
   @OneToMany(() => Comment, (comment) => comment.article)
   comments: Comment[];
+
+  @OneToMany(() => ArticleImage, (articleImage) => articleImage.article)
+  images: ArticleImage[];
 
   @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'writer_id' })

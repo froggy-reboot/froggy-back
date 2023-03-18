@@ -16,7 +16,7 @@ export enum customBool {
   N = 'N',
 }
 
-@Entity()
+@Entity({ name: 'ravelryUser' })
 export class RavelryUser extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;

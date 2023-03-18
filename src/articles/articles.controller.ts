@@ -9,16 +9,26 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
+  Request,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiConsumes,
+  ApiProperty,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesService } from 'src/files/files.service';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -33,8 +43,14 @@ export class ArticlesController {
   ) {}
 
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  create(
+    @Request() req,
+    @Body() createArticleDto: CreateArticleDto,
+    @UploadedFile() file,
+  ) {
+    return this.articlesService.create(createArticleDto, file);
   }
 
   @Get('/pages/:page')
