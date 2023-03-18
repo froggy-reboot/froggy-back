@@ -6,11 +6,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Article } from '../../articles/entities/article.entity';
 import { User } from '../../users/entities/user.entity';
+import { CommentImage } from '../../comment-images/entities/comment-image.entity';
 
 @Entity()
 export class Comment extends EntityHelper {
@@ -51,4 +53,7 @@ export class Comment extends EntityHelper {
   })
   @JoinColumn({ name: 'writer_id' })
   user: User;
+
+  @OneToMany(() => CommentImage, (commentImage) => commentImage.comment)
+  images: CommentImage[];
 }
