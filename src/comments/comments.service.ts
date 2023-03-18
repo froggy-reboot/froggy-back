@@ -12,8 +12,8 @@ export class CommentsService {
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
   ) {}
-  create(createCommentDto: CreateCommentDto) {
-    return this.commentRepository.save(
+  async create(createCommentDto: CreateCommentDto) {
+    const CreateCommentResult = this.commentRepository.save(
       this.commentRepository.create(createCommentDto),
     );
   }

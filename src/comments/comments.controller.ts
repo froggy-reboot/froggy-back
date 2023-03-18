@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('게시판 댓글')
 @Controller({
@@ -22,9 +25,12 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
   create(
     @Param('articleId') articleId: number,
     @Body() createCommentDto: CreateCommentDto,
+    @UploadedFile() file,
   ) {
     createCommentDto.article_id = articleId;
     return this.commentsService.create(createCommentDto);

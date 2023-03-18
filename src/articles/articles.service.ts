@@ -25,12 +25,13 @@ export class ArticlesService {
     );
     console.log(result);
 
-    const createArticleImageDto: CreateArticleImagePreDto = {
+    const createArticleImageDto: CreateArticleImageDto = {
       articleId: result.id,
       order: 1,
+      url: file.location,
     };
     if (file) {
-      this.articleImagesService.create(createArticleImageDto, file);
+      this.articleImagesService.create(createArticleImageDto);
     }
   }
 
