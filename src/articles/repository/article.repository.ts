@@ -14,7 +14,6 @@ export class ArticlesRepository extends Repository<Article> {
   }
 
   async findArticleList(paginationOptions: IPaginationOptions) {
-    console.log(paginationOptions);
     const articles = await this.repository
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
