@@ -5,32 +5,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
-import { FilesService } from 'src/files/files.service';
 import { ArticleImagesService } from 'src/article-images/article-images.service';
-import {
-  CreateArticleImageDto,
-  CreateArticleImagePreDto,
-} from 'src/article-images/dto/create-article-image.dto';
+import { CreateArticleImageDto } from 'src/article-images/dto/create-article-image.dto';
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
-
     private articleImagesService: ArticleImagesService,
   ) {}
   async create(createArticleDto: CreateArticleDto, file) {
     const result = await this.articleRepository.save(
       this.articleRepository.create(createArticleDto),
     );
-    console.log(result);
 
-    const createArticleImageDto: CreateArticleImageDto = {
-      articleId: result.id,
-      order: 1,
-      url: file.location,
-    };
     if (file) {
+      const createArticleImageDto: CreateArticleImageDto = {
+        articleId: result.id,
+        order: 1,
+        url: file.location,
+      };
       this.articleImagesService.create(createArticleImageDto);
     }
   }

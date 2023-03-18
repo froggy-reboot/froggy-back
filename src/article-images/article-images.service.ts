@@ -2,10 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FilesService } from 'src/files/files.service';
 import { Repository } from 'typeorm';
-import {
-  CreateArticleImageDto,
-  CreateArticleImagePreDto,
-} from './dto/create-article-image.dto';
+import { CreateArticleImageDto } from './dto/create-article-image.dto';
 import { UpdateArticleImageDto } from './dto/update-article-image.dto';
 import { ArticleImage } from './entities/article-image.entity';
 
