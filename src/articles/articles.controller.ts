@@ -57,8 +57,7 @@ export class ArticlesController {
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
-    const uid = article['writer_id'];
-    const userInfo = await this.usersService.findById(+uid);
+    const userInfo = await this.usersService.findById(+article['writer_id']);
     article['user'] = userInfo;
     return article;
   }
