@@ -3,12 +3,12 @@ import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
 export class IPaginationOptions {
   @ApiProperty({ example: 1 })
-  @IsNumber()
   @Type(() => Number)
+  @IsNumber()
   page: number;
 
   @ApiProperty({ example: 5 })
-  @IsNumber()
   @Type(() => Number)
+  @IsNumber()
   limit: number = 20;
 }

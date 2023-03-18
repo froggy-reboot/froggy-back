@@ -37,14 +37,14 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto);
   }
 
-  @Get()
+  @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
   @ApiResponse({
     status: 200,
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
-  findAll(@Body() paginationOptions: IPaginationOptions) {
+  findAll(@Param() paginationOptions: IPaginationOptions) {
     // return this.articlesService.findManyWithPagination(paginationOptions);
     return this.articlesRepository.findArticleList(paginationOptions);
   }
@@ -57,8 +57,7 @@ export class ArticlesController {
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
-    const uid = article['writer_id'];
-    const userInfo = await this.usersService.findById(+uid);
+    const userInfo = await this.usersService.findById(+article['writer_id']);
     article['user'] = userInfo;
     return article;
   }
