@@ -4,8 +4,7 @@ import { articleType } from '../entities/article.entity';
 
 export class CreateArticleDto {
   @ApiProperty({ example: '1' })
-  @IsNotEmpty()
-  writerId: number;
+  writerId?: number;
 
   @ApiProperty({ example: '자유' })
   @IsNotEmpty()

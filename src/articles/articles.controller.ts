@@ -51,7 +51,7 @@ export class ArticlesController {
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFile() file,
   ) {
-    console.log(req.user);
+    createArticleDto.writerId = req.user.id;
     return this.articlesService.create(createArticleDto, file);
   }
 
