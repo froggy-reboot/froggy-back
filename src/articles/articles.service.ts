@@ -5,12 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
-import { FilesService } from 'src/files/files.service';
 import { ArticleImagesService } from 'src/article-images/article-images.service';
-import {
-  CreateArticleImageDto,
-  CreateArticleImagePreDto,
-} from 'src/article-images/dto/create-article-image.dto';
+import { CreateArticleImageDto } from 'src/article-images/dto/create-article-image.dto';
+
 @Injectable()
 export class ArticlesService {
   constructor(
