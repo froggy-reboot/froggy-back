@@ -33,7 +33,7 @@ export class CommentsController {
     @UploadedFile() file,
   ) {
     createCommentDto.article_id = articleId;
-    return this.commentsService.create(createCommentDto);
+    return this.commentsService.create(createCommentDto, file);
   }
 
   @Get('/pages/:page')

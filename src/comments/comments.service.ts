@@ -5,17 +5,29 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Comment } from './entities/comment.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
+import { CommentImagesService } from 'src/comment-images/comment-images.service';
+import { CreateCommentImageDto } from 'src/comment-images/dto/create-comment-image.dto';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
+    private commentImagesService: CommentImagesService,
   ) {}
-  async create(createCommentDto: CreateCommentDto) {
-    const CreateCommentResult = this.commentRepository.save(
+  async create(createCommentDto: CreateCommentDto, file) {
+    const createCommentResult = await this.commentRepository.save(
       this.commentRepository.create(createCommentDto),
     );
+
+    if (file) {
+      const createCommentImageDto: CreateCommentImageDto = {
+        commentId: createCommentResult.id,
+        url: file.location,
+      };
+      // this.commentImagesService.create(createCommentImageDto);
+    }
+    return createCommentResult;
   }
 
   findByArticleId(articleId: number, paginationOptions: IPaginationOptions) {

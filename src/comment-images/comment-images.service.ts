@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCommentImageDto } from './dto/create-comment-image.dto';
 import { UpdateCommentImageDto } from './dto/update-comment-image.dto';
+import { CommentImage } from './entities/comment-image.entity';
 
 @Injectable()
 export class CommentImagesService {
+  constructor(
+    @InjectRepository(CommentImage)
+    private repository: Repository<CommentImage>,
+  ) {}
+
   create(createCommentImageDto: CreateCommentImageDto) {
-    return 'This action adds a new commentImage';
+    return this.repository.save(this.repository.create(createCommentImageDto));
   }
 
   findAll() {
