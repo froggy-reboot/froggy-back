@@ -13,7 +13,7 @@ import { ArticleImage } from './entities/article-image.entity';
 export class ArticleImagesService {
   constructor(
     @InjectRepository(ArticleImage)
-    private articleImagesRepository: Repository<ArticleImage>,
+    private repository: Repository<ArticleImage>,
   ) {}
 
   create(createArticleImagePreDto: CreateArticleImagePreDto, file) {
@@ -32,13 +32,19 @@ export class ArticleImagesService {
     const path = file.location;
     const createArticleDto = createArticleImagePreDto;
     createArticleDto['url'] = path;
-    return this.articleImagesRepository.save(
-      this.articleImagesRepository.create(createArticleDto),
-    );
+    return this.repository.save(this.repository.create(createArticleDto));
   }
 
-  findAll() {
-    return `This action returns all articleImages`;
+  findAll(articleId: number) {
+    const images = this.repository
+      .createQueryBuilder('articleImage')
+      .leftJoin('article.images', 'image')
+      .select(['article', 'user.nickname'])
+      .leftJoin('article.comments', 'comment')
+      .loadRelationCountAndMap('article.comment_count', 'article.comments')
+      .getMany();
+    // console.log(articles);
+    return images;
   }
 
   findOne(id: number) {
