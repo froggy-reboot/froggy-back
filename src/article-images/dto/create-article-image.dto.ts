@@ -1,12 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { customBool } from '../entities/article-image.entity';
 
 export class CreateArticleImagePreDto {
   @ApiProperty({ example: '3' })
   articleId: number;
-
-  @ApiProperty({ example: 'Y' })
-  isComment: customBool;
 
   @ApiProperty({ example: '7' })
   commentId?: number;
@@ -17,9 +13,6 @@ export class CreateArticleImagePreDto {
 export class CreateArticleImageDto {
   @ApiProperty({ example: '3' })
   articleId: number;
-
-  @ApiProperty({ example: 'Y' })
-  isComment: customBool;
 
   @ApiProperty({ example: '7' })
   commentId?: number;

@@ -11,7 +11,6 @@ import {
   CreateArticleImageDto,
   CreateArticleImagePreDto,
 } from 'src/article-images/dto/create-article-image.dto';
-import { customBool } from 'src/article-images/entities/article-image.entity';
 @Injectable()
 export class ArticlesService {
   constructor(
@@ -28,7 +27,6 @@ export class ArticlesService {
 
     const createArticleImageDto: CreateArticleImagePreDto = {
       articleId: result.id,
-      isComment: customBool.N,
       order: 1,
     };
     if (file) {
