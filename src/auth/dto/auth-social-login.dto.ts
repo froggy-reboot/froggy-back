@@ -27,6 +27,9 @@ export class AuthSocialLoginResDto {
   @ApiProperty({ example: 'adkhgddfasajfkljfdka' })
   jwtToken: string;
 
+  @ApiProperty({ example: 'adkhgddfasajfkljfdka' })
+  refreshToken: string;
+
   @ApiProperty({ type: () => User })
   user: ShowUserDto;
 }

@@ -45,11 +45,13 @@ export class ArticlesController {
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
   create(
     @Request() req,
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFile() file,
   ) {
+    console.log(req.user);
     return this.articlesService.create(createArticleDto, file);
   }
 
