@@ -17,9 +17,11 @@ export class Comment extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '1' })
   id: number;
+
   @Column({ nullable: false })
   @ApiProperty({ example: '11' })
-  article_id: number;
+  articleId: number;
+
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
   writer_id: number;
@@ -27,6 +29,7 @@ export class Comment extends EntityHelper {
   @Column({ nullable: false })
   @ApiProperty({ example: '내용입니다.' })
   content: string;
+
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   created_at: Date;
@@ -39,7 +42,7 @@ export class Comment extends EntityHelper {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'article_id' })
+  @JoinColumn({ name: 'articleId' })
   article: Article;
 
   @ManyToOne(() => User, (user) => user.id, {
