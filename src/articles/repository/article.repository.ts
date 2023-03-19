@@ -23,17 +23,17 @@ export class ArticlesRepository extends Repository<Article> {
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
-    // console.log(articles);
     return articles;
   }
 
   findArticle(id: number) {
-    const articleWithComments = this.repository
+    const articleWithImages = this.repository
       .createQueryBuilder('article')
-      .where('article.id =:id', { id })
-      // .leftJoinAndSelect('article.comments', 'comment')
+      .leftJoin('article.images', 'image')
+      .select(['article', 'image.url'])
       .loadRelationCountAndMap('article.comment_count', 'article.comments')
+      .where('article.id =:id', { id })
       .getOne();
-    return articleWithComments;
+    return articleWithImages;
   }
 }
