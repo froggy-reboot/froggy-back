@@ -30,6 +30,7 @@ export class ArticlesService {
     if (file) {
       this.articleImagesService.create(createArticleImageDto);
     }
+    return result;
   }
 
   findManyWithPagination(paginationOptions: IPaginationOptions) {
