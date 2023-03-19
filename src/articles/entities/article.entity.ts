@@ -17,7 +17,6 @@ import { ArticleImage } from 'src/article-images/entities/article-image.entity';
 export enum articleType {
   everything = '자유',
   question = '질문',
-  answer = '답변',
 }
 
 @Entity()
