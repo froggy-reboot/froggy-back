@@ -13,6 +13,7 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
+
     private commentImagesService: CommentImagesService,
   ) {}
   async create(createCommentDto: CreateCommentDto, file) {
