@@ -36,7 +36,14 @@ export class CommentsService {
       .createQueryBuilder('comment')
       .where('comment.articleId = :id', { id: articleId })
       .leftJoin('comment.user', 'user')
-      .select(['comment.id', 'comment.content', 'user.id', 'user.nickname'])
+      .leftJoin('comment.images', 'image')
+      .select([
+        'comment.id',
+        'comment.content',
+        'user.id',
+        'user.nickname',
+        'image.url',
+      ])
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
