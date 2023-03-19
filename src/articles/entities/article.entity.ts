@@ -56,7 +56,9 @@ export class Article extends EntityHelper {
   @OneToMany(() => Comment, (comment) => comment.article)
   comments: Comment[];
 
-  @OneToMany(() => ArticleImage, (articleImage) => articleImage.article)
+  @OneToMany(() => ArticleImage, (articleImage) => articleImage.article, {
+    cascade: true,
+  })
   images: ArticleImage[];
 
   @ManyToOne(() => User, (user) => user.comments)

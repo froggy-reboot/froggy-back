@@ -40,7 +40,9 @@ export class ArticleImage extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deletedAt: Date;
 
-  @ManyToOne(() => Article, (article) => article.images)
+  @ManyToOne(() => Article, (article) => article.images, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'articleId' })
   article: Article;
 }
