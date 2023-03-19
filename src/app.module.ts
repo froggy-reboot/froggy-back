@@ -96,8 +96,8 @@ import { CommentImagesModule } from './comment-images/comment-images.module';
     ArticlesModule,
     CommentsModule,
     RavelryUsersModule,
-    ArticleImagesModule,
-    CommentImagesModule,
+    // ArticleImagesModule,
+    // CommentImagesModule,
   ],
 })
 export class AppModule {}
