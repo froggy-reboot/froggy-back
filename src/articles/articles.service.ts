@@ -54,6 +54,6 @@ export class ArticlesService {
   }
 
   remove(id: number) {
-    return this.articleRepository.delete({ id });
+    return this.articleRepository.softDelete({ id });
   }
 }
