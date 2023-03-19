@@ -34,7 +34,7 @@ export class CommentsService {
   findByArticleId(articleId: number, paginationOptions: IPaginationOptions) {
     return this.commentRepository
       .createQueryBuilder('comment')
-      .where('comment.article_id = :id', { id: articleId })
+      .where('comment.articleId = :id', { id: articleId })
       .leftJoin('comment.user', 'user')
       .select(['comment.id', 'comment.content', 'user.id', 'user.nickname'])
       .limit(paginationOptions.limit)

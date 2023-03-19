@@ -19,7 +19,7 @@ export class ArticlesRepository extends Repository<Article> {
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname'])
       .leftJoin('article.comments', 'comment')
-      .loadRelationCountAndMap('article.comment_count', 'article.comments')
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
@@ -31,7 +31,7 @@ export class ArticlesRepository extends Repository<Article> {
       .createQueryBuilder('article')
       .leftJoin('article.images', 'image')
       .select(['article', 'image.url'])
-      .loadRelationCountAndMap('article.comment_count', 'article.comments')
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .where('article.id =:id', { id })
       .getOne();
     return articleWithImages;
