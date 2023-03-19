@@ -21,6 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   public validate(payload: any) {
     if (!payload.id) {
+      console.log('payload.id가 없습니다.');
       throw new UnauthorizedException();
     }
 

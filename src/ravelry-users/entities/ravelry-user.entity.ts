@@ -36,13 +36,13 @@ export class RavelryUser extends EntityHelper {
   refresh_token: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @Column('varchar', { length: 40, nullable: false })
   username: string;

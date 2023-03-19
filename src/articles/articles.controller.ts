@@ -17,6 +17,7 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import {
+  ApiBearerAuth,
   ApiConsumes,
   ApiProperty,
   ApiResponse,
@@ -43,13 +44,16 @@ export class ArticlesController {
   ) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
   create(
     @Request() req,
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFile() file,
   ) {
+    createArticleDto.writerId = req.user.id;
     return this.articlesService.create(createArticleDto, file);
   }
 
@@ -73,12 +77,13 @@ export class ArticlesController {
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
-    const userInfo = await this.usersService.findById(+article['writer_id']);
+    const userInfo = await this.usersService.findById(+article['writerId']);
     article['user'] = userInfo;
     return article;
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.OK)
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articlesService.update(+id, updateArticleDto);

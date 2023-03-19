@@ -77,7 +77,7 @@ export class User extends EntityHelper {
   profile_img: string;
 
   @Column('varchar', { length: 2084, nullable: true })
-  blog_url: string;
+  blogUrl: string;
 
   @Column({ type: 'enum', enum: role, nullable: true, default: role.customer })
   role!: role;
@@ -109,13 +109,13 @@ export class User extends EntityHelper {
   certify_hash: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];

@@ -6,7 +6,7 @@ import { articleType } from '../entities/article.entity';
 export class UpdateArticleDto extends PartialType(CreateArticleDto) {
   @ApiProperty({ example: '1' })
   @IsNotEmpty()
-  writer_id: number;
+  writerId: number;
 
   @ApiProperty({ example: '자유' })
   @IsOptional()

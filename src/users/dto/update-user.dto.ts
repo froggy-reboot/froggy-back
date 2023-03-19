@@ -45,7 +45,7 @@ export class UpdateUserDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  blog_url?: string | null;
+  blogUrl?: string | null;
 
   @ApiProperty()
   @IsOptional()

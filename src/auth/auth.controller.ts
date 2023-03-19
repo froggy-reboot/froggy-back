@@ -111,8 +111,6 @@ export class AuthController {
   }
 
   @Post('social/login')
-  @UseGuards(AuthGuard('jwt-refresh'))
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     type: AuthSocialLoginResDto,
@@ -122,9 +120,10 @@ export class AuthController {
     const getAccessTokenAndUserByIdResult =
       await this.service.getAccessTokenAndUserById(dto.userId);
 
-    const { jwtToken, user } = getAccessTokenAndUserByIdResult;
+    const { token, refreshToken, user } = getAccessTokenAndUserByIdResult;
     const resJson: AuthSocialLoginResDto = {
-      jwtToken: jwtToken,
+      jwtToken: token,
+      refreshToken,
       user: user,
     };
 

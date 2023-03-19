@@ -10,7 +10,7 @@ export class ShowArticlesDto {
   @ApiProperty({ example: '1' })
   @IsNotEmpty()
   @IsNumber()
-  writer_id: number;
+  writerId: number;
 
   @ApiProperty({ example: '0' })
   @IsNotEmpty()
@@ -39,7 +39,7 @@ export class ShowArticlesDto {
 
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   @IsDate()
-  created_at: Date;
+  createdAt: Date;
 }
 export class ShowOneArticleDto {
   @ApiProperty({ example: '1' })
@@ -48,7 +48,7 @@ export class ShowOneArticleDto {
   @ApiProperty({ example: '1' })
   @IsNotEmpty()
   @IsNumber()
-  writer_id: number;
+  writerId: number;
 
   @ApiProperty({ example: '0' })
   @IsNotEmpty()
@@ -75,5 +75,5 @@ export class ShowOneArticleDto {
 
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   @IsDate()
-  created_at: Date;
+  createdAt: Date;
 }

@@ -8,6 +8,6 @@ import { CommentImage } from './entities/comment-image.entity';
   imports: [TypeOrmModule.forFeature([CommentImage])],
   controllers: [CommentImagesController],
   providers: [CommentImagesService],
-  exports: [CommentImagesModule],
+  exports: [CommentImagesModule, CommentImagesService],
 })
 export class CommentImagesModule {}

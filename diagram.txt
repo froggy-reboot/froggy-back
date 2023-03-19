@@ -34,7 +34,7 @@ Table "user" {
   "enroll_type" enroll_type
   "birth" datetime
   "gender" gender
-  "blog_url" varchar(2084)
+  "blogUrl" varchar(2084)
   "role" role
   "isIntegrated" bool
   "isCertified" bool

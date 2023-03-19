@@ -226,13 +226,11 @@ export class AuthService {
     const user = await this.usersService.findOne({
       id: userId,
     });
-
-    const jwtToken = await this.jwtService.sign({
-      user: user,
-    });
+    const { token, refreshToken } = await this.getTokens(userId);
 
     return {
-      jwtToken,
+      token,
+      refreshToken,
       user,
     };
   }

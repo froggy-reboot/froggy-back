@@ -28,11 +28,11 @@ export class Article extends EntityHelper {
 
   @Column({ nullable: false })
   @ApiProperty({ example: '2' })
-  writer_id: number;
+  writerId: number;
 
   @Column({ nullable: false })
   @ApiProperty({ example: '자유' })
-  article_type: articleType;
+  articleType: articleType;
 
   @Column({ nullable: false, default: 0 })
   @ApiProperty({ example: '0' })
@@ -48,11 +48,11 @@ export class Article extends EntityHelper {
 
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
-  created_at: Date;
+  createdAt: Date;
 
   @DeleteDateColumn()
   @ApiProperty({ example: 'null' })
-  deleted_at: Date;
+  deletedAt: Date;
 
   @OneToMany(() => Comment, (comment) => comment.article)
   comments: Comment[];
@@ -61,6 +61,6 @@ export class Article extends EntityHelper {
   images: ArticleImage[];
 
   @ManyToOne(() => User, (user) => user.comments)
-  @JoinColumn({ name: 'writer_id' })
+  @JoinColumn({ name: 'writerId' })
   user: User;
 }
