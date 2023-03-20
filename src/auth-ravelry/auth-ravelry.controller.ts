@@ -37,13 +37,13 @@ export class AuthRavelryController {
   ) {}
 
   @Get('register')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   @ApiResponse({
-    status: 200,
+    status: 301,
     type: AuthSocialLoginUrlDto,
     description: 'Ravelry 로그인 창 url을 보내줍니다.',
   })
-  async register(@Req() req, @Res() res) {
+  async register() {
     const authorizationUri = await this.authRavelryService.getRedirectUrl();
     return authorizationUri;
   }
