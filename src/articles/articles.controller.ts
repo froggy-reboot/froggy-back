@@ -84,7 +84,6 @@ export class ArticlesController {
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  @HttpCode(HttpStatus.OK)
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articlesService.update(+id, updateArticleDto);
     // When the (unary) + operator is applied to a string,
@@ -92,6 +91,7 @@ export class ArticlesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string) {
     return this.articlesService.remove(+id);
   }
