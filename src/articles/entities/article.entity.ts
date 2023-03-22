@@ -53,7 +53,9 @@ export class Article extends EntityHelper {
   @ApiProperty({ example: 'null' })
   deletedAt: Date;
 
-  @OneToMany(() => Comment, (comment) => comment.article)
+  @OneToMany(() => Comment, (comment) => comment.article, {
+    cascade: true,
+  })
   comments: Comment[];
 
   @OneToMany(() => ArticleImage, (articleImage) => articleImage.article, {
