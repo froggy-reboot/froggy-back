@@ -20,7 +20,7 @@ export class ArticlesService {
     const result = await this.articleRepository.save(
       this.articleRepository.create(createArticleDto),
     );
-    if (file) {
+    if (file && file.location) {
       const createArticleImageDto: CreateArticleImageDto = {
         articleId: result.id,
         order: 1,
