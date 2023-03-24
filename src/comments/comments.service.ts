@@ -26,7 +26,7 @@ export class CommentsService {
         commentId: createCommentResult.id,
         url: file.location,
       };
-      this.commentImagesService.create(createCommentImageDto);
+      await this.commentImagesService.create(createCommentImageDto);
     }
     return createCommentResult;
   }
