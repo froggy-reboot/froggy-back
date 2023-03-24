@@ -20,15 +20,13 @@ export class ArticlesService {
     const result = await this.articleRepository.save(
       this.articleRepository.create(createArticleDto),
     );
-    console.log(result);
-
-    const createArticleImageDto: CreateArticleImageDto = {
-      articleId: result.id,
-      order: 1,
-      url: file.location,
-    };
     if (file) {
-      this.articleImagesService.create(createArticleImageDto);
+      const createArticleImageDto: CreateArticleImageDto = {
+        articleId: result.id,
+        order: 1,
+        url: file.location,
+      };
+      await this.articleImagesService.create(createArticleImageDto);
     }
     return result;
   }
