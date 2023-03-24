@@ -74,9 +74,15 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string, res: Response) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
+    if (article == null || article == undefined) {
+      return {
+        status: 400,
+        message: `${id}는 삭제되었거나, 없는 글입니다.`,
+      };
+    }
     const userInfo = await this.usersService.findById(+article['writerId']);
     article['user'] = userInfo;
     return article;
