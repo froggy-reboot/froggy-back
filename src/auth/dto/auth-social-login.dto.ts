@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Allow, IsNotEmpty } from 'class-validator';
+import { Allow, IsNotEmpty, IsNumber } from 'class-validator';
 import { Tokens } from 'src/social/tokens';
 import { ShowUserDto } from 'src/users/dto/show-user.dto';
 import { User } from 'src/users/entities/user.entity';
@@ -33,15 +33,17 @@ export class AuthSocialLoginResDto {
   @ApiProperty({ type: () => User })
   user: ShowUserDto;
 }
+
 export class AuthSocialLoginUrlDto {
   @ApiProperty({
     example: 'https://accounts.google.com/signin/oauth/error/v2....',
   })
   redirectUrl: string;
 }
-export class AuthSocialLoginIngResDto {
+export class AuthSocialLoginIngDto {
   @ApiProperty({
     example: '33',
   })
+  @IsNumber()
   userId: number;
 }

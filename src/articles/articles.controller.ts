@@ -74,7 +74,7 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
-  async findOne(@Param('id') id: string, res: Response) {
+  async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
     if (article == null || article == undefined) {
