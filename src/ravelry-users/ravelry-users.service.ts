@@ -10,11 +10,11 @@ import { RavelryUser } from './entities/ravelry-user.entity';
 export class RavelryUsersService {
   constructor(
     @InjectRepository(RavelryUser)
-    private usersRepository: Repository<RavelryUser>,
+    private ravelryUsersRepository: Repository<RavelryUser>,
   ) {}
   create(createRavelryUserDto: CreateRavelryUserDto) {
-    return this.usersRepository.save(
-      this.usersRepository.create(createRavelryUserDto),
+    return this.ravelryUsersRepository.save(
+      this.ravelryUsersRepository.create(createRavelryUserDto),
     );
   }
 
@@ -22,8 +22,10 @@ export class RavelryUsersService {
     return `This action returns all ravelryUsers`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ravelryUser`;
+  findOne(fields: EntityCondition<RavelryUser>) {
+    return this.ravelryUsersRepository.findOne({
+      where: fields,
+    });
   }
 
   update(id: number, updateRavelryUserDto: UpdateRavelryUserDto) {

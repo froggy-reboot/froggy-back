@@ -68,39 +68,41 @@ export class AuthRavelryController {
     const raverlyUserInfo =
       await this.authRavelryService.getUserInfoByAccessToken(accessToken);
 
-    await this.authRavelryService.saveAuthRavelryUser(
+    const ravelryUser = await this.authRavelryService.findOrCreateRavelryUser(
       raverlyUserInfo,
       accessToken,
     );
+    console.log('ravelryUser', ravelryUser);
 
     const socialData: SocialInterface = this.authRavelryService.genSocialData(
       raverlyUserInfo,
       accessToken,
     );
 
-    const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`http://localhost:3000/sign-in/ravelry/${userId}`);
+    const userId = await this.authService.findOrCreateUserByRavelryUserId(
+      ravelryUser,
+      socialData,
+    );
+    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
   }
 
   @Get('link/callback')
   async linkCallback(@Req() req, @Res() res) {
-    const accessToken = await this.authRavelryService.getAccessToken(req);
-
-    const raverlyUserInfo =
-      await this.authRavelryService.getUserInfoByAccessToken(accessToken);
-
-    await this.authRavelryService.saveAuthRavelryUser(
-      raverlyUserInfo,
-      accessToken,
-    );
-
-    const socialData: SocialInterface = this.authRavelryService.genSocialData(
-      raverlyUserInfo,
-      accessToken,
-    );
-
-    const userId = await this.authService.validateSocialLogin(socialData);
-    res.redirect(`http://localhost:3000/sign-in/ravelry/${userId}`);
+    // const accessToken = await this.authRavelryService.getAccessToken(req);
+    // const raverlyUserInfo =
+    //   await this.authRavelryService.getUserInfoByAccessToken(accessToken);
+    // await this.authRavelryService.saveAuthRavelryUser(
+    //   raverlyUserInfo,
+    //   accessToken,
+    // );
+    // const socialData: SocialInterface = this.authRavelryService.genSocialData(
+    //   raverlyUserInfo,
+    //   accessToken,
+    // );
+    // // const userId = await this.authService.findOrCreateUserByRavelryUserId(
+    // //   socialData,
+    // // );
+    // res.redirect(`http://localhost:3000/sign-in/ravelry/${userId}`);
   }
 
   @Post('link')

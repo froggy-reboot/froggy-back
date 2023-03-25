@@ -39,11 +39,6 @@ export class AuthGoogleController {
   getRegister() {
     const redirectUrl = this.authGoogleService.getRedirectUrl();
     return redirectUrl;
-    // const socialData = this.authGoogleService.getProfileByToken(loginDto);
-    // console.log(socialData);
-    // console.log(loginDto);
-    // return this.authService.register(createUserDto);
-    // return this.authService.validateSocialLogin('google', socialData);
   }
 
   @Get('callback')
@@ -55,7 +50,7 @@ export class AuthGoogleController {
       password: null,
     };
 
-    const userId = await this.authService.validateSocialLogin(socialData);
+    const userId = await this.authService.findOrCreateUser(socialData);
     res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
   }
 

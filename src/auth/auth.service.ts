@@ -98,7 +98,7 @@ export class AuthService {
     });
   }
 
-  async validateSocialLogin(
+  async findOrCreateUser(
     socialData: SocialInterface,
   ): Promise<{ userId: number }> {
     let user: User;
@@ -115,6 +115,26 @@ export class AuthService {
       userId = createdSocialUser.id;
     } else {
       userId = userByEmail.id;
+    }
+    return userId;
+  }
+
+  async findOrCreateUserByRavelryUserId(
+    ravelryUser,
+    socialData: SocialInterface,
+  ): Promise<{ userId: number }> {
+    let user: User;
+
+    const findUserResult = await this.usersService.findOne({
+      ravelryUserId: ravelryUser.id,
+    });
+
+    let userId;
+    if (!findUserResult) {
+      const createdSocialUser = await this.createSocialUser(socialData);
+      userId = createdSocialUser.id;
+    } else {
+      userId = findUserResult.id;
     }
     return userId;
   }

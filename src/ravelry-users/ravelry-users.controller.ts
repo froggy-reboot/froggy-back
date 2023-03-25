@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { RavelryUsersService } from './ravelry-users.service';
 import { CreateRavelryUserDto } from './dto/create-ravelry-user.dto';
 import { UpdateRavelryUserDto } from './dto/update-ravelry-user.dto';
@@ -19,11 +27,14 @@ export class RavelryUsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ravelryUsersService.findOne(+id);
+    // return this.ravelryUsersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRavelryUserDto: UpdateRavelryUserDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateRavelryUserDto: UpdateRavelryUserDto,
+  ) {
     return this.ravelryUsersService.update(+id, updateRavelryUserDto);
   }
 

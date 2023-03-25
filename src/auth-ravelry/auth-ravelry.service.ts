@@ -7,6 +7,7 @@ import { enrollType } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
+import { ravelryUserDto } from './dto/auth-ravelry.dto';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -60,7 +61,24 @@ export class AuthRavelryService {
         }),
       );
     const { data } = await firstValueFrom(request);
-    return data.user;
+    const raverlyUserInfo: ravelryUserDto = data.user;
+    return raverlyUserInfo;
+  }
+
+  async findOrCreateRavelryUser(raverlyUserInfo: ravelryUserDto, accessToken) {
+    const ravelryUser = await this.ravelryUsersService.findOne({
+      raverlyId: raverlyUserInfo.id,
+    });
+
+    if (!ravelryUser) {
+      const createRaverlyUserResult = await this.ravelryUsersService.create({
+        raverlyId: raverlyUserInfo.id,
+        token: accessToken,
+        username: raverlyUserInfo.username,
+      });
+      return createRaverlyUserResult;
+    }
+    return ravelryUser;
   }
 
   async saveAuthRavelryUser(raverlyUserInfo, accessToken) {

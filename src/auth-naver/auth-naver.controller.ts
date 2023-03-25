@@ -52,7 +52,7 @@ export class AuthNaverController {
     };
     console.log(socialData);
 
-    const userId = await this.authService.validateSocialLogin(socialData);
+    const userId = await this.authService.findOrCreateUser(socialData);
     res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
   }
 }
