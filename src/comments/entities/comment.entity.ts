@@ -42,14 +42,12 @@ export class Comment extends EntityHelper {
 
   @ManyToOne(() => Article, (article) => article.comments, {
     nullable: false,
-    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'articleId' })
   article: Article;
 
   @ManyToOne(() => User, (user) => user.id, {
     nullable: false,
-    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'writerId' })
   user: User;

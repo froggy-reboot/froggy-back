@@ -3,6 +3,7 @@ import { ArticlesService } from './articles.service';
 import { ArticlesController } from './articles.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Article } from './entities/article.entity';
+import { Comment } from '../comments/entities/comment.entity';
 import { ArticlesRepository } from './repository/article.repository';
 import { UsersModule } from '../users/users.module';
 import { MulterModule } from '@nestjs/platform-express';
@@ -13,7 +14,7 @@ import * as multerS3 from 'multer-s3';
 import { ArticleImagesModule } from 'src/article-images/article-images.module';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Article]),
+    TypeOrmModule.forFeature([Article, Comment]),
     UsersModule,
     ArticleImagesModule,
     MulterModule.registerAsync({

@@ -7,12 +7,16 @@ import { Article } from './entities/article.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticleImagesService } from 'src/article-images/article-images.service';
 import { CreateArticleImageDto } from 'src/article-images/dto/create-article-image.dto';
+import { Comment } from '../comments/entities/comment.entity';
 
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
+
+    @InjectRepository(Comment)
+    private commentRepository: Repository<Comment>,
 
     private articleImagesService: ArticleImagesService,
   ) {}
@@ -52,6 +56,11 @@ export class ArticlesService {
   }
 
   remove(id: number) {
+    // 아래 방법으로는 댓글까지 soft delete가 안됨
+    // return this.articleRepository.softDelete({ id });
+    const comments = this.commentRepository.softDelete({
+      articleId: id,
+    });
     return this.articleRepository.softDelete({ id });
   }
 }

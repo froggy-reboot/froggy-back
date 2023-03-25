@@ -55,6 +55,7 @@ export class Article extends EntityHelper {
 
   @OneToMany(() => Comment, (comment) => comment.article, {
     cascade: true,
+    onDelete: 'CASCADE',
   })
   comments: Comment[];
 
