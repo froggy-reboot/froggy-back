@@ -6,19 +6,11 @@ import {
   AuthEmailLoginDto,
   AuthEmailLoginResDto,
 } from './dto/auth-email-login.dto';
-import { AuthUpdateDto } from './dto/auth-update.dto';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
-import { RoleEnum } from 'src/roles/roles.enum';
-import { StatusEnum } from 'src/statuses/statuses.enum';
 import * as crypto from 'crypto';
-import { plainToClass } from 'class-transformer';
-import { Status } from 'src/statuses/entities/status.entity';
-import { Role } from 'src/roles/entities/role.entity';
-import { AuthProvidersEnum } from './auth-providers.enum';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
-import { ShowUserDto } from 'src/users/dto/show-user.dto';
 import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthRefreshResDto } from './dto/auth-refresh.dto';
@@ -127,15 +119,18 @@ export class AuthService {
     return userId;
   }
 
-  async genJwtToken(userByEmail, socialData) {
-    if (userByEmail.enroll_type === socialData.enroll_type) {
-      const jwtToken = await this.jwtService.sign({
-        id: userByEmail.id,
-      });
-      return jwtToken;
-    } else {
-      //TODO: 소셜과 일반 로그인 연동
-    }
+  async getUserAuthInfoByUserId(userId: number) {
+    const { token, refreshToken } = await this.getTokens(userId);
+    await this.usersService.update(userId, { refreshToken: refreshToken });
+    const user = await this.usersService.findOne({
+      id: userId,
+    });
+
+    return {
+      token,
+      refreshToken,
+      user,
+    };
   }
 
   async getTokens(userId: number) {
@@ -220,19 +215,6 @@ export class AuthService {
       },
     });
     return;
-  }
-
-  async getAccessTokenAndUserById(userId) {
-    const user = await this.usersService.findOne({
-      id: userId,
-    });
-    const { token, refreshToken } = await this.getTokens(userId);
-
-    return {
-      token,
-      refreshToken,
-      user,
-    };
   }
 
   async checkExistEmail(dto) {

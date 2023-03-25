@@ -10,7 +10,6 @@ import fileConfig from './config/file.config';
 
 import kakaoConfig from './config/kakao.config';
 import googleConfig from './config/google.config';
-import twitterConfig from './config/twitter.config';
 import naverConfig from './config/naver.config';
 
 import * as path from 'path';
@@ -51,7 +50,6 @@ import { CommentImagesModule } from './comment-images/comment-images.module';
         fileConfig,
         kakaoConfig,
         googleConfig,
-        twitterConfig,
         naverConfig,
       ],
       envFilePath: ['.env'],
