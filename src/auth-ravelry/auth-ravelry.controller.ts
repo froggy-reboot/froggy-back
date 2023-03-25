@@ -82,6 +82,27 @@ export class AuthRavelryController {
     res.redirect(`http://localhost:3000/sign-in/ravelry/${userId}`);
   }
 
+  @Get('link/callback')
+  async linkCallback(@Req() req, @Res() res) {
+    const accessToken = await this.authRavelryService.getAccessToken(req);
+
+    const raverlyUserInfo =
+      await this.authRavelryService.getUserInfoByAccessToken(accessToken);
+
+    await this.authRavelryService.saveAuthRavelryUser(
+      raverlyUserInfo,
+      accessToken,
+    );
+
+    const socialData: SocialInterface = this.authRavelryService.genSocialData(
+      raverlyUserInfo,
+      accessToken,
+    );
+
+    const userId = await this.authService.validateSocialLogin(socialData);
+    res.redirect(`http://localhost:3000/sign-in/ravelry/${userId}`);
+  }
+
   @Post('link')
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
