@@ -21,6 +21,5 @@ import { ArticlesModule } from 'src/articles/articles.module';
   ],
   controllers: [CommentsController],
   providers: [CommentsService, ConfigModule, ConfigService],
-  exports: [CommentsService],
 })
 export class CommentsModule {}
