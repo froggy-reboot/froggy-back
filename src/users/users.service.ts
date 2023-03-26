@@ -23,7 +23,11 @@ export class UsersService {
     return this.usersRepository
       .createQueryBuilder('user')
       .where('user.id =:id', { id })
-      .select('user.nickname', 'writer_nickname')
+      .select('user.nickname as writerNickname')
+      .select([
+        'user.nickname as writerNickname',
+        'user.profileImg as writerProfileImg',
+      ])
       .getRawOne();
   }
 

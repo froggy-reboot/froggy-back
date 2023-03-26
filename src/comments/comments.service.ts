@@ -58,6 +58,7 @@ export class CommentsService {
         'comment.content',
         'user.id',
         'user.nickname',
+        'user.profileImg',
         'image.url',
       ])
       .limit(paginationOptions.limit)
