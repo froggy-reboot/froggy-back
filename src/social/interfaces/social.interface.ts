@@ -1,8 +1,10 @@
+import { customBool } from 'src/ravelry-users/entities/ravelry-user.entity';
 import { enrollType } from '../../users/entities/user.entity';
 
 export interface SocialInterface {
   email: string;
-  enroll_type: enrollType;
+  enrollType: enrollType;
   password: string;
-  raverly_token?: string;
+  isRavelryIntegrated?: customBool;
+  ravelryUserId?: number;
 }

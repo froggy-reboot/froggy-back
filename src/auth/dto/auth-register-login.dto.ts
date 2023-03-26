@@ -28,5 +28,5 @@ export class AuthRegisterLoginDto {
   @ApiProperty({ enum: enrollType, example: 'local' })
   @IsNotEmpty()
   @IsEnum(enrollType)
-  enroll_type: enrollType;
+  enrollType: enrollType;
 }

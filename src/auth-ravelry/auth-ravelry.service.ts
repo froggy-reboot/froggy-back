@@ -8,6 +8,7 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
 import { ravelryUserDto } from './dto/auth-ravelry.dto';
+import { customBool } from 'src/ravelry-users/entities/ravelry-user.entity';
 const {
   ClientCredentials,
   ResourceOwnerPassword,
@@ -113,10 +114,10 @@ export class AuthRavelryService {
     const raverlyEmail = raverlyUserData.id + '@raverly.com';
 
     const socialData: SocialInterface = {
-      enroll_type: <enrollType>'raverly',
+      enrollType: enrollType.ravelry,
       email: raverlyEmail,
       password: null,
-      raverly_token: accessToken,
+      isRavelryIntegrated: customBool.Y,
     };
 
     return socialData;

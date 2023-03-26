@@ -45,7 +45,7 @@
 //   createdAt: Date;
 
 //   @UpdateDateColumn()
-//   updated_at: Date;
+//   updatedAt: Date;
 
 //   @DeleteDateColumn()
 //   deletedAt: Date;

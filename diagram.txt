@@ -1,6 +1,6 @@
 
 
-enum enroll_type {
+enum enrollType {
   local
   google
   raverly
@@ -31,7 +31,7 @@ Table "user" {
   "password" varchar(80) [not null]
   "raverly_token" varchar(100) 
   "raverly_refresh_token" varchar(100) 
-  "enroll_type" enroll_type
+  "enrollType" enrollType
   "birth" datetime
   "gender" gender
   "blogUrl" varchar(2084)

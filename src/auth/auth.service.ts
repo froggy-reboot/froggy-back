@@ -31,7 +31,7 @@ export class AuthService {
   ): Promise<AuthEmailLoginResDto> {
     const user = await this.usersService.findOne({
       email: loginDto.email,
-      enroll_type: enrollType.local,
+      enrollType: enrollType.local,
     });
 
     if (!user) {
@@ -46,7 +46,7 @@ export class AuthService {
       );
     }
 
-    if (user.is_certified === 'N') {
+    if (user.isCertified === 'N') {
       throw new HttpException(
         {
           status: HttpStatus.UNAUTHORIZED,
@@ -106,7 +106,7 @@ export class AuthService {
 
     const userByEmail = await this.usersService.findOne({
       email: socialEmail,
-      enroll_type: socialData.enroll_type,
+      enrollType: socialData.enrollType,
     });
 
     let userId;
@@ -189,7 +189,7 @@ export class AuthService {
     const createUserResult = await this.usersService.create({
       email: socialData.email,
       password: socialData.password,
-      enroll_type: socialData.enroll_type,
+      enrollType: socialData.enrollType,
       nickname: randomNickname,
     });
 
@@ -222,10 +222,10 @@ export class AuthService {
 
     const user = await this.usersService.create({
       email: dto.email,
-      enroll_type: dto.enroll_type,
+      enrollType: dto.enrollType,
       password: hash,
       nickname: dto.nickname,
-      certify_hash: hash4MailCertify,
+      certifyHash: hash4MailCertify,
     });
 
     await this.mailService.userSignUp({
@@ -277,7 +277,7 @@ export class AuthService {
 
   async confirmEmail(hash: string): Promise<void> {
     const user = await this.usersService.findOne({
-      certify_hash: hash,
+      certifyHash: hash,
     });
 
     if (!user) {

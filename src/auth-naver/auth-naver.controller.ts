@@ -46,7 +46,7 @@ export class AuthNaverController {
   async callback(@Req() req, @Res() res) {
     // console.log(req.user);
     const socialData: SocialInterface = {
-      enroll_type: enrollType.naver,
+      enrollType: enrollType.naver,
       email: req.user.email,
       password: null,
     };

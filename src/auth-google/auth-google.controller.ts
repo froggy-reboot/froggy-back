@@ -45,7 +45,7 @@ export class AuthGoogleController {
   @UseGuards(AuthGuard('google'))
   async callback(@Req() req, @Res() res) {
     const socialData: SocialInterface = {
-      enroll_type: enrollType.google,
+      enrollType: enrollType.google,
       email: req.user.email,
       password: null,
     };

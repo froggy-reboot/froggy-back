@@ -25,12 +25,12 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'local' })
   @IsNotEmpty()
-  enroll_type: enrollType;
+  enrollType: enrollType;
 
   @ApiProperty({ example: '멋진기린321' })
   @IsNotEmpty()
   nickname: string;
 
   @IsOptional()
-  certify_hash?: string;
+  certifyHash?: string;
 }

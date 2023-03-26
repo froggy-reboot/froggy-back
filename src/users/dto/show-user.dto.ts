@@ -34,7 +34,7 @@ export class ShowUserDto {
 
   @ApiProperty({ example: 'local' })
   @IsNotEmpty()
-  enroll_type: enrollType;
+  enrollType: enrollType;
 
   @ApiProperty({ type: Date })
   @IsDate()

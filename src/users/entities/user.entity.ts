@@ -65,7 +65,7 @@ export class User extends EntityHelper {
   nickname: string;
 
   @Column({ type: 'enum', enum: enrollType, nullable: false })
-  enroll_type!: enrollType;
+  enrollType!: enrollType;
 
   @Column({ nullable: true })
   birth: Date;
@@ -74,7 +74,7 @@ export class User extends EntityHelper {
   gender!: gender;
 
   @Column({ type: 'varchar', nullable: true })
-  profile_img: string;
+  profileImg: string;
 
   @Column('varchar', { length: 2084, nullable: true })
   blogUrl: string;
@@ -103,16 +103,16 @@ export class User extends EntityHelper {
     nullable: false,
     default: customBool.N,
   })
-  is_certified!: customBool;
+  isCertified!: customBool;
 
   @Column({ type: 'varchar', length: 300 })
-  certify_hash: string;
+  certifyHash: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
   deletedAt: Date;

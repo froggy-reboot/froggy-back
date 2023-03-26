@@ -46,7 +46,7 @@ export class AuthKakaoController {
   async callback(@Req() req, @Res() res) {
     // console.log(req.user);
     const socialData: SocialInterface = {
-      enroll_type: enrollType.kakao,
+      enrollType: enrollType.kakao,
       email: req.user.email,
       password: null,
     };
