@@ -29,7 +29,6 @@ import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FilesService } from 'src/files/files.service';
 
 @ApiTags('게시판 글')
 @Controller({

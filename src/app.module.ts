@@ -17,8 +17,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// import { AuthFacebookModule } from './auth-facebook/auth-facebook.module';
-// import { AuthTwitterModule } from './auth-twitter/auth-twitter.module';
 import { AuthGoogleModule } from './auth-google/auth-google.module';
 import { AuthNaverModule } from './auth-naver/auth-naver.module';
 import { AuthRavelryModule } from './auth-ravelry/auth-ravelry.module';
@@ -35,8 +33,6 @@ import { ArticlesModule } from './articles/articles.module';
 import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
 import { CommentsModule } from './comments/comments.module';
 import { RavelryUsersModule } from './ravelry-users/ravelry-users.module';
-import { ArticleImagesModule } from './article-images/article-images.module';
-import { CommentImagesModule } from './comment-images/comment-images.module';
 
 @Module({
   imports: [

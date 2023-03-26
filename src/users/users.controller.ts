@@ -57,11 +57,10 @@ export class UsersController {
     status: 406,
     description: 'jwt의 유저 정보와 변경을 위한 user 정보가 다른 경우',
   })
-  @HttpCode(HttpStatus.OK)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
-  async update(
+  update(
     @Request() req,
     @Param('id') id: number,
     @Body() updateProfileDto: UpdateUserDto,
@@ -80,6 +79,7 @@ export class UsersController {
     }
     if (file && file.location) {
       updateProfileDto.profileImg = file.location;
+      console.log('#### file location: ', file.location);
     }
     return this.usersService.update(id, updateProfileDto);
   }
