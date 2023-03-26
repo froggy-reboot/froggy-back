@@ -10,6 +10,8 @@ import {
   UploadedFile,
   UseGuards,
   Request,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -69,8 +71,48 @@ export class CommentsController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: 200,
+    description: '댓글 수정 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 댓글 작성자가 다른 경우',
+  })
+  @ApiResponse({
+    status: 400,
+    description: '댓글이 존재하지 않는 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
+  async update(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() updateCommentDto: UpdateCommentDto,
+  ) {
+    const comment = await this.commentsService.findOne(+id);
+    if (!comment) {
+      throw new HttpException(
+        {
+          status: 400,
+          errors: {
+            msg: 'comment is not exist',
+          },
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    if (comment.writerId !== req.user.id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            msg: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     return this.commentsService.update(+id, updateCommentDto);
   }
 

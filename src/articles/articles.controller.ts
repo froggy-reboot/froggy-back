@@ -12,6 +12,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Request,
+  HttpException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -79,7 +80,7 @@ export class ArticlesController {
     if (article == null || article == undefined) {
       return {
         status: 400,
-        message: `${id}는 삭제되었거나, 없는 글입니다.`,
+        msg: `${id}는 삭제되었거나, 없는 글입니다.`,
       };
     }
     const userInfo = await this.usersService.findById(+article['writerId']);
@@ -88,8 +89,36 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: 200,
+    description: '글 수정 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
+  })
+  @ApiResponse({
+    status: 400,
+    description: '글이 존재하지 않는 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+  async update(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() updateArticleDto: UpdateArticleDto,
+  ) {
+    const article = await this.articlesService.findOne(+id);
+    if (article.writerId !== req.user.id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            msg: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     return this.articlesService.update(+id, updateArticleDto);
     // When the (unary) + operator is applied to a string,
     // it tries to convert the string to a numeric value.

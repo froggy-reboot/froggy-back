@@ -71,14 +71,19 @@ export class CommentsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} comment`;
+    return this.commentRepository.findOne({ where: { id: id } });
   }
 
   update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+    return this.commentRepository.save(
+      this.commentRepository.create({
+        id,
+        ...updateCommentDto,
+      }),
+    );
   }
 
   remove(id: number) {
-    return `This action removes a #${id} comment`;
+    return this.commentRepository.softDelete({ id });
   }
 }
