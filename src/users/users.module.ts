@@ -19,7 +19,7 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
     }),
   ],
   controllers: [UsersController],
-  providers: [IsExist, IsNotExist, UsersService],
+  providers: [IsExist, IsNotExist, UsersService, ConfigModule, ConfigService],
   exports: [UsersService],
 })
 export class UsersModule {}

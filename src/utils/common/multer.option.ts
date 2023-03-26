@@ -2,7 +2,6 @@ import { ConfigService } from '@nestjs/config';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import * as AWS from 'aws-sdk';
 import * as multerS3 from 'multer-s3';
-import path from 'path';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
