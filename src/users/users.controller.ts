@@ -11,12 +11,20 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Request,
+  HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from './entities/user.entity';
 
 @ApiTags('Users')
 @Controller({
@@ -39,15 +47,37 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: User,
+    description: 'user update 성공, user 객체 반환',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 변경을 위한 user 정보가 다른 경우',
+  })
   @HttpCode(HttpStatus.OK)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
   async update(
+    @Request() req,
     @Param('id') id: number,
     @Body() updateProfileDto: UpdateUserDto,
     @UploadedFile() file,
   ) {
+    if (req.user.id !== id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            different: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     if (file && file.location) {
       updateProfileDto.profileImg = file.location;
     }
