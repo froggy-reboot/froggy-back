@@ -14,7 +14,12 @@ import {
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -32,6 +37,14 @@ export class CommentsController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 201,
+    description: '댓글 작성 성공',
+  })
+  @ApiResponse({
+    status: 422,
+    description: '글이 존재하지 않습니다.',
+  })
   create(
     @Request() req,
     @Param('articleId') articleId: number,

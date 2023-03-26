@@ -23,5 +23,6 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
   ],
   controllers: [ArticlesController],
   providers: [ArticlesService, ArticlesRepository, ConfigModule, ConfigService],
+  exports: [ArticlesService],
 })
 export class ArticlesModule {}

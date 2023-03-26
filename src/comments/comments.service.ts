@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,16 +7,32 @@ import { Comment } from './entities/comment.entity';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { CommentImagesService } from 'src/comment-images/comment-images.service';
 import { CreateCommentImageDto } from 'src/comment-images/dto/create-comment-image.dto';
+import { ArticlesService } from 'src/articles/articles.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
-
+    private articleService: ArticlesService,
     private commentImagesService: CommentImagesService,
   ) {}
   async create(createCommentDto: CreateCommentDto, file) {
+    const targetArticle = await this.articleService.findOne(
+      createCommentDto.articleId,
+    );
+    if (!targetArticle) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          errors: {
+            message: '해당 게시글이 존재하지 않습니다.',
+          },
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
     const createCommentResult = await this.commentRepository.save(
       this.commentRepository.create(createCommentDto),
     );
