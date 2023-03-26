@@ -48,6 +48,9 @@ export class UsersController {
     @Body() updateProfileDto: UpdateUserDto,
     @UploadedFile() file,
   ) {
+    if (file && file.location) {
+      updateProfileDto.profileImg = file.location;
+    }
     return this.usersService.update(id, updateProfileDto);
   }
 
