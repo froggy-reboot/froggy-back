@@ -48,6 +48,9 @@ export class UsersController {
 
   @Patch(':id')
   @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     type: User,
@@ -57,9 +60,6 @@ export class UsersController {
     status: 406,
     description: 'jwt의 유저 정보와 변경을 위한 user 정보가 다른 경우',
   })
-  @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file'))
-  @UseGuards(AuthGuard('jwt'))
   update(
     @Request() req,
     @Param('id') id: number,
