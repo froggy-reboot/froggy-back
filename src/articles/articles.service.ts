@@ -20,17 +20,19 @@ export class ArticlesService {
 
     private articleImagesService: ArticleImagesService,
   ) {}
-  async create(createArticleDto: CreateArticleDto, file) {
+  async create(createArticleDto: CreateArticleDto, files) {
     const result = await this.articleRepository.save(
       this.articleRepository.create(createArticleDto),
     );
-    if (file && file.location) {
-      const createArticleImageDto: CreateArticleImageDto = {
-        articleId: result.id,
-        order: 1,
-        url: file.location,
-      };
-      await this.articleImagesService.create(createArticleImageDto);
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const createArticleImageDto: CreateArticleImageDto = {
+          articleId: result.id,
+          order: i + 1,
+          url: files[i].location,
+        };
+        await this.articleImagesService.create(createArticleImageDto);
+      }
     }
     return result;
   }

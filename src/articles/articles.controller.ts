@@ -13,9 +13,13 @@ import {
   UseInterceptors,
   Request,
   HttpException,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/create-article.dto';
+import {
+  CreateArticleDto,
+  CreateArticleResDto,
+} from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
@@ -29,7 +33,7 @@ import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -46,15 +50,20 @@ export class ArticlesController {
   @Post()
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 201,
+    type: CreateArticleResDto,
+    description: '글 작성 성공!',
+  })
   create(
     @Request() req,
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFile() file,
+    @UploadedFiles() files,
   ) {
     createArticleDto.writerId = req.user.id;
-    return this.articlesService.create(createArticleDto, file);
+    return this.articlesService.create(createArticleDto, files);
   }
 
   @Get('/pages/:page')
