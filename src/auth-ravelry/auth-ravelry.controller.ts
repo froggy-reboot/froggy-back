@@ -66,17 +66,18 @@ export class AuthRavelryController {
 
     const ravelryUserInfo =
       await this.authRavelryService.getUserInfoByAccessToken(accessToken);
-    console.log('ravelryUserInfo', ravelryUserInfo);
+    console.log('ravelryUserInfoTest', ravelryUserInfo);
 
     const ravelryUser = await this.authRavelryService.findOrCreateRavelryUser(
       ravelryUserInfo,
       accessToken,
     );
-    console.log('ravelryUser', ravelryUser);
+    console.log('ravelryUserTest', ravelryUser);
 
     const socialData: SocialInterface =
       this.authRavelryService.genSocialData(ravelryUser);
 
+    console.log('socialDataTest', socialData);
     const userId = await this.authService.findOrCreateUserByRavelryUserId(
       ravelryUser,
       socialData,

@@ -208,6 +208,7 @@ export class AuthService {
       enrollType: socialData.enrollType,
       nickname: randomNickname,
       ravelryUserId: socialData.ravelryUserId,
+      isCertified: socialData.isCertified,
     });
 
     const user = await this.usersService.findOne({

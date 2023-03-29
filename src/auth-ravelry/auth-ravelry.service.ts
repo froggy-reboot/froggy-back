@@ -121,6 +121,8 @@ export class AuthRavelryService {
       ravelryUserId: ravelryUser.id,
       isCertified: customBool.Y,
     };
+    console.log('gen social data result :', socialData);
+    console.log('type of raverlyUserId', typeof socialData.ravelryUserId);
 
     return socialData;
   }
