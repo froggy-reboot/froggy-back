@@ -111,14 +111,15 @@ export class AuthRavelryService {
     return client;
   }
   genSocialData(ravelryUser) {
-    const ravelryEmail = ravelryUser.ravelry + '@ravelry.com';
+    const ravelryEmail = ravelryUser.ravelryId + '@ravelry.com';
 
     const socialData: SocialInterface = {
       enrollType: enrollType.ravelry,
       email: ravelryEmail,
       password: null,
       isRavelryIntegrated: customBool.Y,
-      ravelryUserId: ravelryUser.ravelryId,
+      ravelryUserId: ravelryUser.id,
+      isCertified: customBool.Y,
     };
 
     return socialData;

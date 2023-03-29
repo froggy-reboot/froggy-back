@@ -7,4 +7,5 @@ export interface SocialInterface {
   password: string;
   isRavelryIntegrated?: customBool;
   ravelryUserId?: number;
+  isCertified?: customBool;
 }
