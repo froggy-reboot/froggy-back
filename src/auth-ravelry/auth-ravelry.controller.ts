@@ -21,7 +21,6 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
-import { enrollType } from 'src/users/entities/user.entity';
 import { AuthRavelryService } from './auth-ravelry.service';
 import { AuthRavelryLoginDto } from './dto/auth-ravelry.dto';
 
@@ -54,7 +53,7 @@ export class AuthRavelryController {
     status: 200,
     type: AuthSocialLoginUrlDto,
     description:
-      'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 http://localhost:3000/sign-in/ravelry/${userId}으로 리다이렉트 됩니다.',
+      'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 http://localhost:3000/sign-in/social/${userId}으로 리다이렉트 됩니다.',
   })
   async getRedirectUrl(@Req() req, @Res() res) {
     const authorizationUri = await this.authRavelryService.getRedirectUrl();
@@ -65,19 +64,18 @@ export class AuthRavelryController {
   async callback(@Req() req, @Res() res) {
     const accessToken = await this.authRavelryService.getAccessToken(req);
 
-    const raverlyUserInfo =
+    const ravelryUserInfo =
       await this.authRavelryService.getUserInfoByAccessToken(accessToken);
+    console.log('ravelryUserInfo', ravelryUserInfo);
 
     const ravelryUser = await this.authRavelryService.findOrCreateRavelryUser(
-      raverlyUserInfo,
+      ravelryUserInfo,
       accessToken,
     );
     console.log('ravelryUser', ravelryUser);
 
-    const socialData: SocialInterface = this.authRavelryService.genSocialData(
-      raverlyUserInfo,
-      accessToken,
-    );
+    const socialData: SocialInterface =
+      this.authRavelryService.genSocialData(ravelryUser);
 
     const userId = await this.authService.findOrCreateUserByRavelryUserId(
       ravelryUser,
@@ -86,17 +84,34 @@ export class AuthRavelryController {
     res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
   }
 
+  @Get('test')
+  async test(@Body('ravelryId') ravelryId: string) {
+    const ravelryUserInfo = { id: ravelryId };
+    const ravelryUser = await this.authRavelryService.findOrCreateRavelryUser(
+      ravelryUserInfo,
+      'ddd',
+    );
+
+    const socialData: SocialInterface =
+      this.authRavelryService.genSocialData(ravelryUser);
+
+    const userId = await this.authService.findOrCreateUserByRavelryUserId(
+      ravelryUser,
+      socialData,
+    );
+  }
+
   @Get('link/callback')
   async linkCallback(@Req() req, @Res() res) {
     // const accessToken = await this.authRavelryService.getAccessToken(req);
-    // const raverlyUserInfo =
+    // const ravelryUserInfo =
     //   await this.authRavelryService.getUserInfoByAccessToken(accessToken);
     // await this.authRavelryService.saveAuthRavelryUser(
-    //   raverlyUserInfo,
+    //   ravelryUserInfo,
     //   accessToken,
     // );
     // const socialData: SocialInterface = this.authRavelryService.genSocialData(
-    //   raverlyUserInfo,
+    //   ravelryUserInfo,
     //   accessToken,
     // );
     // // const userId = await this.authService.findOrCreateUserByRavelryUserId(

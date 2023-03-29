@@ -33,4 +33,7 @@ export class CreateUserDto {
 
   @IsOptional()
   certifyHash?: string;
+
+  @IsOptional()
+  ravelryUserId?: number;
 }

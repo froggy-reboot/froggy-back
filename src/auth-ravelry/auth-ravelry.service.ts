@@ -62,31 +62,31 @@ export class AuthRavelryService {
         }),
       );
     const { data } = await firstValueFrom(request);
-    const raverlyUserInfo: ravelryUserDto = data.user;
-    return raverlyUserInfo;
+    const ravelryUserInfo: ravelryUserDto = data.user;
+    return ravelryUserInfo;
   }
 
-  async findOrCreateRavelryUser(raverlyUserInfo: ravelryUserDto, accessToken) {
+  async findOrCreateRavelryUser(ravelryUserInfo, accessToken) {
     const ravelryUser = await this.ravelryUsersService.findOne({
-      raverlyId: raverlyUserInfo.id,
+      ravelryId: ravelryUserInfo.id,
     });
 
     if (!ravelryUser) {
-      const createRaverlyUserResult = await this.ravelryUsersService.create({
-        raverlyId: raverlyUserInfo.id,
+      const createRavelryUserResult = await this.ravelryUsersService.create({
+        ravelryId: ravelryUserInfo.id,
         token: accessToken,
-        username: raverlyUserInfo.username,
+        username: ravelryUserInfo.username,
       });
-      return createRaverlyUserResult;
+      return createRavelryUserResult;
     }
     return ravelryUser;
   }
 
-  async saveAuthRavelryUser(raverlyUserInfo, accessToken) {
+  async saveAuthRavelryUser(ravelryUserInfo, accessToken) {
     await this.ravelryUsersService.create({
-      raverlyId: raverlyUserInfo.id,
+      ravelryId: ravelryUserInfo.id,
       token: accessToken,
-      username: raverlyUserInfo.username,
+      username: ravelryUserInfo.username,
     });
   }
 
@@ -110,14 +110,15 @@ export class AuthRavelryService {
     const client = new AuthorizationCode(config);
     return client;
   }
-  genSocialData(raverlyUserData, accessToken) {
-    const raverlyEmail = raverlyUserData.id + '@raverly.com';
+  genSocialData(ravelryUser) {
+    const ravelryEmail = ravelryUser.ravelry + '@ravelry.com';
 
     const socialData: SocialInterface = {
       enrollType: enrollType.ravelry,
-      email: raverlyEmail,
+      email: ravelryEmail,
       password: null,
       isRavelryIntegrated: customBool.Y,
+      ravelryUserId: ravelryUser.ravelryId,
     };
 
     return socialData;
