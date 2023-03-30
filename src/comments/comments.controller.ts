@@ -118,8 +118,28 @@ export class CommentsController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: '삭제 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 댓글 작성자가 다른 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Request() req) {
+    const comment = await this.commentsService.findOne(+id);
+    if (comment.writerId !== req.user.id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            msg: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     return this.commentsService.remove(+id);
   }
 }
