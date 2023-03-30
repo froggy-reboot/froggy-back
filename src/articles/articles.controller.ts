@@ -135,7 +135,7 @@ export class ArticlesController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Request() req) {
     return this.articlesService.remove(+id);
   }
 }
