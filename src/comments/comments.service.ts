@@ -56,6 +56,7 @@ export class CommentsService {
       .select([
         'comment.id',
         'comment.content',
+        'comment.createdAt',
         'user.id',
         'user.nickname',
         'user.profileImg',
