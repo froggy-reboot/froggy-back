@@ -105,6 +105,8 @@ export class ArticlesController {
       );
     }
     return this.articlesService.update(+id, updateArticleDto);
+    // When the (unary) + operator is applied to a string,
+    // it tries to convert the string to a numeric value.
   }
 
   @Delete(':id')
