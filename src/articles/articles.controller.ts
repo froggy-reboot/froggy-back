@@ -13,6 +13,7 @@ import {
   UseInterceptors,
   Request,
   NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -88,15 +89,37 @@ export class ArticlesController {
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+  async update(
+    @Request() req,
+    @Param('id') id: string,
+    @Body() updateArticleDto: UpdateArticleDto,
+  ) {
+    const userId = req.user.id;
+    const article = await this.articlesRepository.findArticle(+id);
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
+    }
+    if (userId !== article['writerId']) {
+      throw new ForbiddenException(
+        `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
+      );
+    }
     return this.articlesService.update(+id, updateArticleDto);
-    // When the (unary) + operator is applied to a string,
-    // it tries to convert the string to a numeric value.
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
+  async remove(@Request() req, @Param('id') id: string) {
+    const userId = req.user.id;
+    const article = await this.articlesRepository.findArticle(+id);
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
+    }
+    if (userId !== article['writerId']) {
+      throw new ForbiddenException(
+        `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
+      );
+    }
     return this.articlesService.remove(+id);
   }
 }
