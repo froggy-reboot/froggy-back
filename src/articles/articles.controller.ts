@@ -85,6 +85,10 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
+  @ApiResponse({
+    status: 404,
+    description: '글이 존재하지 않는 경우',
+  })
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
@@ -98,15 +102,15 @@ export class ArticlesController {
 
   @Patch(':id')
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: '글 수정 성공',
   })
   @ApiResponse({
-    status: 406,
+    status: 403,
     description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
   })
   @ApiResponse({
-    status: 400,
+    status: 404,
     description: '글이 존재하지 않는 경우',
   })
   @UseGuards(AuthGuard('jwt'))
@@ -136,7 +140,7 @@ export class ArticlesController {
     description: '삭제 성공',
   })
   @ApiResponse({
-    status: 406,
+    status: 403,
     description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
   })
   @UseGuards(AuthGuard('jwt'))
