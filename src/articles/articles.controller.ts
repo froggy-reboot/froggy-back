@@ -12,6 +12,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Request,
+  NotFoundException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -77,11 +78,8 @@ export class ArticlesController {
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
-    if (article == null || article == undefined) {
-      return {
-        status: 400,
-        message: `${id}는 삭제되었거나, 없는 글입니다.`,
-      };
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
     const userInfo = await this.usersService.findById(+article['writerId']);
     article['user'] = userInfo;
