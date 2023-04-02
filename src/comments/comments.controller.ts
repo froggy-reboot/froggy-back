@@ -10,6 +10,7 @@ import {
   UploadedFile,
   UseGuards,
   Request,
+  ForbiddenException,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -18,6 +19,7 @@ import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
+import { ArticlesService } from '../articles/articles.service';
 
 @ApiTags('게시판 댓글')
 @Controller({
@@ -25,14 +27,17 @@ import { AuthGuard } from '@nestjs/passport';
   version: '1',
 })
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+  constructor(
+    private readonly commentsService: CommentsService,
+    private readonly articlesService: ArticlesService,
+  ) {}
 
   @Post()
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
-  create(
+  async create(
     @Request() req,
     @Param('articleId') articleId: number,
     @Body() createCommentDto: CreateCommentDto,
@@ -40,6 +45,12 @@ export class CommentsController {
   ) {
     createCommentDto.articleId = articleId;
     createCommentDto.writerId = req.user.id;
+    const article = this.articlesService.findOne(articleId);
+    if (article == null) {
+      throw new ForbiddenException(
+        `${articleId} 번째 글은 삭제되었거나, 없는 글입니다.`,
+      );
+    }
     return this.commentsService.create(createCommentDto, file);
   }
 

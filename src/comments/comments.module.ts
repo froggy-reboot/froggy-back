@@ -9,10 +9,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as AWS from 'aws-sdk';
 import * as multerS3 from 'multer-s3';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
+import { ArticlesModule } from '../articles/articles.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Comment]),
     CommentImagesModule,
+    ArticlesModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
