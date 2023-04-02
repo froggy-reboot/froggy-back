@@ -131,7 +131,7 @@ export class AuthService {
 
     let userId;
     if (!findUserResult) {
-      const createdSocialUser = await this.createSocialUser(socialData);
+      const createdSocialUser = await this.createRavelrySocialUser(socialData);
       userId = createdSocialUser.id;
     } else {
       userId = findUserResult.id;
@@ -191,6 +191,24 @@ export class AuthService {
       password: socialData.password,
       enrollType: socialData.enrollType,
       nickname: randomNickname,
+    });
+
+    const user = await this.usersService.findOne({
+      id: createUserResult.id,
+    });
+
+    return user;
+  }
+
+  async createRavelrySocialUser(socialData): Promise<User> {
+    const randomNickname = await this.getUniqueNickName();
+    const createUserResult = await this.usersService.create({
+      email: socialData.email,
+      password: socialData.password,
+      enrollType: socialData.enrollType,
+      nickname: randomNickname,
+      ravelryUserId: socialData.ravelryUserId,
+      isCertified: socialData.isCertified,
     });
 
     const user = await this.usersService.findOne({

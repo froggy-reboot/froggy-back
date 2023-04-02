@@ -6,6 +6,7 @@ import {
   MinLength,
   Validate,
 } from 'class-validator';
+import { customBool } from 'src/ravelry-users/entities/ravelry-user.entity';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 import { enrollType } from '../entities/user.entity';
 
@@ -33,4 +34,10 @@ export class CreateUserDto {
 
   @IsOptional()
   certifyHash?: string;
+
+  @IsOptional()
+  ravelryUserId?: number;
+
+  @IsOptional()
+  isCertified?: customBool;
 }

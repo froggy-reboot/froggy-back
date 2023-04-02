@@ -12,11 +12,16 @@ import {
   UploadedFile,
   UseInterceptors,
   Request,
+  HttpException,
+  UploadedFiles,
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/create-article.dto';
+import {
+  CreateArticleDto,
+  CreateArticleResDto,
+} from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
@@ -30,8 +35,7 @@ import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { FilesService } from 'src/files/files.service';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -48,15 +52,20 @@ export class ArticlesController {
   @Post()
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 201,
+    type: CreateArticleResDto,
+    description: '글 작성 성공!',
+  })
   create(
     @Request() req,
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFile() file,
+    @UploadedFiles() files,
   ) {
     createArticleDto.writerId = req.user.id;
-    return this.articlesService.create(createArticleDto, file);
+    return this.articlesService.create(createArticleDto, files);
   }
 
   @Get('/pages/:page')
@@ -88,6 +97,18 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: 200,
+    description: '글 수정 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
+  })
+  @ApiResponse({
+    status: 400,
+    description: '글이 존재하지 않는 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
   async update(
     @Request() req,
@@ -110,6 +131,14 @@ export class ArticlesController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: '삭제 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
   async remove(@Request() req, @Param('id') id: string) {
     const userId = req.user.id;

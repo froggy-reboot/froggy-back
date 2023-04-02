@@ -32,6 +32,11 @@ export class UpdateUserDto {
   @IsOptional()
   age?: number | null;
 
+  @ApiProperty({ example: '33' })
+  @IsString()
+  @IsOptional()
+  nickname?: string;
+
   @ApiProperty({ type: Date })
   @IsDate()
   @IsOptional()
@@ -63,4 +68,7 @@ export class UpdateUserDto {
 
   @IsOptional()
   refreshToken?: string;
+
+  @IsOptional()
+  profileImg?: string;
 }

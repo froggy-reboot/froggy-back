@@ -17,7 +17,7 @@
 // export enum enrollType {
 //   local = 'local',
 //   google = 'google',
-//   raverly = 'raverly',
+//   ravelry = 'ravelry',
 //   naver = 'naver',
 //   kakao = 'kakao',
 // }

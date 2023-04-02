@@ -4,10 +4,6 @@ import { NumberCapabilityList } from 'aws-sdk/clients/sns';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class AuthRavelryLoginDto {
-  // @ApiProperty({ example: 'kajljidgasdfagda' })
-  // @IsNotEmpty()
-  // jwtToken: string;
-
   @ApiProperty({ example: '33' })
   @IsNotEmpty()
   socialUserId: number;

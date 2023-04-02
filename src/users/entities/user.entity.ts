@@ -73,7 +73,11 @@ export class User extends EntityHelper {
   @Column({ type: 'enum', enum: gender, nullable: true })
   gender!: gender;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default: 'https://imhannah.me/common/img/default_profile.png',
+  })
   profileImg: string;
 
   @Column('varchar', { length: 2084, nullable: true })

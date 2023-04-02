@@ -11,11 +11,18 @@ import {
   UseGuards,
   Request,
   ForbiddenException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -37,6 +44,14 @@ export class CommentsController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 201,
+    description: '댓글 작성 성공',
+  })
+  @ApiResponse({
+    status: 422,
+    description: '글이 존재하지 않습니다.',
+  })
   async create(
     @Request() req,
     @Param('articleId') articleId: number,
@@ -67,14 +82,74 @@ export class CommentsController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: 200,
+    description: '댓글 수정 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 댓글 작성자가 다른 경우',
+  })
+  @ApiResponse({
+    status: 400,
+    description: '댓글이 존재하지 않는 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
+  async update(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() updateCommentDto: UpdateCommentDto,
+  ) {
+    const comment = await this.commentsService.findOne(+id);
+    if (!comment) {
+      throw new HttpException(
+        {
+          status: 400,
+          errors: {
+            msg: 'comment is not exist',
+          },
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    if (comment.writerId !== req.user.id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            msg: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     return this.commentsService.update(+id, updateCommentDto);
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: '삭제 성공',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 댓글 작성자가 다른 경우',
+  })
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Request() req) {
+    const comment = await this.commentsService.findOne(+id);
+    if (comment.writerId !== req.user.id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          errors: {
+            msg: 'different user',
+          },
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
     return this.commentsService.remove(+id);
   }
 }

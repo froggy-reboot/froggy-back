@@ -25,7 +25,7 @@ export class RavelryUser extends EntityHelper {
   userId: number;
 
   @Column('varchar', { length: 320, nullable: false })
-  raverlyId: string;
+  ravelryId: string;
 
   @Column('varchar', { length: 100, nullable: true })
   @Exclude()

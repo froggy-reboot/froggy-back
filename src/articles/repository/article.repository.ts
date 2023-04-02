@@ -17,7 +17,7 @@ export class ArticlesRepository extends Repository<Article> {
     const articles = await this.repository
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
-      .select(['article', 'user.nickname'])
+      .select(['article', 'user.nickname', 'user.profileImg'])
       .leftJoin('article.comments', 'comment')
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)

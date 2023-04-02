@@ -1,5 +1,5 @@
 export class CreateRavelryUserDto {
-  raverlyId: string;
+  ravelryId: string;
 
   token: string;
 
