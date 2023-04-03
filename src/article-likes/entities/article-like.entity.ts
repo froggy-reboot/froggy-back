@@ -4,13 +4,16 @@ import { User } from 'src/users/entities/user.entity';
 import { EntityHelper } from 'src/utils/entity-helper';
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'articleLike' })
 export class ArticleLike extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '11' })
@@ -24,13 +27,13 @@ export class ArticleLike extends EntityHelper {
   @ApiProperty({ example: '2' })
   articleId: number;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @DeleteDateColumn()
   deletedAt: Date;
 
   @ManyToOne(() => User, (user) => user.articleLikes)

@@ -1,11 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleLikeDto } from './dto/create-article-like.dto';
 import { UpdateArticleLikeDto } from './dto/update-article-like.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ArticleLike } from './entities/article-like.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ArticleLikesService {
-  create(createArticleLikeDto: CreateArticleLikeDto) {
-    return 'This action adds a new articleLike';
+  constructor(
+    @InjectRepository(ArticleLike)
+    private articleLikesRepository: Repository<ArticleLike>,
+  ) {}
+  create(createArticleLikeDto) {
+    // TODO : 이미 좋아요를 눌렀는지 확인
+    // TODO : 글 좋아요 개수 update 해야함
+    return this.articleLikesRepository.save(
+      this.articleLikesRepository.create(createArticleLikeDto),
+    );
   }
 
   findAll() {
