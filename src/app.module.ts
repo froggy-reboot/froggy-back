@@ -33,6 +33,7 @@ import { HeaderResolver } from 'nestjs-i18n';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { MailConfigService } from './mail/mail-config.service';
 import { DataSource } from 'typeorm';
+import { ArticleLikesModule } from './article-likes/article-likes.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { DataSource } from 'typeorm';
     ArticlesModule,
     CommentsModule,
     RavelryUsersModule,
+    ArticleLikesModule,
     // ArticleImagesModule,
     // CommentImagesModule,
   ],

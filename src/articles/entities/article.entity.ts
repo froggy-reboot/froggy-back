@@ -13,6 +13,7 @@ import { User } from '../../users/entities/user.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { ArticleImage } from 'src/article-images/entities/article-image.entity';
+import { ArticleLike } from 'src/article-likes/entities/article-like.entity';
 
 export enum articleType {
   everything = '자유',
@@ -63,6 +64,11 @@ export class Article extends EntityHelper {
     cascade: true,
   })
   images: ArticleImage[];
+
+  @OneToMany(() => ArticleLike, (articleLike) => articleLike.article, {
+    cascade: true,
+  })
+  articleLikes: ArticleLike[];
 
   @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'writerId' })
