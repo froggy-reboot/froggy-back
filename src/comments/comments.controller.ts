@@ -10,6 +10,7 @@ import {
   UploadedFile,
   UseGuards,
   Request,
+  ForbiddenException,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -25,6 +26,7 @@ import {
 import { IPaginationOptions } from '../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
+import { ArticlesService } from '../articles/articles.service';
 
 @ApiTags('게시판 댓글')
 @Controller({
@@ -32,7 +34,10 @@ import { AuthGuard } from '@nestjs/passport';
   version: '1',
 })
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+  constructor(
+    private readonly commentsService: CommentsService,
+    private readonly articlesService: ArticlesService,
+  ) {}
 
   @Post()
   @ApiBearerAuth()
@@ -47,7 +52,7 @@ export class CommentsController {
     status: 422,
     description: '글이 존재하지 않습니다.',
   })
-  create(
+  async create(
     @Request() req,
     @Param('articleId') articleId: number,
     @Body() createCommentDto: CreateCommentDto,
@@ -55,6 +60,12 @@ export class CommentsController {
   ) {
     createCommentDto.articleId = articleId;
     createCommentDto.writerId = req.user.id;
+    const article = this.articlesService.findOne(articleId);
+    if (article == null) {
+      throw new ForbiddenException(
+        `${articleId} 번째 글은 삭제되었거나, 없는 글입니다.`,
+      );
+    }
     return this.commentsService.create(createCommentDto, file);
   }
 
@@ -69,7 +80,6 @@ export class CommentsController {
   findOne(@Param('id') id: string) {
     return this.commentsService.findOne(+id);
   }
-  // push test
 
   @Patch(':id')
   @ApiResponse({

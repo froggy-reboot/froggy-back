@@ -15,6 +15,8 @@ import {
   HttpException,
   UploadedFiles,
   Query,
+  NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import {
@@ -102,14 +104,15 @@ export class ArticlesController {
     status: 200,
     type: ShowOneArticleDto,
   })
+  @ApiResponse({
+    status: 404,
+    description: '글이 존재하지 않는 경우',
+  })
   async findOne(@Param('id') id: string) {
     // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
-    if (article == null || article == undefined) {
-      return {
-        status: 400,
-        msg: `${id}는 삭제되었거나, 없는 글입니다.`,
-      };
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
     const userInfo = await this.usersService.findById(+article['writerId']);
     article['user'] = userInfo;
@@ -118,33 +121,31 @@ export class ArticlesController {
 
   @Patch(':id')
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: '글 수정 성공',
   })
   @ApiResponse({
-    status: 406,
+    status: 403,
     description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
   })
   @ApiResponse({
-    status: 400,
+    status: 404,
     description: '글이 존재하지 않는 경우',
   })
   @UseGuards(AuthGuard('jwt'))
   async update(
-    @Param('id') id: string,
     @Request() req,
+    @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    const article = await this.articlesService.findOne(+id);
-    if (article.writerId !== req.user.id) {
-      throw new HttpException(
-        {
-          status: HttpStatus.NOT_ACCEPTABLE,
-          errors: {
-            msg: 'different user',
-          },
-        },
-        HttpStatus.NOT_ACCEPTABLE,
+    const userId = req.user.id;
+    const article = await this.articlesRepository.findArticle(+id);
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
+    }
+    if (userId !== article['writerId']) {
+      throw new ForbiddenException(
+        `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
     return this.articlesService.update(+id, updateArticleDto);
@@ -158,21 +159,19 @@ export class ArticlesController {
     description: '삭제 성공',
   })
   @ApiResponse({
-    status: 406,
+    status: 403,
     description: 'jwt의 유저 정보와 글 작성자가 다른 경우',
   })
   @UseGuards(AuthGuard('jwt'))
-  async remove(@Param('id') id: string, @Request() req) {
-    const article = await this.articlesService.findOne(+id);
-    if (article.writerId !== req.user.id) {
-      throw new HttpException(
-        {
-          status: HttpStatus.NOT_ACCEPTABLE,
-          errors: {
-            msg: 'different user',
-          },
-        },
-        HttpStatus.NOT_ACCEPTABLE,
+  async remove(@Request() req, @Param('id') id: string) {
+    const userId = req.user.id;
+    const article = await this.articlesRepository.findArticle(+id);
+    if (article == null) {
+      throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
+    }
+    if (userId !== article['writerId']) {
+      throw new ForbiddenException(
+        `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
     return this.articlesService.remove(+id);
