@@ -14,6 +14,7 @@ import {
   Request,
   HttpException,
   UploadedFiles,
+  Query,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import {
@@ -34,6 +35,7 @@ import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { SearchOptions } from 'src/utils/types/search-options';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -76,6 +78,23 @@ export class ArticlesController {
   findAll(@Param() paginationOptions: IPaginationOptions) {
     // return this.articlesService.findManyWithPagination(paginationOptions);
     return this.articlesRepository.findArticleList(paginationOptions);
+  }
+
+  @Get('/search/:page')
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  search(
+    @Param() paginationOptions: IPaginationOptions,
+    @Query() searchTarget: SearchOptions,
+  ) {
+    return this.articlesRepository.findSearchArticleList(
+      searchTarget.target,
+      paginationOptions,
+    );
   }
 
   @Get(':id')

@@ -36,4 +36,23 @@ export class ArticlesRepository extends Repository<Article> {
       .getOne();
     return articleWithImages;
   }
+
+  async findSearchArticleList(target, paginationOptions: IPaginationOptions) {
+    const articles = await this.repository
+      .createQueryBuilder('article')
+      .leftJoin('article.user', 'user')
+      .select(['article', 'user.nickname', 'user.profileImg'])
+      .leftJoin('article.comments', 'comment')
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
+      .where('article.title LIKE :search', {
+        search: `%${target}%`,
+      })
+      .orWhere('article.content LIKE :search', {
+        search: `%${target}%`,
+      })
+      .limit(paginationOptions.limit)
+      .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .getMany();
+    return articles;
+  }
 }
