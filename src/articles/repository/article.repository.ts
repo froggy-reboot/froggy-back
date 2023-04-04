@@ -74,4 +74,24 @@ export class ArticlesRepository extends Repository<Article> {
       .getMany();
     return articles;
   }
+
+  async addLikeCount(id: number) {
+    const articles = await this.repository
+      .createQueryBuilder('article')
+      .update(Article)
+      .set({ liked: () => `liked+1` })
+      .where('id = :id', { id: id })
+      .execute();
+    return articles;
+  }
+
+  async subLikeCount(id: number) {
+    const articles = await this.repository
+      .createQueryBuilder('article')
+      .update(Article)
+      .set({ liked: () => `liked-1` })
+      .where('id = :id', { id: id })
+      .execute();
+    return articles;
+  }
 }
