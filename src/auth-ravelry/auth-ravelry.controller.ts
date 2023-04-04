@@ -94,7 +94,8 @@ export class AuthRavelryController {
       'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 {{front_api_url}}/link/ravelry/${socialUserId}으로 리다이렉트 됩니다.',
   })
   async getRedirectUrl(@Req() req, @Res() res) {
-    const authorizationUri = await this.authRavelryService.getRedirectUrl();
+    const authorizationUri = await this.authRavelryService.getLinkRedirectUrl();
+    console.log('authorizationUri', authorizationUri);
     return authorizationUri;
   }
 

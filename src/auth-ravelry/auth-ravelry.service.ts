@@ -35,7 +35,7 @@ export class AuthRavelryService {
     return authorizationUri;
   }
   async getLinkRedirectUrl() {
-    const client = this.getClient();
+    const client = this.getLinkClient();
     const authorizationUri = client.authorizeURL({
       redirect_uri: process.env.RAVELRY_LINK_CALL_BACK_URL,
       scope: 'patternstore-read',
