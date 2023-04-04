@@ -78,9 +78,22 @@ export class ArticlesController {
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
-  findAll(@Param() paginationOptions: IPaginationOptions) {
-    // return this.articlesService.findManyWithPagination(paginationOptions);
-    return this.articlesRepository.findArticleList(paginationOptions);
+  findAllByFilter(
+    @Param() paginationOptions: IPaginationOptions,
+    @Query() filterOptions: FilterOptions,
+  ) {
+    console.log(filterOptions);
+    if (filterOptions.filter === undefined) {
+      console.log('this is 그냥 페이지네이션');
+      return this.articlesRepository.findArticleList(paginationOptions);
+    } else {
+      console.log('this is filter');
+      console.log(filterOptions.filter);
+      return this.articlesRepository.findArticleListByFilter(
+        paginationOptions,
+        filterOptions.filter,
+      );
+    }
   }
 
   @Get('/pages/:page')
@@ -90,15 +103,9 @@ export class ArticlesController {
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
-  findAllByFilter(
-    @Param() paginationOptions: IPaginationOptions,
-    @Query() filterOptions: FilterOptions,
-  ) {
-    console.log(filterOptions);
-    return this.articlesRepository.findArticleListByFilter(
-      paginationOptions,
-      filterOptions.filter,
-    );
+  findAll(@Param() paginationOptions: IPaginationOptions) {
+    console.log('this is 그냥 페이지네이션');
+    return this.articlesRepository.findArticleList(paginationOptions);
   }
 
   @Get('/search/:page')
