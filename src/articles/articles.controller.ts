@@ -38,6 +38,7 @@ import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { SearchOptions } from 'src/utils/types/search-options';
+import { FilterOptions } from '../utils/types/filter-options';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -80,6 +81,24 @@ export class ArticlesController {
   findAll(@Param() paginationOptions: IPaginationOptions) {
     // return this.articlesService.findManyWithPagination(paginationOptions);
     return this.articlesRepository.findArticleList(paginationOptions);
+  }
+
+  @Get('/pages/:page')
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  findAllByFilter(
+    @Param() paginationOptions: IPaginationOptions,
+    @Query() filterOptions: FilterOptions,
+  ) {
+    console.log(filterOptions);
+    return this.articlesRepository.findArticleListByFilter(
+      paginationOptions,
+      filterOptions.filter,
+    );
   }
 
   @Get('/search/:page')

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IPaginationOptions } from '../../utils/types/pagination-options';
+import { filters } from '../../utils/types/filter-options';
 
 @Injectable()
 export class ArticlesRepository extends Repository<Article> {
@@ -22,6 +23,24 @@ export class ArticlesRepository extends Repository<Article> {
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .orderBy({ 'article.createdAt': 'DESC' })
+      .getMany();
+    return articles;
+  }
+
+  async findArticleListByFilter(
+    paginationOptions: IPaginationOptions,
+    filterOptions: filters,
+  ) {
+    const articles = await this.repository
+      .createQueryBuilder('article')
+      .leftJoin('article.user', 'user')
+      .select(['article', 'user.nickname', 'user.profileImg'])
+      .leftJoin('article.comments', 'comment')
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
+      .limit(paginationOptions.limit)
+      .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .orderBy({ 'article.createdAt': 'DESC' })
       .getMany();
     return articles;
   }
