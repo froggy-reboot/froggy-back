@@ -4,19 +4,41 @@ import { UpdateArticleLikeDto } from './dto/update-article-like.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleLike } from './entities/article-like.entity';
 import { Repository } from 'typeorm';
+import { Article } from 'src/articles/entities/article.entity';
+import { ArticlesService } from 'src/articles/articles.service';
 
 @Injectable()
 export class ArticleLikesService {
   constructor(
     @InjectRepository(ArticleLike)
     private articleLikesRepository: Repository<ArticleLike>,
+    private articleService: ArticlesService,
   ) {}
   create(createArticleLikeDto) {
-    // TODO : 이미 좋아요를 눌렀는지 확인
-    // TODO : 글 좋아요 개수 update 해야함
     return this.articleLikesRepository.save(
       this.articleLikesRepository.create(createArticleLikeDto),
     );
+  }
+
+  async toggleLike(createArticleLikeDto) {
+    const articleLike = await this.articleLikesRepository.findOne({
+      where: {
+        userId: createArticleLikeDto.userId,
+        articleId: createArticleLikeDto.articleId,
+      },
+    });
+    if (articleLike) {
+      await this.articleLikesRepository.delete(articleLike.id);
+      await this.articleService.updateLikeCount(articleLike.articleId, 'sub');
+    } else {
+      this.articleLikesRepository.save(
+        this.articleLikesRepository.create(createArticleLikeDto),
+      );
+      await this.articleService.updateLikeCount(
+        createArticleLikeDto.articleId,
+        'add',
+      );
+    }
   }
 
   findAll() {

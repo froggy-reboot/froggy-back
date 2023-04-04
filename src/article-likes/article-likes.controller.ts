@@ -27,13 +27,13 @@ export class ArticleLikesController {
   @Post('/:articleId')
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
-  create(@Request() req, @Param('articleId') articleId: string) {
+  async create(@Request() req, @Param('articleId') articleId: string) {
     const createArticleLikeDto: CreateArticleLikeDto = {
       articleId: +articleId,
       userId: req.user.id,
     };
 
-    return this.articleLikesService.create(createArticleLikeDto);
+    return await this.articleLikesService.toggleLike(createArticleLikeDto);
   }
 
   @Get()

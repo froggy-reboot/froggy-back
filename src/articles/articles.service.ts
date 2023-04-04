@@ -8,12 +8,14 @@ import { IPaginationOptions } from '../utils/types/pagination-options';
 import { ArticleImagesService } from 'src/article-images/article-images.service';
 import { CreateArticleImageDto } from 'src/article-images/dto/create-article-image.dto';
 import { Comment } from '../comments/entities/comment.entity';
+import { ArticlesRepository } from './repository/article.repository';
 
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
+    private articleCustomRepository: ArticlesRepository,
 
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
@@ -55,6 +57,16 @@ export class ArticlesService {
         ...updateArticleDto,
       }),
     );
+  }
+
+  async updateLikeCount(id: number, type: string) {
+    if (type === 'sub') {
+      const article = await this.articleCustomRepository.subLikeCount(id);
+      return article;
+    } else if (type === 'add') {
+      const article = await this.articleCustomRepository.addLikeCount(id);
+      return article;
+    }
   }
 
   remove(id: number) {
