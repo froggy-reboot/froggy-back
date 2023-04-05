@@ -86,14 +86,14 @@ export class AuthRavelryController {
   }
 
   @Get('link/redirect-url')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   @ApiResponse({
-    status: 200,
+    status: 301,
     type: AuthSocialLoginUrlDto,
     description:
       'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 {{front_api_url}}/link/ravelry/${socialUserId}으로 리다이렉트 됩니다.',
   })
-  async getRedirectUrl(@Req() req, @Res() res) {
+  async getRedirectUrl() {
     const authorizationUri = await this.authRavelryService.getLinkRedirectUrl();
     console.log('authorizationUri', authorizationUri);
     return authorizationUri;
