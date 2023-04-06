@@ -71,30 +71,30 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto, files);
   }
 
-  @Get('/pages/:page')
-  @ApiProperty({ type: IPaginationOptions })
-  @ApiResponse({
-    status: 200,
-    type: [ShowArticlesDto],
-    description: 'Article의 배열 json',
-  })
-  findAllByFilter(
-    @Param() paginationOptions: IPaginationOptions,
-    @Query() filterOptions: FilterOptions,
-  ) {
-    console.log(filterOptions);
-    if (filterOptions.filter === undefined) {
-      console.log('this is 그냥 페이지네이션');
-      return this.articlesRepository.findArticleList(paginationOptions);
-    } else {
-      console.log('this is filter');
-      console.log(filterOptions.filter);
-      return this.articlesRepository.findArticleListByFilter(
-        paginationOptions,
-        filterOptions.filter,
-      );
-    }
-  }
+  // @Get('/pages/:page')
+  // @ApiProperty({ type: IPaginationOptions })
+  // @ApiResponse({
+  //   status: 200,
+  //   type: [ShowArticlesDto],
+  //   description: 'Article의 배열 json',
+  // })
+  // findAllByFilter(
+  //   @Param() paginationOptions: IPaginationOptions,
+  //   @Query() filterOptions: FilterOptions,
+  // ) {
+  //   console.log(filterOptions);
+  //   if (filterOptions.filter === undefined) {
+  //     console.log('this is 그냥 페이지네이션');
+  //     return this.articlesRepository.findArticleList(paginationOptions);
+  //   } else {
+  //     console.log('this is filter');
+  //     console.log(filterOptions.filter);
+  //     return this.articlesRepository.findArticleListByFilter(
+  //       paginationOptions,
+  //       filterOptions.filter,
+  //     );
+  //   }
+  // }
 
   @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
@@ -158,6 +158,8 @@ export class ArticlesController {
     status: 404,
     description: '글이 존재하지 않는 경우',
   })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard('jwt'))
   async update(
     @Request() req,
