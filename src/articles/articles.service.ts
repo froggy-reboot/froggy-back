@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import {
+  UpdateArticleDto,
+  UpdateArticleReqDto,
+} from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
@@ -50,7 +53,23 @@ export class ArticlesService {
     return this.articleRepository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
+  async update(id: number, updateArticleDto: UpdateArticleReqDto, files) {
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const createArticleImageDto: CreateArticleImageDto = {
+          articleId: id,
+          order: i + 1,
+          url: files[i].location,
+        };
+        this.articleImagesService.create(createArticleImageDto);
+      }
+    }
+    if (updateArticleDto.deleteImageIdList) {
+      await this.articleImagesService.removeMany(
+        updateArticleDto.deleteImageIdList,
+      );
+    }
+
     return this.articleRepository.save(
       this.articleRepository.create({
         id,

@@ -1,7 +1,15 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { CreateArticleDto } from './create-article.dto';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsNumberString,
+  IsOptional,
+} from 'class-validator';
 import { articleType } from '../entities/article.entity';
+import { Type } from 'class-transformer';
 
 export class UpdateArticleDto extends PartialType(CreateArticleDto) {
   @ApiProperty({ example: '1' })
@@ -29,4 +37,25 @@ export class UpdateArticleDto extends PartialType(CreateArticleDto) {
   @IsOptional()
   @IsNotEmpty()
   content: string;
+}
+
+export class UpdateArticleReqDto {
+  @ApiProperty({
+    example: '제목입니다. 안녕하세요 저는 뜨개질을 하기 어려워해요',
+  })
+  @IsNotEmpty()
+  title: string;
+
+  @ApiProperty({ example: '본문입니다. 어떡하죠, 도와주세요.' })
+  @IsNotEmpty()
+  content: string;
+
+  @ApiPropertyOptional({
+    example: '[25, 26]',
+  })
+  @IsArray()
+  @Type(() => Number)
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  deleteImageIdList?: number[];
 }

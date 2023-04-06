@@ -23,7 +23,10 @@ import {
   CreateArticleDto,
   CreateArticleResDto,
 } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import {
+  UpdateArticleDto,
+  UpdateArticleReqDto,
+} from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -164,7 +167,8 @@ export class ArticlesController {
   async update(
     @Request() req,
     @Param('id') id: string,
-    @Body() updateArticleDto: UpdateArticleDto,
+    @Body() updateArticleReqDto: UpdateArticleReqDto,
+    @UploadedFiles() files,
   ) {
     const userId = req.user.id;
     const article = await this.articlesRepository.findArticle(+id);
@@ -176,7 +180,8 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-    return this.articlesService.update(+id, updateArticleDto);
+
+    return await this.articlesService.update(+id, updateArticleReqDto, files);
     // When the (unary) + operator is applied to a string,
     // it tries to convert the string to a numeric value.
   }
