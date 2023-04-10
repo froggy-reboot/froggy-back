@@ -82,13 +82,9 @@ export class ArticlesController {
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
   ) {
-    console.log(filterOptions);
     if (filterOptions.filter === undefined) {
-      console.log('this is 그냥 페이지네이션');
       return this.articlesRepository.findArticleList(paginationOptions);
     } else {
-      console.log('this is filter');
-      console.log(filterOptions.filter);
       return this.articlesRepository.findArticleListByFilter(
         paginationOptions,
         filterOptions.filter,
@@ -104,8 +100,18 @@ export class ArticlesController {
     description: 'Article의 배열 json',
   })
   findAll(@Param() paginationOptions: IPaginationOptions) {
-    console.log('this is 그냥 페이지네이션');
     return this.articlesRepository.findArticleList(paginationOptions);
+  }
+
+  @Get('/hot/pages/:page')
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  findAllHot(@Param() paginationOptions: IPaginationOptions) {
+    return this.articlesRepository.findArticleListByHot(paginationOptions);
   }
 
   @Get('/search/:page')
