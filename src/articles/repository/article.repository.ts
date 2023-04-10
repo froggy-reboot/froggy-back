@@ -32,11 +32,13 @@ export class ArticlesRepository extends Repository<Article> {
     paginationOptions: IPaginationOptions,
     filterOptions: filters,
   ) {
+    console.log(filterOptions);
     const articles = await this.repository
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
       .leftJoin('article.comments', 'comment')
+      .where('article.articleType = :filterOptions', { filterOptions })
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
