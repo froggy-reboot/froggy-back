@@ -50,13 +50,24 @@ export class ArticlesService {
     return this.articleRepository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.articleRepository.save(
+  async update(id: number, updateArticleDto: UpdateArticleDto, files) {
+    const result = await this.articleRepository.save(
       this.articleRepository.create({
         id,
         ...updateArticleDto,
       }),
     );
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const createArticleImageDto: CreateArticleImageDto = {
+          articleId: result.id,
+          order: i + 1,
+          url: files[i].location,
+        };
+        await this.articleImagesService.create(createArticleImageDto);
+      }
+    }
+    return result;
   }
 
   async updateLikeCount(id: number, type: string) {

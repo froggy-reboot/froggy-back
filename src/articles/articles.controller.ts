@@ -152,6 +152,10 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files'))
+  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 201,
     description: '글 수정 성공',
@@ -169,6 +173,7 @@ export class ArticlesController {
     @Request() req,
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
+    @UploadedFiles() files,
   ) {
     const userId = req.user.id;
     const article = await this.articlesRepository.findArticle(+id);
@@ -180,7 +185,8 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-    return this.articlesService.update(+id, updateArticleDto);
+    console.log(updateArticleDto);
+    return this.articlesService.update(+id, updateArticleDto, files);
     // When the (unary) + operator is applied to a string,
     // it tries to convert the string to a numeric value.
   }
