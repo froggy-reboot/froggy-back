@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import {
+  UpdateArticleDto,
+  UpdateArticleReqDto,
+} from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
@@ -49,6 +52,7 @@ export class ArticlesService {
   findOne(id: number) {
     return this.articleRepository.findOne({ where: { id: id } });
   }
+
 
   async update(id: number, updateArticleDto: UpdateArticleDto, files) {
     const result = await this.articleRepository.save(
