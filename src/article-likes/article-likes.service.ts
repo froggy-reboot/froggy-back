@@ -31,7 +31,7 @@ export class ArticleLikesService {
       await this.articleLikesRepository.delete(articleLike.id);
       await this.articleService.updateLikeCount(articleLike.articleId, 'sub');
     } else {
-      this.articleLikesRepository.save(
+      await this.articleLikesRepository.save(
         this.articleLikesRepository.create(createArticleLikeDto),
       );
       await this.articleService.updateLikeCount(
