@@ -53,29 +53,25 @@ export class ArticlesService {
     return this.articleRepository.findOne({ where: { id: id } });
   }
 
-  async update(id: number, updateArticleDto: UpdateArticleReqDto, files) {
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        const createArticleImageDto: CreateArticleImageDto = {
-          articleId: id,
-          order: i + 1,
-          url: files[i].location,
-        };
-        this.articleImagesService.create(createArticleImageDto);
-      }
-    }
-    if (updateArticleDto.deleteImageIdList) {
-      await this.articleImagesService.removeMany(
-        updateArticleDto.deleteImageIdList,
-      );
-    }
 
-    return this.articleRepository.save(
+  async update(id: number, updateArticleDto: UpdateArticleDto, files) {
+    const result = await this.articleRepository.save(
       this.articleRepository.create({
         id,
         ...updateArticleDto,
       }),
     );
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const createArticleImageDto: CreateArticleImageDto = {
+          articleId: result.id,
+          order: i + 1,
+          url: files[i].location,
+        };
+        await this.articleImagesService.create(createArticleImageDto);
+      }
+    }
+    return result;
   }
 
   async updateLikeCount(id: number, type: string) {

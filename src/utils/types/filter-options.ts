@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsEnum, isEnum } from 'class-validator';
+import { IsEnum } from 'class-validator';
 export enum filters {
   question = '질문',
   free = '자유',

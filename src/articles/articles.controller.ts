@@ -74,30 +74,27 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto, files);
   }
 
-  // @Get('/pages/:page')
-  // @ApiProperty({ type: IPaginationOptions })
-  // @ApiResponse({
-  //   status: 200,
-  //   type: [ShowArticlesDto],
-  //   description: 'Article의 배열 json',
-  // })
-  // findAllByFilter(
-  //   @Param() paginationOptions: IPaginationOptions,
-  //   @Query() filterOptions: FilterOptions,
-  // ) {
-  //   console.log(filterOptions);
-  //   if (filterOptions.filter === undefined) {
-  //     console.log('this is 그냥 페이지네이션');
-  //     return this.articlesRepository.findArticleList(paginationOptions);
-  //   } else {
-  //     console.log('this is filter');
-  //     console.log(filterOptions.filter);
-  //     return this.articlesRepository.findArticleListByFilter(
-  //       paginationOptions,
-  //       filterOptions.filter,
-  //     );
-  //   }
-  // }
+  @Get('/pages/:page')
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  findAllByFilter(
+    @Param() paginationOptions: IPaginationOptions,
+    @Query() filterOptions: FilterOptions,
+  ) {
+    if (filterOptions.filter === undefined) {
+      return this.articlesRepository.findArticleList(paginationOptions);
+    } else {
+      return this.articlesRepository.findArticleListByFilter(
+        paginationOptions,
+        filterOptions.filter,
+      );
+    }
+  }
+
 
   @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
@@ -107,8 +104,18 @@ export class ArticlesController {
     description: 'Article의 배열 json',
   })
   findAll(@Param() paginationOptions: IPaginationOptions) {
-    console.log('this is 그냥 페이지네이션');
     return this.articlesRepository.findArticleList(paginationOptions);
+  }
+
+  @Get('/hot/pages/:page')
+  @ApiProperty({ type: IPaginationOptions })
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  findAllHot(@Param() paginationOptions: IPaginationOptions) {
+    return this.articlesRepository.findArticleListByHot(paginationOptions);
   }
 
   @Get('/search/:page')
@@ -149,6 +156,10 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files'))
+  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 201,
     description: '글 수정 성공',
@@ -167,7 +178,7 @@ export class ArticlesController {
   async update(
     @Request() req,
     @Param('id') id: string,
-    @Body() updateArticleReqDto: UpdateArticleReqDto,
+    @Body() updateArticleDto: UpdateArticleDto,
     @UploadedFiles() files,
   ) {
     const userId = req.user.id;
@@ -180,10 +191,7 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-
-    return await this.articlesService.update(+id, updateArticleReqDto, files);
-    // When the (unary) + operator is applied to a string,
-    // it tries to convert the string to a numeric value.
+    return this.articlesService.update(+id, updateArticleDto, files);
   }
 
   @Delete(':id')
