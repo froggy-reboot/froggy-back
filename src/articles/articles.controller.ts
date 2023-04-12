@@ -23,7 +23,10 @@ import {
   CreateArticleDto,
   CreateArticleResDto,
 } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import {
+  UpdateArticleDto,
+  UpdateArticleReqDto,
+} from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -91,6 +94,7 @@ export class ArticlesController {
       );
     }
   }
+
 
   @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
@@ -168,6 +172,8 @@ export class ArticlesController {
     status: 404,
     description: '글이 존재하지 않는 경우',
   })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard('jwt'))
   async update(
     @Request() req,
@@ -185,10 +191,7 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-    console.log(updateArticleDto);
     return this.articlesService.update(+id, updateArticleDto, files);
-    // When the (unary) + operator is applied to a string,
-    // it tries to convert the string to a numeric value.
   }
 
   @Delete(':id')

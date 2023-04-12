@@ -37,6 +37,23 @@ export class ArticleImagesService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} articleImage`;
+    const image = this.repository.softDelete({
+      id: id,
+    });
+    return this.repository.softDelete({ id });
+  }
+
+  async removeMany(ids: number[]) {
+    const idsString = ids.map((id) => id.toString());
+    const images = await this.repository
+      .createQueryBuilder('articleImage')
+      .softDelete()
+      .from('articleImage')
+      .where('id In(:id)', {
+        id: idsString,
+      })
+      .execute();
+
+    return images;
   }
 }
