@@ -28,12 +28,17 @@ import {
   AuthCheckIsExistEmailDto,
   AuthCheckIsExistEmailResDto,
 } from './dto/auth-email-isExist.dto';
-import { AuthRandomNickNameResDto } from './dto/auth-random-nickname.dto';
+import {
+  AuthCheckNicknameReqDto,
+  AuthCheckNicknameResDto,
+  AuthRandomNicknameResDto,
+} from './dto/auth-nickname.dto';
 import {
   AuthSocialLoginIngDto,
   AuthSocialLoginResDto,
 } from './dto/auth-social-login.dto';
 import { AuthRefreshDto, AuthRefreshResDto } from './dto/auth-refresh.dto';
+import { customBool } from 'src/users/entities/user.entity';
 
 @ApiTags('로컬 회원가입')
 @Controller({
@@ -67,7 +72,7 @@ export class AuthController {
     return this.service.validateLogin(loginDto);
   }
 
-  @Post('email/isexist')
+  @Post('email/isExist')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
@@ -79,7 +84,24 @@ export class AuthController {
   ) {
     const checkResult = await this.service.checkExistEmail(checkEmailDto);
     const resJson = {
-      isExistEmail: checkResult ? 'Y' : 'N',
+      isExistEmail: checkResult ? customBool.Y : customBool.N,
+    };
+    return resJson;
+  }
+
+  @Post('nickname/isExist')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    description: '이미 존재하는 닉네임: Y, 존재하지 않는 닉네임:N ',
+    type: AuthCheckNicknameResDto,
+  })
+  public async checkIsNickNameExist(
+    @Body() checkEmailDto: AuthCheckNicknameReqDto,
+  ) {
+    const checkResult = await this.service.checkExistEmail(checkEmailDto);
+    const resJson = {
+      isExistNickname: checkResult ? customBool.Y : customBool.N,
     };
     return resJson;
   }
@@ -96,10 +118,10 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
-    type: AuthRandomNickNameResDto,
+    type: AuthRandomNicknameResDto,
     description: '랜덤 닉네임 조회 완료',
   })
-  public async getRandomNickname(): Promise<AuthRandomNickNameResDto> {
+  public async getRandomNickname(): Promise<AuthRandomNicknameResDto> {
     const nickname = await this.service.getUniqueNickName();
     const resJson = { nickname };
     return resJson;

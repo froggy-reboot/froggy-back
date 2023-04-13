@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
+import { customBool } from 'src/utils/common/custom.enum';
 
 export class AuthCheckIsExistEmailDto {
   @ApiProperty({ example: 'test1@example.com' })
@@ -9,5 +10,5 @@ export class AuthCheckIsExistEmailDto {
 
 export class AuthCheckIsExistEmailResDto {
   @ApiProperty({ example: 'Y' })
-  isExistEmail: string;
+  isExistEmail: customBool;
 }
