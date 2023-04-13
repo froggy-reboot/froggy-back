@@ -77,7 +77,8 @@ export class User extends EntityHelper {
   @Column({
     type: 'varchar',
     nullable: true,
-    default: 'https://imhannah.me/common/img/default_profile.png',
+    default:
+      'https://froggy-image.s3.amazonaws.com/6d67457b-be7e-4e06-a3bd-c222d4415ddd.png',
   })
   profileImg: string;
 
