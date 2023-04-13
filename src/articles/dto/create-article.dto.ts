@@ -10,10 +10,6 @@ export class CreateArticleDto {
   @IsNotEmpty()
   articleType: articleType;
 
-  @ApiProperty({ example: '0' })
-  @IsNotEmpty()
-  liked: number;
-
   @ApiProperty({
     example: '제목입니다. 안녕하세요 저는 뜨개질을 하기 어려워해요',
   })
