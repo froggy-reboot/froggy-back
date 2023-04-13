@@ -60,5 +60,19 @@ export class UpdateArticleReqDto {
   deleteImageIdList?: number[];
 
   @IsOptional()
+  @ApiPropertyOptional({
+    example: `'[
+  {
+    "imgUrl": "https://froggy-image.s3.ap-northeast-2.amazonaws.com/507f5b3b-3036-4fad-981c-c3cd74c6e1ec.png",
+    "id": 60,
+    "type": "existing"
+  },
+  {
+    "type": "new"
+  },
+  {
+    "type": "new"
+  }]'`,
+  })
   photoOrderList?: string;
 }
