@@ -58,4 +58,7 @@ export class UpdateArticleReqDto {
   @IsNumber({}, { each: true })
   @IsOptional()
   deleteImageIdList?: number[];
+
+  @IsOptional()
+  photoOrderList?: string;
 }

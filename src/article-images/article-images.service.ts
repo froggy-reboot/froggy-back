@@ -33,7 +33,12 @@ export class ArticleImagesService {
   }
 
   update(id: number, updateArticleImageDto: UpdateArticleImageDto) {
-    return `This action updates a #${id} articleImage`;
+    return this.repository.save(
+      this.repository.create({
+        id,
+        ...updateArticleImageDto,
+      }),
+    );
   }
 
   remove(id: number) {

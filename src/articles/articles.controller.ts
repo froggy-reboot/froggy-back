@@ -95,7 +95,6 @@ export class ArticlesController {
     }
   }
 
-
   @Get('/pages/:page')
   @ApiProperty({ type: IPaginationOptions })
   @ApiResponse({
@@ -172,17 +171,15 @@ export class ArticlesController {
     status: 404,
     description: '글이 존재하지 않는 경우',
   })
-  @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FilesInterceptor('files'))
-  @UseGuards(AuthGuard('jwt'))
   async update(
     @Request() req,
     @Param('id') id: string,
-    @Body() updateArticleDto: UpdateArticleDto,
+    @Body() updateArticleDto: UpdateArticleReqDto,
     @UploadedFiles() files,
   ) {
     const userId = req.user.id;
     const article = await this.articlesRepository.findArticle(+id);
+    console.log(updateArticleDto);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -191,7 +188,12 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-    return this.articlesService.update(+id, updateArticleDto, files);
+    const result = await this.articlesService.update(
+      +id,
+      updateArticleDto,
+      files,
+    );
+    return result;
   }
 
   @Delete(':id')

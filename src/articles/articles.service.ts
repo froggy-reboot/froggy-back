@@ -12,6 +12,7 @@ import { ArticleImagesService } from 'src/article-images/article-images.service'
 import { CreateArticleImageDto } from 'src/article-images/dto/create-article-image.dto';
 import { Comment } from '../comments/entities/comment.entity';
 import { ArticlesRepository } from './repository/article.repository';
+import { UpdateArticleImageDto } from 'src/article-images/dto/update-article-image.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -53,23 +54,41 @@ export class ArticlesService {
     return this.articleRepository.findOne({ where: { id: id } });
   }
 
-
-  async update(id: number, updateArticleDto: UpdateArticleDto, files) {
+  async update(id: number, updateArticleDto: UpdateArticleReqDto, files) {
     const result = await this.articleRepository.save(
       this.articleRepository.create({
         id,
         ...updateArticleDto,
       }),
     );
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
+    const photoOrderList = JSON.parse(updateArticleDto.photoOrderList);
+
+    let fileIdx = 0;
+    for (const index in photoOrderList) {
+      const photoOrder = photoOrderList[index];
+      if (photoOrder.type === 'new') {
         const createArticleImageDto: CreateArticleImageDto = {
-          articleId: result.id,
-          order: i + 1,
-          url: files[i].location,
+          articleId: id,
+          order: parseInt(index) + 1,
+          url: files[fileIdx].location,
         };
         await this.articleImagesService.create(createArticleImageDto);
+        fileIdx += 1;
+      } else if (photoOrder.type === 'existing') {
+        const updateArticleImageDto: UpdateArticleImageDto = {
+          order: parseInt(index) + 1,
+        };
+        await this.articleImagesService.update(
+          photoOrder.id,
+          updateArticleImageDto,
+        );
       }
+    }
+
+    if (updateArticleDto.deleteImageIdList) {
+      await this.articleImagesService.removeMany(
+        updateArticleDto.deleteImageIdList,
+      );
     }
     return result;
   }
