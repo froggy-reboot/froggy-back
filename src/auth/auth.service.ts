@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { customBool, enrollType, User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
@@ -224,13 +229,7 @@ export class AuthService {
       email: dto.email,
     });
     if (exUser) {
-      throw new HttpException(
-        {
-          status: HttpStatus.CONFLICT,
-          error: `email already exist`,
-        },
-        HttpStatus.CONFLICT,
-      );
+      throw new ConflictException('email already exist');
     }
 
     const hash4MailCertify = crypto
@@ -238,11 +237,13 @@ export class AuthService {
       .update(randomStringGenerator())
       .digest('hex');
 
+    const randomNickname = await this.getUniqueNickName();
+
     const user = await this.usersService.create({
       email: dto.email,
       enrollType: dto.enrollType,
       password: hash,
-      nickname: dto.nickname,
+      nickname: randomNickname,
       certifyHash: hash4MailCertify,
     });
 
