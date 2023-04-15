@@ -144,7 +144,6 @@ export class ArticlesController {
     description: '글이 존재하지 않는 경우',
   })
   async findOne(@Param('id') id: string) {
-    // return this.articlesService.findOne(+id);
     const article = await this.articlesRepository.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);

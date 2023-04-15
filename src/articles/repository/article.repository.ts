@@ -65,7 +65,8 @@ export class ArticlesRepository extends Repository<Article> {
     const articleWithImages = this.repository
       .createQueryBuilder('article')
       .leftJoin('article.images', 'image')
-      .select(['article', 'image.url', 'image.id'])
+      .select(['article', 'image.url', 'image.id', 'image.order'])
+      .orderBy('image.order', 'ASC')
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .where('article.id =:id', { id })
       .getOne();
