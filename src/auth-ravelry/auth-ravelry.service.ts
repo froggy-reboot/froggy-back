@@ -111,20 +111,29 @@ export class AuthRavelryService {
   }
 
   async saveAuthRavelryUser(ravelryUserInfo, accessToken) {
-    const newRavelryUser = await this.ravelryUsersService.create({
+    const ravelryUser = await this.ravelryUsersService.findOne({
       ravelryId: ravelryUserInfo.id,
-      token: accessToken,
-      username: ravelryUserInfo.username,
     });
-    return newRavelryUser;
+
+    if (ravelryUser.ravelryId === ravelryUserInfo.id) {
+      return -1;
+    } else {
+      const newRavelryUser = await this.ravelryUsersService.create({
+        ravelryId: ravelryUserInfo.id,
+        token: accessToken,
+        username: ravelryUserInfo.username,
+      });
+      return newRavelryUser;
+    }
   }
 
   async linkRavelryToAnotherAccount(user, dto) {
     const { socialUserId } = dto;
-    await this.usersService.update(user.id, {
+    const updateResult = await this.usersService.update(user.id, {
       ravelryUserId: socialUserId,
       isRavelryIntegrated: customBool.Y,
     });
+    return updateResult;
   }
 
   getClient() {

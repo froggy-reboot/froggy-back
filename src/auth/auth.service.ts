@@ -87,16 +87,6 @@ export class AuthService {
     }
   }
 
-  async saveRavelryUser() {
-    // 1. 라이벌리 계정 정보 저장 확인
-    // 2. 저장 안되어 있을 때 저장
-    // 3. 저장 이후 userId 반환
-  }
-
-  async linkRavelryUser() {
-    // 1. 라이벌리 user id 와 user jwt token 필요
-  }
-
   async updateRefreshToken(userId, refreshToken: string) {
     await this.usersService.update(userId, {
       refreshToken: refreshToken,
