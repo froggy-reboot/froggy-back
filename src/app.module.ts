@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { UsersModule } from './users/users.module';
 import { FilesModule } from './files/files.module';
@@ -34,6 +34,8 @@ import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { MailConfigService } from './mail/mail-config.service';
 import { DataSource } from 'typeorm';
 import { ArticleLikesModule } from './article-likes/article-likes.module';
+
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -96,4 +98,8 @@ import { ArticleLikesModule } from './article-likes/article-likes.module';
     // CommentImagesModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
