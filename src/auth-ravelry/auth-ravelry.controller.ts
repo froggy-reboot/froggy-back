@@ -101,13 +101,17 @@ export class AuthRavelryController {
 
   @Get('link/callback')
   async linkCallback(@Req() req, @Res() res) {
+    console.log('link/callback');
     const accessToken = await this.authRavelryService.getLinkAccessToken(req);
+    console.log('accessToken', accessToken);
     const ravelryUserInfo =
       await this.authRavelryService.getUserInfoByAccessToken(accessToken);
+    console.log('ravelryUserInfo', ravelryUserInfo);
     const newRavelryUser = await this.authRavelryService.saveAuthRavelryUser(
       ravelryUserInfo,
       accessToken,
     );
+    console.log('newRavelryUser', newRavelryUser);
     res.redirect(`http://localhost:3000/sign-in/ravelry/${newRavelryUser.id}`);
   }
 
