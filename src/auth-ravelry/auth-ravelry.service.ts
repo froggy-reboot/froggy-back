@@ -60,12 +60,12 @@ export class AuthRavelryService {
   }
 
   async getLinkAccessToken(req) {
-    const client = this.getClient();
+    const client = this.getLinkClient();
 
     const tokenParams = {
       code: req.query.code,
       redirect_uri: process.env.RAVELRY_LINK_CALL_BACK_URL,
-      scope: 'patternstore-read',
+      scope: 'offline patternstore-read',
     };
 
     const getTokenResult = await client.getToken(tokenParams, { json: true });
