@@ -54,7 +54,7 @@ export class AuthRavelryService {
       scope: 'offline patternstore-read',
     };
 
-    const getTokenResult = await client.getToken(tokenParams);
+    const getTokenResult = await client.getToken(tokenParams, { json: true });
     const accessToken = getTokenResult.token.access_token;
     return accessToken;
   }
@@ -68,7 +68,7 @@ export class AuthRavelryService {
       scope: 'patternstore-read',
     };
 
-    const getTokenResult = await client.getToken(tokenParams);
+    const getTokenResult = await client.getToken(tokenParams, { json: true });
     const accessToken = getTokenResult.token.access_token;
     return accessToken;
   }
