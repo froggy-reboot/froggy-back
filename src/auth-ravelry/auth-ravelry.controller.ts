@@ -120,7 +120,6 @@ export class AuthRavelryController {
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
-    type: AuthSocialLoginUrlDto,
     description: 'Ravelry계정과 계정을 연동해 줍니다.',
   })
   @ApiResponse({
