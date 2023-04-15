@@ -69,6 +69,7 @@ export class AuthRavelryService {
     };
 
     const getTokenResult = await client.getToken(tokenParams, { json: true });
+    console.log(getTokenResult);
     const accessToken = getTokenResult.token.access_token;
     return accessToken;
   }
