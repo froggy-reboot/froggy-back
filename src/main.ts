@@ -18,11 +18,6 @@ import { join } from 'path';
 import * as fs from 'fs';
 
 async function bootstrap() {
-  const httpsOptions = {
-    // cert: fs.readFileSync('./src/config/cert.pem'),
-    // key: fs.readFileSync('./src/config/key.pem'),
-  };
-
   const server = express();
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
@@ -60,10 +55,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
 
-  http.createServer(server).listen(configService.get('app.port'));
-  https
-    .createServer(httpsOptions, server)
-    .listen(configService.get('app.httpsPort'));
+  await app.listen(configService.get('app.port'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
   app.init();
