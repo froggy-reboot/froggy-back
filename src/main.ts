@@ -32,7 +32,7 @@ async function bootstrap() {
   const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://froggy-knit.com'],
   };
 
   app.enableCors(corsOptions);
