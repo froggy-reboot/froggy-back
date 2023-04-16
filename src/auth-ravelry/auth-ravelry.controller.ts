@@ -18,6 +18,7 @@ import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { AuthRavelryService } from './auth-ravelry.service';
 import { AuthRavelryLoginDto } from './dto/auth-ravelry.dto';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('ravelry 회원가입')
 @Controller({
@@ -28,6 +29,7 @@ export class AuthRavelryController {
   constructor(
     public authService: AuthService,
     public authRavelryService: AuthRavelryService,
+    private configService: ConfigService,
   ) {}
 
   @Get('register')
@@ -65,7 +67,8 @@ export class AuthRavelryController {
       ravelryUser,
       socialData,
     );
-    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
+    const frontUrl = this.configService.get('FRONTEND_DOMAIN');
+    res.redirect(`${frontUrl}/sign-in/social/${userId}`);
   }
 
   @Get('test')
@@ -109,13 +112,11 @@ export class AuthRavelryController {
       ravelryUserInfo,
       accessToken,
     );
-
+    const frontUrl = this.configService.get('FRONTEND_DOMAIN');
     if (newRavelryUser == -1) {
-      res.redirect(`http://localhost:3000/sign-in/ravelry/-1`);
+      res.redirect(`${frontUrl}/sign-in/ravelry/-1`);
     } else {
-      res.redirect(
-        `http://localhost:3000/sign-in/ravelry/${newRavelryUser.id}`,
-      );
+      res.redirect(`${frontUrl}/sign-in/ravelry/${newRavelryUser.id}`);
     }
   }
 

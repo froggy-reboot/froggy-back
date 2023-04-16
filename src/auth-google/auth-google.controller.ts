@@ -17,6 +17,7 @@ import { AuthGoogleLoginDto } from './dto/auth-google-login.dto';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { enrollType } from '../users/entities/user.entity';
 import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('구글 회원가입')
 @Controller({
@@ -27,6 +28,7 @@ export class AuthGoogleController {
   constructor(
     public authService: AuthService,
     public authGoogleService: AuthGoogleService,
+    private configService: ConfigService,
   ) {}
 
   @Get('register')
@@ -50,8 +52,9 @@ export class AuthGoogleController {
       password: null,
     };
 
+    const frontUrl = this.configService.get('FRONTEND_DOMAIN');
     const userId = await this.authService.findOrCreateUser(socialData);
-    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
+    res.redirect(`${frontUrl}/sign-in/social/${userId}`);
   }
 
   // @Post('login')

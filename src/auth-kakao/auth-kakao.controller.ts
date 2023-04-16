@@ -16,8 +16,7 @@ import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { AuthKakaoService } from './auth-kakao.service';
-import { AuthKakaoLoginDto } from './dto/auth-kakao-login.dto';
-
+import { ConfigService } from '@nestjs/config';
 @ApiTags('카카오 회원가입')
 @Controller({
   path: 'auth/kakao',
@@ -27,6 +26,7 @@ export class AuthKakaoController {
   constructor(
     public authService: AuthService,
     public authKakaoService: AuthKakaoService,
+    private configService: ConfigService,
   ) {}
 
   @Get('register')
@@ -52,6 +52,7 @@ export class AuthKakaoController {
     };
 
     const userId = await this.authService.findOrCreateUser(socialData);
-    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
+    const frontUrl = this.configService.get('FRONTEND_DOMAIN');
+    res.redirect(`${frontUrl}/sign-in/social/${userId}`);
   }
 }

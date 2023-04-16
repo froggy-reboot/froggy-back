@@ -17,7 +17,7 @@ import { AuthNaverLoginDto } from './dto/auth-naver-login.dto';
 import { SocialInterface } from '../social/interfaces/social.interface';
 import { enrollType } from '../users/entities/user.entity';
 import { AuthSocialLoginUrlDto } from 'src/auth/dto/auth-social-login.dto';
-
+import { ConfigService } from '@nestjs/config';
 @ApiTags('네이버 회원가입')
 @Controller({
   path: 'auth/naver',
@@ -27,6 +27,7 @@ export class AuthNaverController {
   constructor(
     public authService: AuthService,
     public authNaverService: AuthNaverService,
+    private configService: ConfigService,
   ) {}
 
   @Get('register')
@@ -53,6 +54,7 @@ export class AuthNaverController {
     console.log(socialData);
 
     const userId = await this.authService.findOrCreateUser(socialData);
-    res.redirect(`http://localhost:3000/sign-in/social/${userId}`);
+    const frontUrl = this.configService.get('FRONTEND_DOMAIN');
+    res.redirect(`${frontUrl}/sign-in/social/${userId}`);
   }
 }
