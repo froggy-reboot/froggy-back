@@ -39,6 +39,7 @@ export class ArticleLikesService {
         'add',
       );
     }
+    return articleLike;
   }
 
   findAll() {

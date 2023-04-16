@@ -19,7 +19,7 @@ export class ArticlesRepository extends Repository<Article> {
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
-      .leftJoin('article.comments', 'comment')
+      // .leftJoin('article.comments', 'comment')
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
@@ -51,9 +51,29 @@ export class ArticlesRepository extends Repository<Article> {
       .createQueryBuilder('article')
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
-      .leftJoin('article.comments', 'comment')
-      .where('article.liked >= 5')
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
+      .where('article.liked >= :liked', { liked: 1 })
+      /*
+      아래의 주석을 지우지 말 것
+      좋아요 기록을 조회하기 위해, like 다대다 테이블을 사용하는 기능이 추가될 경우,
+      좋아요 개수 기준을 충족하는 게시글들을 반환하기 위한 조건
+       */
+      // .loadRelationCountAndMap(
+      //   'article.articleLikes',
+      //   'article.articleLikes',
+      //   'likes',
+      // )
+
+      // .where((qb) => {
+      //   const subQuery = qb
+      //     .subQuery()
+      //     .select('articleId')
+      //     .from('articleLike', 'articleLike')
+      //     .groupBy('articleId')
+      //     .having('COUNT(*) > :count', { count: 0 })
+      //     .getQuery();
+      //   return 'article.id IN ' + subQuery;
+      // })
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .orderBy({ 'article.createdAt': 'DESC' })

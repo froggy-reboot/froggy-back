@@ -12,8 +12,9 @@ import {
 import { ArticleLikesService } from './article-likes.service';
 import { CreateArticleLikeDto } from './dto/create-article-like.dto';
 import { UpdateArticleLikeDto } from './dto/update-article-like.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateArticleResDto } from '../articles/dto/create-article.dto';
 
 @ApiTags('article 좋아요')
 @Controller({
@@ -26,13 +27,15 @@ export class ArticleLikesController {
 
   @Post('/:articleId')
   @ApiBearerAuth()
+  @ApiResponse({
+    description: 'affected row',
+  })
   @UseGuards(AuthGuard('jwt'))
   async create(@Request() req, @Param('articleId') articleId: string) {
     const createArticleLikeDto: CreateArticleLikeDto = {
       articleId: +articleId,
       userId: req.user.id,
     };
-
     return await this.articleLikesService.toggleLike(createArticleLikeDto);
   }
 
