@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
-import {
-  UpdateArticleDto,
-  UpdateArticleReqDto,
-} from './dto/update-article.dto';
+import { UpdateArticleReqDto } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
@@ -95,11 +92,9 @@ export class ArticlesService {
 
   async updateLikeCount(id: number, type: string) {
     if (type === 'sub') {
-      const article = await this.articleCustomRepository.subLikeCount(id);
-      return article;
+      return await this.articleCustomRepository.subLikeCount(id);
     } else if (type === 'add') {
-      const article = await this.articleCustomRepository.addLikeCount(id);
-      return article;
+      return await this.articleCustomRepository.addLikeCount(id);
     }
   }
 
