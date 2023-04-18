@@ -12,10 +12,7 @@ import { AppModule } from './app.module';
 import validationOptions from './utils/validation-options';
 import * as express from 'express';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as https from 'https';
-import * as http from 'http';
 import { join } from 'path';
-import * as fs from 'fs';
 
 async function bootstrap() {
   const server = express();
