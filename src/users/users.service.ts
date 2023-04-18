@@ -37,7 +37,7 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateProfileDto: UpdateUserDto, file) {
+  update(id: number, updateProfileDto: UpdateUserDto, file = null) {
     if (file && file.location) {
       updateProfileDto.profileImg = file.location;
       console.log('#### file location: ', file.location);
