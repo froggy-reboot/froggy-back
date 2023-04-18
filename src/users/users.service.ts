@@ -37,7 +37,11 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateProfileDto: UpdateUserDto) {
+  update(id: number, updateProfileDto: UpdateUserDto, file) {
+    if (file && file.location) {
+      updateProfileDto.profileImg = file.location;
+      console.log('#### file location: ', file.location);
+    }
     return this.usersRepository.save(
       this.usersRepository.create({
         id,

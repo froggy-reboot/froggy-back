@@ -7,7 +7,6 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
-  SerializeOptions,
   UseGuards,
   UseInterceptors,
   UploadedFile,
@@ -15,7 +14,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UpdateUserDto, UpdateUserReqDto } from './dto/update-user.dto';
+import { UpdateUserReqDto } from './dto/update-user.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -77,11 +76,7 @@ export class UsersController {
         HttpStatus.NOT_ACCEPTABLE,
       );
     }
-    if (file && file.location) {
-      updateProfileDto.profileImg = file.location;
-      console.log('#### file location: ', file.location);
-    }
-    return this.usersService.update(id, updateProfileDto);
+    return this.usersService.update(id, updateProfileDto, file);
   }
 
   @Delete(':id')
