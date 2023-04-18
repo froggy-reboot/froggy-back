@@ -5,13 +5,10 @@ import { AxiosError } from 'axios';
 import { SocialInterface } from 'src/social/interfaces/social.interface';
 import { enrollType } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { JwtService } from '@nestjs/jwt';
 import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
 import { ravelryUserDto } from './dto/auth-ravelry.dto';
 import { customBool } from 'src/ravelry-users/entities/ravelry-user.entity';
 const {
-  ClientCredentials,
-  ResourceOwnerPassword,
   AuthorizationCode,
 } = require('simple-oauth2');
 const randomString = require('randomstring');

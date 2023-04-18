@@ -15,7 +15,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpdateUserReqDto } from './dto/update-user.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -63,7 +63,7 @@ export class UsersController {
   update(
     @Request() req,
     @Param('id') id: number,
-    @Body() updateProfileDto: UpdateUserDto,
+    @Body() updateProfileDto: UpdateUserReqDto,
     @UploadedFile() file,
   ) {
     if (req.user.id !== id) {

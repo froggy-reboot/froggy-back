@@ -72,3 +72,13 @@ export class UpdateUserDto {
   @IsOptional()
   profileImg?: string;
 }
+
+export class UpdateUserReqDto {
+  @ApiProperty({ example: '33' })
+  @IsString()
+  @IsOptional()
+  nickname?: string;
+
+  @IsOptional()
+  profileImg?: string;
+}

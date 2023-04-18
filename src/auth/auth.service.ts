@@ -497,6 +497,14 @@ export class AuthService {
       '로봇',
       '브로콜리',
       '귤',
+      '생강',
+      '마라탕',
+      '햄버거',
+      '어묵꼬치',
+      '주먹밥',
+      '베이컨',
+      '참치',
+      '고등어',
     ];
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return noun;
