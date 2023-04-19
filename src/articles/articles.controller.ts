@@ -87,6 +87,8 @@ export class ArticlesController {
   ) {
     if (filterOptions.filter === undefined) {
       return this.articlesRepository.findArticleList(paginationOptions);
+    } else if (filterOptions.filter == '인기') {
+      return this.articlesRepository.findArticleListByHot(paginationOptions);
     } else {
       return this.articlesRepository.findArticleListByFilter(
         paginationOptions,
@@ -104,17 +106,6 @@ export class ArticlesController {
   })
   findAll(@Param() paginationOptions: IPaginationOptions) {
     return this.articlesRepository.findArticleList(paginationOptions);
-  }
-
-  @Get('/hot/pages/:page')
-  @ApiProperty({ type: IPaginationOptions })
-  @ApiResponse({
-    status: 200,
-    type: [ShowArticlesDto],
-    description: 'Article의 배열 json',
-  })
-  findAllHot(@Param() paginationOptions: IPaginationOptions) {
-    return this.articlesRepository.findArticleListByHot(paginationOptions);
   }
 
   @Get('/search/:page')
