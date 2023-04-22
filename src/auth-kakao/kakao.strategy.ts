@@ -9,7 +9,6 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   constructor(private configService: ConfigService) {
     super({
       clientID: configService.get('kakao.clientId'),
-      clientSecret: configService.get('kakao.clientSecret'),
       callbackURL: configService.get('kakao.callbackUrl'),
       passReqToCallback: true,
       scope: ['account_email'],
@@ -29,12 +28,13 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     done: any,
   ) {
     try {
-      const email = profile._json.kakao_account.email;
+      // const email = profile._json.kakao_account.email;
       // console.log(profile);
       //profile.emails[0].value, 에 email이 담김
+      const customEmail = profile.id + '@kakaoId.com';
       return {
         provider: 'kakao',
-        email: profile._json.kakao_account.email,
+        email: customEmail,
         refreshToken,
         accessToken,
       };
