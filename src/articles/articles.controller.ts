@@ -42,6 +42,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { SearchOptions } from 'src/utils/types/search-options';
 import { FilterOptions } from '../utils/types/filter-options';
+import { CheckLikeInterceptor } from '../common/interceptors/ checkLike.interceptor';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -75,16 +76,20 @@ export class ArticlesController {
   }
 
   @Get('/pages/:page')
+  @UseInterceptors(CheckLikeInterceptor)
   @ApiProperty({ type: IPaginationOptions })
+  // @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
   findAllByFilter(
+    @Request() req,
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
   ) {
+    console.log(req.user);
     if (filterOptions.filter === undefined) {
       return this.articlesRepository.findArticleList(paginationOptions);
     } else if (filterOptions.filter == '인기') {

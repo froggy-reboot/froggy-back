@@ -42,6 +42,10 @@ export class ArticleLikesService {
     return articleLike;
   }
 
+  addLikeInfo(articles: Article[], userId: string) {
+    return articles;
+  }
+
   findAll() {
     return `This action returns all articleLikes`;
   }
