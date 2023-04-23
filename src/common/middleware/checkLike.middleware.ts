@@ -2,8 +2,8 @@ import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../users/entities/user.entity';
-import { ArticleLikesService } from '../article-likes/article-likes.service';
+import { User } from '../../users/entities/user.entity';
+import { ArticleLikesService } from '../../article-likes/article-likes.service';
 
 @Injectable()
 export class CheckLikeMiddleware implements NestMiddleware {
@@ -13,8 +13,8 @@ export class CheckLikeMiddleware implements NestMiddleware {
   ) {}
   public async use(req: Request, res: Response, next: () => void) {
     req.user = await this.verifyUser(req);
+    if (req.user == null) return next();
     const userId = req.user['id'];
-    console.log(userId);
     // if (this.likeService.getLikedByUser(userId))
     return next();
   }

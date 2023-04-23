@@ -40,11 +40,12 @@ import { MailConfigService } from './mail/mail-config.service';
 import { DataSource } from 'typeorm';
 import { ArticleLikesModule } from './article-likes/article-likes.module';
 
-import { LoggerMiddleware } from './middleware/logger.middleware';
-import { CheckLikeMiddleware } from './middleware/checkLike.middleware';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { CheckLikeMiddleware } from './common/middleware/checkLike.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
-import { AuthTokenMiddleware } from './middleware/auth.token';
+import { AuthTokenMiddleware } from './common/middleware/auth.token';
+32;
 
 @Module({
   imports: [
@@ -123,5 +124,8 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthTokenMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
+    consumer
+      .apply(CheckLikeMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.GET });
   }
 }

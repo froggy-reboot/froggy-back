@@ -10,7 +10,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ArticleImagesModule } from 'src/article-images/article-images.module';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
-import { CheckLikeMiddleware } from '../middleware/checkLike.middleware';
+import { CheckLikeMiddleware } from '../common/middleware/checkLike.middleware';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article, Comment]),
