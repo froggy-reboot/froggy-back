@@ -98,9 +98,18 @@ export class ArticlesService {
     }
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     // 아래 방법으로는 댓글까지 soft delete가 안됨
     // return this.articleRepository.softDelete({ id });
+
+    const articleImageList = await this.articleImagesService.findAll(id);
+    if (articleImageList.length > 0) {
+      const articleImageIdList = articleImageList.map((articleImage) => {
+        return articleImage.id;
+      });
+      const imageRemoveResult =
+        this.articleImagesService.removeMany(articleImageIdList);
+    }
     const comments = this.commentRepository.softDelete({
       articleId: id,
     });
