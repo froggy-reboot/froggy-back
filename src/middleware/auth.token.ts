@@ -19,6 +19,9 @@ export class AuthTokenMiddleware implements NestMiddleware {
     let user: User = null;
     try {
       const { authorization } = req.headers;
+      if (!authorization) {
+        return null;
+      }
       const token = authorization.replace('Bearer ', '').replace('bearer ', '');
       const decoded = await this.jwtService.verify(token, {
         secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
