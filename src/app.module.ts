@@ -41,7 +41,7 @@ import { DataSource } from 'typeorm';
 import { ArticleLikesModule } from './article-likes/article-likes.module';
 
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { AuthTokenMiddleware } from './utils/common/auth.token';
+import { AuthTokenMiddleware } from './middleware/auth.token';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 
