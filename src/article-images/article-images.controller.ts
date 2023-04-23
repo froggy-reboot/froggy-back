@@ -10,8 +10,12 @@ import {
 import { ArticleImagesService } from './article-images.service';
 import { CreateArticleImageDto } from './dto/create-article-image.dto';
 import { UpdateArticleImageDto } from './dto/update-article-image.dto';
-
-@Controller('article-images')
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('게시판 사진')
+@Controller({
+  path: 'article-images',
+  version: '1',
+})
 export class ArticleImagesController {
   constructor(private readonly articleImagesService: ArticleImagesService) {}
 
@@ -36,6 +40,12 @@ export class ArticleImagesController {
     @Body() updateArticleImageDto: UpdateArticleImageDto,
   ) {
     return this.articleImagesService.update(+id, updateArticleImageDto);
+  }
+
+  @Delete('periodic')
+  async removeMany() {
+    const removeResult = await this.articleImagesService.removePeriodically();
+    return removeResult;
   }
 
   @Delete(':id')

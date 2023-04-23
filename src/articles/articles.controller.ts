@@ -6,13 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-  HttpCode,
-  HttpStatus,
   UseGuards,
-  UploadedFile,
   UseInterceptors,
   Request,
-  HttpException,
   UploadedFiles,
   Query,
   NotFoundException,
@@ -23,10 +19,7 @@ import {
   CreateArticleDto,
   CreateArticleResDto,
 } from './dto/create-article.dto';
-import {
-  UpdateArticleDto,
-  UpdateArticleReqDto,
-} from './dto/update-article.dto';
+import { UpdateArticleReqDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,

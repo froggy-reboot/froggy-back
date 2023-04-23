@@ -18,7 +18,6 @@ export class AuthTokenMiddleware implements NestMiddleware {
   private async verifyUser(req: Request) {
     let user: User = null;
     try {
-      console.log('req', req);
       const { authorization } = req.headers;
       const token = authorization.replace('Bearer ', '').replace('bearer ', '');
       const decoded = await this.jwtService.verify(token, {
