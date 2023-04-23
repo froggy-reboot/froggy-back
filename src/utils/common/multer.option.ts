@@ -53,7 +53,7 @@ export const multerOptionsFactory = (
 
       callback(null, true);
     },
-    storage: storages[configService.get('file.driver')](),
+    storage: storages['s3'](),
     limits: {
       fileSize: configService.get('file.maxFileSize'),
     },
