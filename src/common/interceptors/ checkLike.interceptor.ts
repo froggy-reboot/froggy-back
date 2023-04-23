@@ -16,7 +16,11 @@ export class CheckLikeInterceptor implements NestInterceptor {
     next: CallHandler,
   ): Promise<Observable<any>> {
     const request: Request = context.switchToHttp().getRequest();
-    const userId = request['user']['id'];
+    const user = request['user'];
+    let userId: number;
+    if (user == null) {
+      userId = 0;
+    } else userId = request['user']['id'];
 
     return next.handle().pipe(
       // tap((articles) =>
