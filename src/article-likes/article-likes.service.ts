@@ -43,13 +43,12 @@ export class ArticleLikesService {
   }
 
   async getLikedByUser(userId: number, articleId: number) {
-    const articleLike = await this.articleLikesRepository.findOne({
+    return await this.articleLikesRepository.findOne({
       where: {
         userId: userId,
         articleId: articleId,
       },
     });
-    return !!articleLike;
   }
 
   findAll() {
