@@ -209,6 +209,7 @@ export class ArticlesController {
         `${id}번째 글에 대해 수정/삭제 권한이 없습니다.`,
       );
     }
-    return this.articlesService.remove(+id);
+    const removeResult = await this.articlesService.remove(+id);
+    return removeResult;
   }
 }

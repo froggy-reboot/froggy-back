@@ -19,10 +19,8 @@ export class ArticleImagesService {
   findAll(articleId: number) {
     const images = this.repository
       .createQueryBuilder('articleImage')
-      .leftJoin('article.images', 'image')
-      .select(['article', 'user.nickname'])
-      .leftJoin('article.comments', 'comment')
-      .loadRelationCountAndMap('article.comment_count', 'article.comments')
+      .where('articleImage.articleId = :articleId', { articleId: articleId })
+      .select(['articleImage'])
       .getMany();
     // console.log(articles);
     return images;
@@ -45,6 +43,7 @@ export class ArticleImagesService {
     const image = this.repository.softDelete({
       id: id,
     });
+
     return this.repository.softDelete({ id });
   }
 
