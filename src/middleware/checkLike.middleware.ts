@@ -14,7 +14,7 @@ export class CheckLikeMiddleware implements NestMiddleware {
   public async use(req: Request, res: Response, next: () => void) {
     req.user = await this.verifyUser(req);
     const userId = req.user['id'];
-    console.log(req.body);
+    console.log(userId);
     // if (this.likeService.getLikedByUser(userId))
     return next();
   }

@@ -42,6 +42,7 @@ import { ArticleLikesModule } from './article-likes/article-likes.module';
 
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { AuthTokenMiddleware } from './utils/common/auth.token';
+import { CheckLikeMiddleware } from './middleware/checkLike.middleware';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -121,5 +122,8 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthTokenMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
+    consumer
+      .apply(CheckLikeMiddleware)
+      .forRoutes({ path: 'articles', method: RequestMethod.GET });
   }
 }
