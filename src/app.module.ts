@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 
 import { UsersModule } from './users/users.module';
 import { FilesModule } from './files/files.module';
@@ -36,6 +41,8 @@ import { DataSource } from 'typeorm';
 import { ArticleLikesModule } from './article-likes/article-likes.module';
 
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { AuthTokenMiddleware } from './utils/common/auth.token';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -94,6 +101,16 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
     CommentsModule,
     RavelryUsersModule,
     ArticleLikesModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('auth.secret'),
+        signOptions: {
+          expiresIn: configService.get('auth.expires'),
+        },
+      }),
+    }),
     // ArticleImagesModule,
     // CommentImagesModule,
   ],
@@ -101,5 +118,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
+    consumer
+      .apply(AuthTokenMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

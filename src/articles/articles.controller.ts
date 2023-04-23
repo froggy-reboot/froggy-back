@@ -82,9 +82,11 @@ export class ArticlesController {
     description: 'Article의 배열 json',
   })
   findAllByFilter(
+    @Request() req,
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
   ) {
+    console.log(req.user);
     if (filterOptions.filter === undefined) {
       return this.articlesRepository.findArticleList(paginationOptions);
     } else if (filterOptions.filter == '인기') {
