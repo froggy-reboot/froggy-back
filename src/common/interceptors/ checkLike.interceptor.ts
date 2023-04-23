@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ArticleLikesService } from '../../article-likes/article-likes.service';
+import { ArticleLikesModule } from '../../article-likes/article-likes.module';
 
 @Injectable()
 export class CheckLikeInterceptor implements NestInterceptor {
@@ -13,13 +15,25 @@ export class CheckLikeInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<any>> {
-    console.log('Before...');
-    const body = await JSON.stringify(context.switchToHttp().getRequest().body);
-    console.log('body : ' + body);
+    const request: Request = context.switchToHttp().getRequest();
+
+    await console.log('Before...');
     const now = Date.now();
     return next.handle().pipe(
       tap(() => console.log(`After... ${Date.now() - now}ms`)), // post-request
-      map((data) => console.log(data)), // 여기서 data는 컨트롤러를 거친 후 응답(response)에 대한 data
+      tap((articles) =>
+        articles.forEach((article) =>
+          console.log(JSON.stringify(article['writerId']) + ' 안뇽 경규예요'),
+        ),
+      ),
+      map((articles) => {
+        if (Array.isArray(articles)) {
+          return articles.map((article) => ({
+            ...article,
+            likedByUser: false,
+          }));
+        }
+      }),
     );
   }
 }
