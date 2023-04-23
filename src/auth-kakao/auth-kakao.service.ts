@@ -11,8 +11,10 @@ export class AuthKakaoService {
 
   getRedirectUrl(): string {
     const callbackUrl = this.configService.get('kakao.callbackUrl');
-    const clinetId = this.configService.get('kakao.clientId');
-    const redirectUrl = `https://accounts.kakao.com/login/?continue=https://kauth.kakao.com/oauth/authorize?scope=account_email&response_type=code&redirect_uri=${callbackUrl}&through_account=true&client_id=${clinetId}#login`;
+    const clientId = this.configService.get('kakao.clientId');
+
+    // const redirectUrl = `https://accounts.kakao.com/login/?continue=https://kauth.kakao.com/oauth/authorize?scope=account_email&response_type=code&redirect_uri=${callbackUrl}&through_account=true&client_id=${clinetId}#login`;
+    const redirectUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${callbackUrl}&response_type=code `;
     return redirectUrl;
   }
 }
