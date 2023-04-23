@@ -89,7 +89,6 @@ export class ArticlesController {
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
   ) {
-    console.log(req.user);
     if (filterOptions.filter === undefined) {
       return this.articlesRepository.findArticleList(paginationOptions);
     } else if (filterOptions.filter == '인기') {
@@ -174,7 +173,6 @@ export class ArticlesController {
   ) {
     const userId = req.user.id;
     const article = await this.articlesRepository.findArticle(+id);
-    console.log(updateArticleDto);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
