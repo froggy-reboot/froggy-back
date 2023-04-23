@@ -112,6 +112,7 @@ export class ArticlesController {
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
+  @UseInterceptors(CheckLikeInterceptor)
   search(
     @Param() paginationOptions: IPaginationOptions,
     @Query() searchTarget: SearchOptions,
@@ -131,6 +132,7 @@ export class ArticlesController {
     status: 404,
     description: '글이 존재하지 않는 경우',
   })
+  @UseInterceptors(CheckLikeInterceptor)
   async findOne(@Param('id') id: string) {
     const article = await this.articlesRepository.findArticle(+id);
     if (article == null) {
