@@ -42,8 +42,14 @@ export class ArticleLikesService {
     return articleLike;
   }
 
-  addLikeInfo(articles: Article[], userId: string) {
-    return articles;
+  getLikedByUser(userId: number, articleId: number) {
+    const articleLike = this.articleLikesRepository.findOne({
+      where: {
+        userId: userId,
+        articleId: articleId,
+      },
+    });
+    return !!articleLike;
   }
 
   findAll() {
