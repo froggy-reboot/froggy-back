@@ -1,17 +1,16 @@
 import {
+  CallHandler,
+  ExecutionContext,
   Injectable,
   NestInterceptor,
-  ExecutionContext,
-  CallHandler,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { ArticleLikesService } from '../../article-likes/article-likes.service';
-import { ArticleLikesModule } from '../../article-likes/article-likes.module';
 
 @Injectable()
 export class CheckLikeInterceptor implements NestInterceptor {
   constructor(private readonly likeService: ArticleLikesService) {}
+  // eslint-disable-next-line @typescript-eslint/require-await
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -20,18 +19,34 @@ export class CheckLikeInterceptor implements NestInterceptor {
     const userId = request['user']['id'];
 
     return next.handle().pipe(
-      tap(() => console.log(`After...`)), // post-request
-      tap((articles) =>
-        articles.forEach((article) =>
-          console.log(JSON.stringify(article['writerId']) + ' 안뇽 경규예요'),
-        ),
-      ),
-      map((articles) => {
-        // if (Array.isArray(articles)) {
-        return articles.map((article) => ({
-          ...article,
-          likedByUser: !!this.likeService.getLikedByUser(userId, article['id']),
-        }));
+      // tap((articles) =>
+      //   articles.forEach(async (article) =>
+      //     console.log(
+      //       'here ' +
+      //         (await this.likeService.getLikedByUser(userId, article['id'])),
+      //     ),
+      //   ),
+      // ),
+      map(async (articles) => {
+        if (Array.isArray(articles)) {
+          return await Promise.all(
+            articles.map(async (article) => ({
+              ...article,
+              likedByUser: !!(await this.likeService.getLikedByUser(
+                userId,
+                article['id'],
+              )),
+            })),
+          );
+        } else {
+          return {
+            ...articles,
+            likedByUser: !!(await this.likeService.getLikedByUser(
+              userId,
+              articles['id'],
+            )),
+          };
+        }
       }),
     );
   }
