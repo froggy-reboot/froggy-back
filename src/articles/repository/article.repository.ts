@@ -3,7 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IPaginationOptions } from '../../utils/types/pagination-options';
-import { filters } from '../../utils/types/filter-options';
+import {
+  FilterOptions,
+  articleTypes,
+  filters,
+} from '../../utils/types/filter-options';
 
 @Injectable()
 export class ArticlesRepository extends Repository<Article> {
@@ -109,6 +113,36 @@ export class ArticlesRepository extends Repository<Article> {
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
+    return articles;
+  }
+
+  async findHotArticleList(
+    articleType: articleTypes,
+    paginationOptions: IPaginationOptions,
+  ) {}
+  async findRecentArticleList(
+    articleType: articleTypes,
+    paginationOptions: IPaginationOptions,
+  ) {
+    let queryBuilder = this.repository
+      .createQueryBuilder('article')
+      .leftJoin('article.user', 'user')
+      .select(['article', 'user.nickname', 'user.profileImg'])
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
+      .limit(paginationOptions.limit)
+      .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .orderBy({ 'article.createdAt': 'DESC' });
+
+    if (
+      articleType == articleTypes.free ||
+      articleType == articleTypes.question
+    ) {
+      queryBuilder = queryBuilder.where('article.articleType = :articleType', {
+        articleType,
+      });
+    }
+
+    const articles = await queryBuilder.getMany();
     return articles;
   }
 
