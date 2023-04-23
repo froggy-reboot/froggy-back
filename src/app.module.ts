@@ -124,8 +124,5 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthTokenMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
-    consumer
-      .apply(CheckLikeMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.GET });
   }
 }

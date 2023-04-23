@@ -42,8 +42,8 @@ export class ArticleLikesService {
     return articleLike;
   }
 
-  getLikedByUser(userId: number, articleId: number) {
-    const articleLike = this.articleLikesRepository.findOne({
+  async getLikedByUser(userId: number, articleId: number) {
+    const articleLike = await this.articleLikesRepository.findOne({
       where: {
         userId: userId,
         articleId: articleId,
