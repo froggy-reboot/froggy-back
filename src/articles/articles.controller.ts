@@ -42,7 +42,7 @@ import {
   articleTypes,
   filters,
 } from '../utils/types/filter-options';
-import { CheckLikeInterceptor } from '../common/interceptors/ checkLike.interceptor';
+import { CheckLikeInterceptor } from '../utils/common/interceptors/ checkLike.interceptor';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -88,7 +88,7 @@ export class ArticlesController {
   async findAllByFilter(
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
-    @Query('search') search: String,
+    @Query('search') search: string,
   ) {
     if (search !== undefined) {
       return this.articlesRepository.findSearchArticleList(
