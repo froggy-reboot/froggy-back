@@ -35,7 +35,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { SearchOptions } from 'src/utils/types/search-options';
 import { FilterOptions } from '../utils/types/filter-options';
-import { CheckLikeInterceptor } from '../common/interceptors/ checkLike.interceptor';
+import { CheckLikeInterceptor } from '../utils/common/interceptors/ checkLike.interceptor';
 
 @ApiTags('게시판 글')
 @Controller({
