@@ -24,6 +24,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from './entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Users')
 @Controller({
@@ -31,7 +32,10 @@ import { User } from './entities/user.entity';
   version: '1',
 })
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    public configService: ConfigService,
+  ) {}
 
   // @Post()
   // @HttpCode(HttpStatus.CREATED)
@@ -65,6 +69,7 @@ export class UsersController {
     @Body() updateProfileDto: UpdateUserReqDto,
     @UploadedFile() file,
   ) {
+    console.log('test for config', this.configService.get('NODE_ENV'));
     if (req.user.id !== id) {
       throw new HttpException(
         {
