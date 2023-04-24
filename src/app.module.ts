@@ -40,11 +40,10 @@ import { MailConfigService } from './mail/mail-config.service';
 import { DataSource } from 'typeorm';
 import { ArticleLikesModule } from './article-likes/article-likes.module';
 
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { CheckLikeMiddleware } from './common/middleware/checkLike.middleware';
+import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
-import { AuthTokenMiddleware } from './common/middleware/auth.token';
+import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
 import { MulterTestModule } from './multer-test/multer-test.module';
 
 @Module({
@@ -116,7 +115,6 @@ import { MulterTestModule } from './multer-test/multer-test.module';
     ArticleLikesModule,
     ArticleImagesModule,
     MulterTestModule,
-    // CommentImagesModule,
   ],
 })
 export class AppModule implements NestModule {
