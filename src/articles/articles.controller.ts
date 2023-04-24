@@ -23,7 +23,10 @@ import { UpdateArticleReqDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
+  ApiOperation,
+  ApiParam,
   ApiProperty,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -34,7 +37,11 @@ import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { SearchOptions } from 'src/utils/types/search-options';
-import { FilterOptions } from '../utils/types/filter-options';
+import {
+  FilterOptions,
+  articleTypes,
+  filters,
+} from '../utils/types/filter-options';
 import { CheckLikeInterceptor } from '../utils/common/interceptors/ checkLike.interceptor';
 
 @ApiTags('게시판 글')
@@ -70,58 +77,55 @@ export class ArticlesController {
 
   @Get('/pages/:page')
   @UseInterceptors(CheckLikeInterceptor)
-  @ApiProperty({ type: IPaginationOptions })
-  // @UseGuards(AuthGuard('jwt'))
+  @ApiQuery({ name: 'filter', enum: filters, required: false })
+  @ApiQuery({ name: 'articleType', enum: articleTypes, required: false })
+  @ApiQuery({ name: 'search', type: String, required: false })
   @ApiResponse({
     status: 200,
     type: [ShowArticlesDto],
     description: 'Article의 배열 json',
   })
-  findAllByFilter(
-    @Request() req,
+  async findAllByFilter(
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
+    @Query('search') search: String,
   ) {
-    if (filterOptions.filter === undefined) {
-      return this.articlesRepository.findArticleList(paginationOptions);
-    } else if (filterOptions.filter == '인기') {
-      return this.articlesRepository.findArticleListByHot(paginationOptions);
-    } else {
-      return this.articlesRepository.findArticleListByFilter(
+    if (search !== undefined) {
+      return this.articlesRepository.findSearchArticleList(
+        search,
         paginationOptions,
-        filterOptions.filter,
+      );
+    }
+    if (filterOptions.filter == '인기') {
+      return this.articlesRepository.findHotArticleList(
+        filterOptions.articleType,
+        paginationOptions,
+      );
+    } else {
+      return this.articlesRepository.findRecentArticleList(
+        filterOptions.articleType,
+        paginationOptions,
       );
     }
   }
 
-  @Get('/pages/:page')
-  @ApiProperty({ type: IPaginationOptions })
-  @ApiResponse({
-    status: 200,
-    type: [ShowArticlesDto],
-    description: 'Article의 배열 json',
-  })
-  findAll(@Param() paginationOptions: IPaginationOptions) {
-    return this.articlesRepository.findArticleList(paginationOptions);
-  }
-
-  @Get('/search/:page')
-  @ApiProperty({ type: IPaginationOptions })
-  @ApiResponse({
-    status: 200,
-    type: [ShowArticlesDto],
-    description: 'Article의 배열 json',
-  })
-  @UseInterceptors(CheckLikeInterceptor)
-  search(
-    @Param() paginationOptions: IPaginationOptions,
-    @Query() searchTarget: SearchOptions,
-  ) {
-    return this.articlesRepository.findSearchArticleList(
-      searchTarget.target,
-      paginationOptions,
-    );
-  }
+  // @Get('/search/:page')
+  // @ApiProperty({ type: IPaginationOptions })
+  // @ApiResponse({
+  //   status: 200,
+  //   type: [ShowArticlesDto],
+  //   description: 'Article의 배열 json',
+  // })
+  // @UseInterceptors(CheckLikeInterceptor)
+  // search(
+  //   @Param() paginationOptions: IPaginationOptions,
+  //   @Query() searchTarget: SearchOptions,
+  // ) {
+  //   return this.articlesRepository.findSearchArticleList(
+  //     searchTarget.target,
+  //     paginationOptions,
+  //   );
+  // }
 
   @Get(':id')
   @ApiResponse({
