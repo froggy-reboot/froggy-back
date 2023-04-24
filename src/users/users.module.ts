@@ -10,7 +10,6 @@ import { ArticlesModule } from 'src/articles/articles.module';
 
 @Module({
   imports: [
-    ConfigModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -19,7 +18,7 @@ import { ArticlesModule } from 'src/articles/articles.module';
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, ConfigService, ConfigModule],
-  exports: [UsersService, ConfigService],
+  providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}
