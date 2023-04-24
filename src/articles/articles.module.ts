@@ -32,13 +32,7 @@ import { ArticleLike } from '../article-likes/entities/article-like.entity';
     ArticleLikesModule,
   ],
   controllers: [ArticlesController],
-  providers: [
-    ArticlesService,
-    ArticlesRepository,
-    ConfigModule,
-    ConfigService,
-    ArticleLikesService,
-  ],
+  providers: [ArticlesService, ArticlesRepository, ArticleLikesService],
   exports: [ArticlesService],
 })
 export class ArticlesModule {}

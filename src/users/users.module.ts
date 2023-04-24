@@ -6,9 +6,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { ArticlesModule } from 'src/articles/articles.module';
 
 @Module({
   imports: [
+    ConfigModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -18,6 +20,6 @@ import { User } from './entities/user.entity';
   ],
   controllers: [UsersController],
   providers: [UsersService, ConfigService, ConfigModule],
-  exports: [UsersService],
+  exports: [UsersService, ConfigService],
 })
 export class UsersModule {}
