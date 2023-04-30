@@ -1,9 +1,4 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateUserDto } from './create-user.dto';
-
-import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../../roles/entities/role.entity';
 import {
   IsDate,
   IsEmail,

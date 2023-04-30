@@ -30,7 +30,15 @@ import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
     }),
   ],
   controllers: [AuthController],
-  providers: [IsExist, IsNotExist, AuthService, JwtStrategy, AnonymousStrategy],
+  providers: [
+    IsExist,
+    IsNotExist,
+    AuthService,
+    JwtStrategy,
+    AnonymousStrategy,
+    ConfigModule,
+    ConfigService,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

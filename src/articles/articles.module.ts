@@ -18,10 +18,12 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
 import { ArticleLikesService } from '../article-likes/article-likes.service';
 import { ArticleLikesModule } from '../article-likes/article-likes.module';
 import { ArticleLike } from '../article-likes/entities/article-like.entity';
+import { MulterTestModule } from 'src/multer-test/multer-test.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article, Comment, ArticleLike]),
     UsersModule,
+    MulterTestModule,
     ArticleImagesModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
@@ -31,13 +33,7 @@ import { ArticleLike } from '../article-likes/entities/article-like.entity';
     ArticleLikesModule,
   ],
   controllers: [ArticlesController],
-  providers: [
-    ArticlesService,
-    ArticlesRepository,
-    ConfigModule,
-    ConfigService,
-    ArticleLikesService,
-  ],
+  providers: [ArticlesService, ArticlesRepository, ArticleLikesService],
   exports: [ArticlesService],
 })
 export class ArticlesModule {}
