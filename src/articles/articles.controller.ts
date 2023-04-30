@@ -109,6 +109,21 @@ export class ArticlesController {
     }
   }
 
+  @Get('my-articles/pages/:page')
+  @UseInterceptors(CheckLikeInterceptor)
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  async findArticleByMe(
+    @Param() paginationOptions: IPaginationOptions,
+    @Request() req,
+  ) {
+    return this.articlesService.findArticleByMe(paginationOptions, req.user.id);
+  }
+
   // @Get('/search/:page')
   // @ApiProperty({ type: IPaginationOptions })
   // @ApiResponse({
