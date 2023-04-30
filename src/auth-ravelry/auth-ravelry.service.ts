@@ -8,9 +8,7 @@ import { UsersService } from 'src/users/users.service';
 import { RavelryUsersService } from 'src/ravelry-users/ravelry-users.service';
 import { ravelryUserDto } from './dto/auth-ravelry.dto';
 import { customBool } from 'src/ravelry-users/entities/ravelry-user.entity';
-const {
-  AuthorizationCode,
-} = require('simple-oauth2');
+const { AuthorizationCode } = require('simple-oauth2');
 const randomString = require('randomstring');
 
 @Injectable()

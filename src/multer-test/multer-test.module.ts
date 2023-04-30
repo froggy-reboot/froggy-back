@@ -15,5 +15,6 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
   ],
   controllers: [MulterTestController],
   providers: [MulterTestService],
+  exports: [MulterTestService],
 })
 export class MulterTestModule {}

@@ -27,7 +27,7 @@ export class MulterTestController {
   @UseInterceptors(FilesInterceptor('files'))
   create(@UploadedFiles() files) {
     console.log(files);
-    return true;
+    return files;
   }
 
   @Get()

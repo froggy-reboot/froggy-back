@@ -8,18 +8,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-// import { Role } from '../../roles/entities/role.entity';
-// import { Status } from '../../statuses/entities/status.entity';
-// import { FileEntity } from '../../files/entities/file.entity';
-// import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Article } from '../../articles/entities/article.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { RavelryUser } from 'src/ravelry-users/entities/ravelry-user.entity';
 import { ArticleLike } from 'src/article-likes/entities/article-like.entity';
-// import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
-// import { Exclude, Expose } from 'class-transformer';
 
 export enum enrollType {
   local = 'local',
