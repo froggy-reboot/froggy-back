@@ -31,7 +31,7 @@ export class Thread extends EntityHelper {
   @ApiProperty({ example: '0' })
   liked: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 1000 })
   @ApiProperty({ example: '내용입니다.' })
   content: string;
 
