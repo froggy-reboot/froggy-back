@@ -44,6 +44,7 @@ import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
+import { ThreadsModule } from './threads/threads.module';
 
 @Module({
   imports: [
@@ -113,6 +114,7 @@ import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
     RavelryUsersModule,
     ArticleLikesModule,
     ArticleImagesModule,
+    ThreadsModule,
   ],
 })
 export class AppModule implements NestModule {
