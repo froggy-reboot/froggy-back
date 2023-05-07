@@ -69,7 +69,6 @@ export class UsersController {
     @Body() updateProfileDto: UpdateUserReqDto,
     @UploadedFile() file,
   ) {
-    console.log('test for config', this.configService.get('NODE_ENV'));
     if (req.user.id !== id) {
       throw new HttpException(
         {

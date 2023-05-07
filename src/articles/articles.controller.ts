@@ -13,6 +13,8 @@ import {
   Query,
   NotFoundException,
   ForbiddenException,
+  NotAcceptableException,
+  UploadedFile,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import {
@@ -43,6 +45,8 @@ import {
   filters,
 } from '../utils/types/filter-options';
 import { CheckLikeInterceptor } from '../common/interceptors/ checkLike.interceptor';
+import { UpdateUserReqDto } from 'src/users/dto/update-user.dto';
+import { User } from 'src/users/entities/user.entity';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -211,5 +215,34 @@ export class ArticlesController {
     }
     const removeResult = await this.articlesService.remove(+id);
     return removeResult;
+  }
+
+  @Patch('user/photo/:id')
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    type: User,
+    description: 'user update 성공, user 객체 반환',
+  })
+  @ApiResponse({
+    status: 406,
+    description: 'jwt의 유저 정보와 변경을 위한 user 정보가 다른 경우',
+  })
+  updateUserPhoto(
+    @Request() req,
+    @Param('id') id: number,
+    @Body() updateProfileDto: UpdateUserReqDto,
+    @UploadedFile() file,
+  ) {
+    const userId = req.user.id;
+    if (userId !== id) {
+      throw new NotAcceptableException(
+        `${id}번째 유저에 대해 수정 권한이 없습니다.`,
+      );
+    }
+    return this.usersService.update(id, updateProfileDto, file);
   }
 }
