@@ -44,7 +44,6 @@ import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
-import { MulterTestModule } from './multer-test/multer-test.module';
 import { PushModule } from './push/push.module';
 
 @Module({
@@ -115,7 +114,6 @@ import { PushModule } from './push/push.module';
     RavelryUsersModule,
     ArticleLikesModule,
     ArticleImagesModule,
-    MulterTestModule,
     PushModule,
   ],
 })
