@@ -2,8 +2,7 @@ import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../../users/entities/user.entity';
-import { ArticleLikesService } from '../../article-likes/article-likes.service';
+import { User } from '../../../users/entities/user.entity';
 
 @Injectable()
 export class CheckLikeMiddleware implements NestMiddleware {

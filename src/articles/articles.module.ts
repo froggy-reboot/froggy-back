@@ -15,7 +15,6 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ArticleImagesModule } from 'src/article-images/article-images.module';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
-import { CheckLikeMiddleware } from '../common/middleware/checkLike.middleware';
 import { ArticleLikesService } from '../article-likes/article-likes.service';
 import { ArticleLikesModule } from '../article-likes/article-likes.module';
 import { ArticleLike } from '../article-likes/entities/article-like.entity';
@@ -38,9 +37,3 @@ import { MulterTestModule } from 'src/multer-test/multer-test.module';
   exports: [ArticlesService],
 })
 export class ArticlesModule {}
-
-// export class ArticlesModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer): any {
-//     consumer.apply(CheckLikeMiddleware).forRoutes('articles');
-//   }
-// }

@@ -44,9 +44,9 @@ import {
   articleTypes,
   filters,
 } from '../utils/types/filter-options';
-import { CheckLikeInterceptor } from '../common/interceptors/ checkLike.interceptor';
 import { UpdateUserReqDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
+import { CheckLikeInterceptor } from '../utils/common/interceptors/ checkLike.interceptor';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -92,7 +92,7 @@ export class ArticlesController {
   async findAllByFilter(
     @Param() paginationOptions: IPaginationOptions,
     @Query() filterOptions: FilterOptions,
-    @Query('search') search: String,
+    @Query('search') search: string,
   ) {
     if (search !== undefined) {
       return this.articlesRepository.findSearchArticleList(
@@ -111,6 +111,21 @@ export class ArticlesController {
         paginationOptions,
       );
     }
+  }
+
+  @Get('my-articles/pages/:page')
+  @UseInterceptors(CheckLikeInterceptor)
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Article의 배열 json',
+  })
+  async findArticleByMe(
+    @Param() paginationOptions: IPaginationOptions,
+    @Request() req,
+  ) {
+    return this.articlesService.findArticleByMe(paginationOptions, req.user.id);
   }
 
   // @Get('/search/:page')

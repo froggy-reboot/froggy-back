@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { ArticleLikesService } from '../../article-likes/article-likes.service';
+import { ArticleLikesService } from '../../../article-likes/article-likes.service';
 
 @Injectable()
 export class CheckLikeInterceptor implements NestInterceptor {
@@ -23,14 +23,6 @@ export class CheckLikeInterceptor implements NestInterceptor {
     } else userId = request['user']['id'];
 
     return next.handle().pipe(
-      // tap((articles) =>
-      //   articles.forEach(async (article) =>
-      //     console.log(
-      //       'here ' +
-      //         (await this.likeService.getLikedByUser(userId, article['id'])),
-      //     ),
-      //   ),
-      // ),
       map(async (articles) => {
         if (Array.isArray(articles)) {
           return await Promise.all(
