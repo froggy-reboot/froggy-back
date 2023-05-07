@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
-import { Article } from '../../articles/entities/article.entity';
-import { Comment } from '../../comments/entities/comment.entity';
+import { Article } from '../../article-tab/articles/entities/article.entity';
+import { Comment } from '../../article-tab/comments/entities/comment.entity';
 import { RavelryUser } from 'src/ravelry-users/entities/ravelry-user.entity';
-import { ArticleLike } from 'src/article-likes/entities/article-like.entity';
+import { ArticleLike } from 'src/article-tab/article-likes/entities/article-like.entity';
 
 export enum enrollType {
   local = 'local',
