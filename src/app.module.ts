@@ -45,6 +45,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
 import { ThreadsModule } from './threads/threads.module';
+import { ThreadImagesModule } from './thread-images/thread-images.module';
 
 @Module({
   imports: [
@@ -115,6 +116,7 @@ import { ThreadsModule } from './threads/threads.module';
     ArticleLikesModule,
     ArticleImagesModule,
     ThreadsModule,
+    ThreadImagesModule,
   ],
 })
 export class AppModule implements NestModule {
