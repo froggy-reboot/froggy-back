@@ -45,6 +45,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
 import { MulterTestModule } from './multer-test/multer-test.module';
+import { PushModule } from './push/push.module';
 
 @Module({
   imports: [
@@ -115,6 +116,7 @@ import { MulterTestModule } from './multer-test/multer-test.module';
     ArticleLikesModule,
     ArticleImagesModule,
     MulterTestModule,
+    PushModule,
   ],
 })
 export class AppModule implements NestModule {
