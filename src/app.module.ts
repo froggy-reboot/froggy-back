@@ -47,6 +47,7 @@ import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
 import { ThreadsModule } from './threads/threads.module';
 import { ThreadImagesModule } from './thread-images/thread-images.module';
 import { PatternsModule } from './patterns/patterns.module';
+import { ThreadCommentsModule } from './thread-comments/thread-comments.module';
 
 @Module({
   imports: [
@@ -119,6 +120,7 @@ import { PatternsModule } from './patterns/patterns.module';
     ThreadsModule,
     ThreadImagesModule,
     PatternsModule,
+    ThreadCommentsModule,
   ],
 })
 export class AppModule implements NestModule {
