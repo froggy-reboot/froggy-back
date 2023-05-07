@@ -49,6 +49,7 @@ import { ThreadImagesModule } from './thread-tab/thread-images/thread-images.mod
 import { PatternsModule } from './patterns/patterns.module';
 import { ThreadCommentsModule } from './thread-tab/thread-comments/thread-comments.module';
 
+import { PushModule } from './push/push.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -121,6 +122,7 @@ import { ThreadCommentsModule } from './thread-tab/thread-comments/thread-commen
     ThreadImagesModule,
     PatternsModule,
     ThreadCommentsModule,
+    PushModule,
   ],
 })
 export class AppModule implements NestModule {

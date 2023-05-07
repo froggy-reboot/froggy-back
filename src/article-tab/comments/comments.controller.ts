@@ -27,6 +27,8 @@ import { IPaginationOptions } from '../../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { ArticlesService } from '../articles/articles.service';
+import { CheckLikeInterceptor } from '../utils/common/interceptors/ checkLike.interceptor';
+import { ShowArticlesDto } from '../articles/dto/show-article.dto';
 
 @ApiTags('게시판 댓글')
 @Controller({
