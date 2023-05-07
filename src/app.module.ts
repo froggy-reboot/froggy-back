@@ -46,6 +46,7 @@ import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
 import { ThreadsModule } from './threads/threads.module';
 import { ThreadImagesModule } from './thread-images/thread-images.module';
+import { PatternsModule } from './patterns/patterns.module';
 
 @Module({
   imports: [
@@ -117,6 +118,7 @@ import { ThreadImagesModule } from './thread-images/thread-images.module';
     ArticleImagesModule,
     ThreadsModule,
     ThreadImagesModule,
+    PatternsModule,
   ],
 })
 export class AppModule implements NestModule {
