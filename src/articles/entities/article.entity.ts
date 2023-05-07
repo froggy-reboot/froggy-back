@@ -42,7 +42,7 @@ export class Article extends EntityHelper {
   @ApiProperty({ example: '제목입니다.' })
   title: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 1000 })
   @ApiProperty({ example: '내용입니다.' })
   content: string;
 

@@ -25,7 +25,7 @@ export class ArticleImage extends EntityHelper {
   @ApiProperty({ example: '2' })
   order: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 400 })
   @ApiProperty({
     example:
       'https://froggy-image.s3.amazonaws.com/acb7a789-7676-42af-a484-f88fe106b885.jpg',
