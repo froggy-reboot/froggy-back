@@ -11,7 +11,6 @@ import { ForgotModule } from 'src/forgot/forgot.module';
 import { MailModule } from 'src/mail/mail.module';
 import { IsExist } from 'src/utils/validators/is-exists.validator';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
-import { MulterTestModule } from 'src/multer-test/multer-test.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { MulterTestModule } from 'src/multer-test/multer-test.module';
     ForgotModule,
     PassportModule,
     MailModule,
-    MulterTestModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

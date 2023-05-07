@@ -44,7 +44,6 @@ import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ArticleImagesModule } from './article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
-import { MulterTestModule } from './multer-test/multer-test.module';
 
 @Module({
   imports: [
@@ -114,7 +113,6 @@ import { MulterTestModule } from './multer-test/multer-test.module';
     RavelryUsersModule,
     ArticleLikesModule,
     ArticleImagesModule,
-    MulterTestModule,
   ],
 })
 export class AppModule implements NestModule {
