@@ -25,9 +25,6 @@ import { UpdateArticleReqDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
-  ApiOperation,
-  ApiParam,
-  ApiProperty,
   ApiQuery,
   ApiResponse,
   ApiTags,
