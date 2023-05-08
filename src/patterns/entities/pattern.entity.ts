@@ -18,6 +18,9 @@ export class Pattern extends EntityHelper {
   @ApiProperty({ example: '도안 이름' })
   name: string;
 
+  @Column({ unique: true, nullable: false })
+  ravelryPatternId: number;
+
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   createdAt: Date;

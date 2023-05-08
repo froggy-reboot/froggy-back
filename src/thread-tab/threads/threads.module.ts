@@ -4,6 +4,7 @@ import { ThreadsController } from './threads.controller';
 
 @Module({
   controllers: [ThreadsController],
-  providers: [ThreadsService]
+  providers: [ThreadsService],
+  exports: [ThreadsService],
 })
 export class ThreadsModule {}

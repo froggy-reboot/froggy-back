@@ -48,7 +48,7 @@ export class PatternsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.patternsService.findOne(+id);
+    // return this.patternsService.findOne(+id);
   }
 
   @Patch(':id')
