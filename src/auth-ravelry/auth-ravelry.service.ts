@@ -86,6 +86,7 @@ export class AuthRavelryService {
       );
     const { data } = await firstValueFrom(request);
     const ravelryUserInfo: ravelryUserDto = data.user;
+    console.log('ravelryUserInfo', ravelryUserInfo);
     return ravelryUserInfo;
   }
 

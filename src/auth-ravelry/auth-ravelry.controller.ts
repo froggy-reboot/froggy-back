@@ -112,6 +112,7 @@ export class AuthRavelryController {
       ravelryUserInfo,
       accessToken,
     );
+    console.log('newRavelryUser', newRavelryUser);
     const frontUrl = this.configService.get('FRONTEND_DOMAIN');
     if (newRavelryUser == -1) {
       res.redirect(`${frontUrl}/sign-in/ravelry/-1`);
