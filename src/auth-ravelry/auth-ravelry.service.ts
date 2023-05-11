@@ -111,7 +111,9 @@ export class AuthRavelryService {
       ravelryId: ravelryUserInfo.id,
     });
 
+    console.log('ravelryUser', ravelryUser);
     if (ravelryUser.ravelryId === ravelryUserInfo.id) {
+      console.log('someting woring ');
       return -1;
     } else {
       const newRavelryUser = await this.ravelryUsersService.create({
@@ -119,6 +121,7 @@ export class AuthRavelryService {
         token: accessToken,
         username: ravelryUserInfo.username,
       });
+      console.log('newRavelryUser', newRavelryUser);
       return newRavelryUser;
     }
   }
