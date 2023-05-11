@@ -112,10 +112,12 @@ export class AuthRavelryService {
     });
 
     console.log('ravelryUser', ravelryUser);
+    console.log('ravelryUserInfo', ravelryUserInfo);
     if (ravelryUser.ravelryId === ravelryUserInfo.id) {
-      console.log('someting woring ');
+      console.log('already exist ravelry user');
       return -1;
     } else {
+      console.log('create new ravelry user');
       const newRavelryUser = await this.ravelryUsersService.create({
         ravelryId: ravelryUserInfo.id,
         token: accessToken,
