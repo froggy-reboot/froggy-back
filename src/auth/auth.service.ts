@@ -203,6 +203,7 @@ export class AuthService {
       enrollType: socialData.enrollType,
       nickname: randomNickname,
       ravelryUserId: socialData.ravelryUserId,
+      isRavelryIntegrated: customBool.Y,
       isCertified: socialData.isCertified,
     });
 
