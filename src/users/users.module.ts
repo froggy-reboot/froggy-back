@@ -6,7 +6,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { ArticlesModule } from 'src/articles/articles.module';
 
 @Module({
   imports: [

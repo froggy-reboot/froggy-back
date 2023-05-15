@@ -14,9 +14,9 @@ import { AuthRavelryModule } from './auth-ravelry/auth-ravelry.module';
 import { ForgotModule } from './forgot/forgot.module';
 import { MailModule } from './mail/mail.module';
 import { HomeModule } from './home/home.module';
-import { ArticlesModule } from './articles/articles.module';
+import { ArticlesModule } from './article-tab/articles/articles.module';
 import { AuthKakaoModule } from './auth-kakao/auth-kakao.module';
-import { CommentsModule } from './comments/comments.module';
+import { CommentsModule } from './article-tab/comments/comments.module';
 import { RavelryUsersModule } from './ravelry-users/ravelry-users.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { I18nModule } from 'nestjs-i18n/dist/i18n.module';
@@ -38,13 +38,19 @@ import { HeaderResolver } from 'nestjs-i18n';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { MailConfigService } from './mail/mail-config.service';
 import { DataSource } from 'typeorm';
-import { ArticleLikesModule } from './article-likes/article-likes.module';
+import { ArticleLikesModule } from './article-tab/article-likes/article-likes.module';
 
 import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { ArticleImagesModule } from './article-images/article-images.module';
+import { ArticleImagesModule } from './article-tab/article-images/article-images.module';
 import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
+import { ThreadsModule } from './thread-tab/threads/threads.module';
+import { ThreadImagesModule } from './thread-tab/thread-images/thread-images.module';
+import { PatternsModule } from './patterns/patterns.module';
+import { ThreadCommentsModule } from './thread-tab/thread-comments/thread-comments.module';
 
+import { PushModule } from './push/push.module';
+import { ThreadTabModule } from './thread-tab/thread-tab.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -113,6 +119,12 @@ import { AuthTokenMiddleware } from './utils/common/middleware/auth.token';
     RavelryUsersModule,
     ArticleLikesModule,
     ArticleImagesModule,
+    ThreadsModule,
+    ThreadImagesModule,
+    PatternsModule,
+    ThreadCommentsModule,
+    PushModule,
+    ThreadTabModule,
   ],
 })
 export class AppModule implements NestModule {

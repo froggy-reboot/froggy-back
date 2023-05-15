@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { ArticleLikesService } from '../../../article-likes/article-likes.service';
+import { ArticleLikesService } from '../../../article-tab/article-likes/article-likes.service';
 
 @Injectable()
 export class CheckLikeInterceptor implements NestInterceptor {
