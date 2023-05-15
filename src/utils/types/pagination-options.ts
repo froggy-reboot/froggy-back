@@ -7,7 +7,21 @@ export class IPaginationOptions {
   @IsNumber()
   page: number;
 
+  @Type(() => Number)
+  @IsNumber()
+  limit: number = 20;
+}
+export class threadPaginationOptions {
+  @ApiProperty({ example: 1 })
+  @Type(() => Number)
+  @IsNumber()
+  page: number;
+
   @ApiProperty({ example: 5 })
+  @Type(() => Number)
+  @IsNumber()
+  patternId: number;
+
   @Type(() => Number)
   @IsNumber()
   limit: number = 20;

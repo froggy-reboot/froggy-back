@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -31,12 +32,9 @@ export class Thread extends EntityHelper {
   @ApiProperty({ example: '0' })
   liked: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 1000 })
   @ApiProperty({ example: '내용입니다.' })
   content: string;
-
-  @Column({ nullable: false })
-  order: number;
 
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
@@ -53,4 +51,8 @@ export class Thread extends EntityHelper {
     cascade: true,
   })
   images: ThreadImage[];
+
+  @ManyToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'writerId' })
+  user: User;
 }

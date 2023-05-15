@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateThreadImageDto } from './dto/create-thread-image.dto';
 import { UpdateThreadImageDto } from './dto/update-thread-image.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ThreadImage } from './entities/thread-image.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ThreadImagesService {
+  constructor(
+    @InjectRepository(ThreadImage)
+    private repository: Repository<ThreadImage>,
+  ) {}
+
   create(createThreadImageDto: CreateThreadImageDto) {
-    return 'This action adds a new threadImage';
+    return this.repository.save(this.repository.create(createThreadImageDto));
   }
 
   findAll() {
