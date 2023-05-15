@@ -15,9 +15,15 @@ import {
   Req,
   Res,
   Render,
+  NotAcceptableException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   AuthEmailLoginDto,
   AuthEmailLoginResDto,
@@ -39,21 +45,22 @@ import {
 } from './dto/auth-social-login.dto';
 import { AuthRefreshDto, AuthRefreshResDto } from './dto/auth-refresh.dto';
 import { customBool } from 'src/users/entities/user.entity';
+import { AuthWithdrawDto } from './dto/auth-withdraw.dto';
 
-@ApiTags('로컬 회원가입')
+@ApiTags('Auth')
 @Controller({
   path: 'auth',
   version: '1',
 })
 export class AuthController {
-  constructor(public service: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   @Post('email/register')
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 200, description: '회원가입 성공' })
   @ApiResponse({ status: 409, description: '이미 존재하는 이메일' })
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
-    return this.service.register(createUserDto);
+    return this.authService.register(createUserDto);
   }
 
   @Post('email/login')
@@ -69,7 +76,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: '인증되지 않은 이메일' })
   @HttpCode(HttpStatus.OK)
   public async login(@Body() loginDto: AuthEmailLoginDto) {
-    return this.service.validateLogin(loginDto);
+    return this.authService.validateLogin(loginDto);
   }
 
   @Post('email/isExist')
@@ -82,7 +89,7 @@ export class AuthController {
   public async checkIsEmailExist(
     @Body() checkEmailDto: AuthCheckIsExistEmailDto,
   ) {
-    const checkResult = await this.service.checkExistEmail(checkEmailDto);
+    const checkResult = await this.authService.checkExistEmail(checkEmailDto);
     const resJson = {
       isExistEmail: checkResult ? customBool.Y : customBool.N,
     };
@@ -99,7 +106,7 @@ export class AuthController {
   public async checkIsNickNameExist(
     @Body() checkEmailDto: AuthCheckNicknameReqDto,
   ) {
-    const checkResult = await this.service.checkExistEmail(checkEmailDto);
+    const checkResult = await this.authService.checkExistEmail(checkEmailDto);
     const resJson = {
       isExistNickname: checkResult ? customBool.Y : customBool.N,
     };
@@ -110,7 +117,7 @@ export class AuthController {
   @Render('certify-complete')
   @HttpCode(HttpStatus.OK)
   async confirmEmail(@Param('hash') hash, @Req() req, @Res() res) {
-    await this.service.confirmEmail(hash);
+    await this.authService.confirmEmail(hash);
     return;
   }
 
@@ -122,7 +129,7 @@ export class AuthController {
     description: '랜덤 닉네임 조회 완료',
   })
   public async getRandomNickname(): Promise<AuthRandomNicknameResDto> {
-    const nickname = await this.service.getUniqueNickName();
+    const nickname = await this.authService.getUniqueNickName();
     const resJson = { nickname };
     return resJson;
   }
@@ -139,7 +146,9 @@ export class AuthController {
     console.log('body dto', authSocialLoginIngDto.userId);
 
     const getUserAuthInfoByUserIdResult =
-      await this.service.getUserAuthInfoByUserId(authSocialLoginIngDto.userId);
+      await this.authService.getUserAuthInfoByUserId(
+        authSocialLoginIngDto.userId,
+      );
 
     const { token, refreshToken, user } = getUserAuthInfoByUserIdResult;
     const resJson: AuthSocialLoginResDto = {
@@ -162,7 +171,7 @@ export class AuthController {
     description: 'refresh token이 유효하지 않음',
   })
   async refresh(@Body() refreshDto: AuthRefreshDto) {
-    return this.service.refreshJwtToken(refreshDto.refreshToken);
+    return this.authService.refreshJwtToken(refreshDto.refreshToken);
   }
 
   @Get('logout')
@@ -177,7 +186,35 @@ export class AuthController {
     description: 'access token이 없거나 유효하지 않습니다.',
   })
   logout(@Request() req) {
-    return this.service.logout(req.user);
+    return this.authService.logout(req.user);
+  }
+
+  @Post('withdraw')
+  @ApiOperation({
+    summary: '회원 탈퇴',
+    description:
+      '회원을 탈퇴합니다. 소셜 로그인의 경우 password를 보내지 않아도 됩니다.',
+  })
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    description: '삭제 성공',
+  })
+  @ApiResponse({
+    status: 422,
+    description: '비밀번호가 일치하지 않습니다.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'jwt의 유저 정보와 삭제를 위한 user 정보가 다른 경우',
+  })
+  @ApiResponse({
+    status: 404,
+    description: '존재하지 않거나, 이미 탈퇴된 유저',
+  })
+  withdraw(@Request() req, @Body() authWithdrawDto: AuthWithdrawDto) {
+    return this.authService.withdraw(req.user.id, authWithdrawDto);
   }
 
   // @Post('forgot/password')
