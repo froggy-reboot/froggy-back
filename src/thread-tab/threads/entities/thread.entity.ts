@@ -35,9 +35,6 @@ export class Thread extends EntityHelper {
   @ApiProperty({ example: '내용입니다.' })
   content: string;
 
-  @Column({ nullable: false })
-  order: number;
-
   @CreateDateColumn()
   @ApiProperty({ example: '2023-02-27T15:15:49.695Z' })
   createdAt: Date;

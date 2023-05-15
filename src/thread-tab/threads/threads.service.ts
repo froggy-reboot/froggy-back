@@ -1,11 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { CreateThreadDto } from './dto/create-thread.dto';
 import { UpdateThreadDto } from './dto/update-thread.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Thread } from './entities/thread.entity';
+import { Repository } from 'typeorm';
+import { ThreadImagesService } from '../thread-images/thread-images.service';
 
 @Injectable()
 export class ThreadsService {
-  create(createThreadDto: CreateThreadDto) {
-    return 'This action adds a new thread';
+  constructor(
+    @InjectRepository(Thread)
+    private threadRepository: Repository<Thread>,
+    private threadImagesService: ThreadImagesService,
+  ) {}
+  async create(createThreadDto: CreateThreadDto, files) {
+    const result = await this.threadRepository.save(
+      this.threadRepository.create(createThreadDto),
+    );
+    // if (files) {
+    //   for (let i = 0; i < files.length; i++) {
+    //     const createArticleImageDto: CreateThreadImageDto = {
+    //       articleId: result.id,
+    //       order: i + 1,
+    //       url: files[i].location,
+    //     };
+    //     await this.articleImagesService.create(createArticleImageDto);
+    //   }
+    // }
+    return result;
   }
 
   findAll() {

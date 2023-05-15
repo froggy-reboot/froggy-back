@@ -10,6 +10,7 @@ export class ThreadTabService {
   ) {}
 
   async createThread(createThreadReqDto, user, files) {
+    // 1. 패턴 생성 또는 조회
     const createPatternDto = {
       ravelryPatternId: createThreadReqDto.ravelryPatternId,
       name: createThreadReqDto.patternName,
@@ -18,14 +19,15 @@ export class ThreadTabService {
       createPatternDto,
     );
 
+    // 2. 스레드 생성
     const createThreadDto = {
       writerId: user.id,
       patternId: pattern.id,
       liked: 0,
       content: createThreadReqDto.content,
-      order: 0,
     };
-    const thread = await this.threadService.create(createThreadDto);
+    const thread = await this.threadService.create(createThreadDto, files);
+
     return thread;
   }
 }

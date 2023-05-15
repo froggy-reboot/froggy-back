@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateThreadReqDto {
   @ApiProperty({ example: 'Dog Hat' })
@@ -16,8 +16,8 @@ export class CreateThreadReqDto {
   @IsNotEmpty()
   content: string;
 
-  @ApiProperty({ example: '파일을 첨부해서 넣어주세요' })
-  files: any;
+  @ApiProperty({ example: '파일을 첨부해서 넣어주세요', required: false })
+  files?: any;
 }
 
 export class CreateThreadDto {
