@@ -65,6 +65,19 @@ export class ArticlesRepository extends Repository<Article> {
     return articleWithImages;
   }
 
+  findArticlesByMe(id: number, paginationOptions: IPaginationOptions) {
+    return this.repository
+      .createQueryBuilder('article')
+      .leftJoin('article.user', 'user')
+      .select(['article', 'user.nickname', 'user.profileImg'])
+      .leftJoin('article.comments', 'comment')
+      .loadRelationCountAndMap('article.commentCount', 'article.comments')
+      .where('article.writerId >= :id', { id: id })
+      .limit(paginationOptions.limit)
+      .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .getMany();
+  }
+
   async findSearchArticleList(target, paginationOptions: IPaginationOptions) {
     const articles = await this.repository
       .createQueryBuilder('article')

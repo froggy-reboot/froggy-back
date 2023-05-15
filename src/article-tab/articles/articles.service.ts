@@ -70,11 +70,10 @@ export class ArticlesService {
   }
 
   findArticleByMe(paginationOptions: IPaginationOptions, userId) {
-    return this.articleRepository.find({
-      where: { writerId: userId },
-      skip: (paginationOptions.page - 1) * paginationOptions.limit, // offset
-      take: paginationOptions.limit, // limit
-    });
+    return this.articleCustomRepository.findArticlesByMe(
+      userId,
+      paginationOptions,
+    );
   }
 
   findOne(id: number) {
