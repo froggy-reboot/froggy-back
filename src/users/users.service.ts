@@ -22,6 +22,7 @@ export class UsersService {
   findById(id: number) {
     return this.usersRepository
       .createQueryBuilder('user')
+      .withDeleted()
       .where('user.id =:id', { id })
       .select('user.nickname as writerNickname')
       .select([

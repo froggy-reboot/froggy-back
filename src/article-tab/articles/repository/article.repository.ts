@@ -81,6 +81,7 @@ export class ArticlesRepository extends Repository<Article> {
   async findSearchArticleList(target, paginationOptions: IPaginationOptions) {
     const articles = await this.repository
       .createQueryBuilder('article')
+      .withDeleted()
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
       .leftJoin('article.comments', 'comment')
@@ -91,6 +92,7 @@ export class ArticlesRepository extends Repository<Article> {
       .orWhere('article.content LIKE :search', {
         search: `%${target}%`,
       })
+      .andWhere('article.deletedAt IS NULL')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
@@ -103,10 +105,12 @@ export class ArticlesRepository extends Repository<Article> {
   ) {
     let queryBuilder = this.repository
       .createQueryBuilder('article')
+      .withDeleted()
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .where('article.liked >= :liked', { liked: 1 })
+      .andWhere('article.deletedAt IS NULL')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .orderBy({ 'article.createdAt': 'DESC' });
@@ -132,7 +136,9 @@ export class ArticlesRepository extends Repository<Article> {
   ) {
     let queryBuilder = this.repository
       .createQueryBuilder('article')
+      .withDeleted()
       .leftJoin('article.user', 'user')
+      .where('article.deletedAt IS NULL')
       .select(['article', 'user.nickname', 'user.profileImg'])
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
       .limit(paginationOptions.limit)
@@ -143,9 +149,12 @@ export class ArticlesRepository extends Repository<Article> {
       articleType == articleTypes.free ||
       articleType == articleTypes.question
     ) {
-      queryBuilder = queryBuilder.where('article.articleType = :articleType', {
-        articleType,
-      });
+      queryBuilder = queryBuilder.andWhere(
+        'article.articleType = :articleType',
+        {
+          articleType,
+        },
+      );
     }
 
     const articles = await queryBuilder.getMany();
