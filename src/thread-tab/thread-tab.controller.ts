@@ -46,6 +46,6 @@ export class ThreadTabController {
       files,
     );
 
-    // return this.threadTabService.createThread(createArticleDto, files);
+    return thread;
   }
 }

@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Thread } from './entities/thread.entity';
 import { Repository } from 'typeorm';
 import { ThreadImagesService } from '../thread-images/thread-images.service';
+import { CreateThreadImageDto } from '../thread-images/dto/create-thread-image.dto';
 
 @Injectable()
 export class ThreadsService {
@@ -17,16 +18,16 @@ export class ThreadsService {
     const result = await this.threadRepository.save(
       this.threadRepository.create(createThreadDto),
     );
-    // if (files) {
-    //   for (let i = 0; i < files.length; i++) {
-    //     const createArticleImageDto: CreateThreadImageDto = {
-    //       articleId: result.id,
-    //       order: i + 1,
-    //       url: files[i].location,
-    //     };
-    //     await this.articleImagesService.create(createArticleImageDto);
-    //   }
-    // }
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const createThreadImageDto: CreateThreadImageDto = {
+          threadId: result.id,
+          order: i + 1,
+          url: files[i].location,
+        };
+        await this.threadImagesService.create(createThreadImageDto);
+      }
+    }
     return result;
   }
 

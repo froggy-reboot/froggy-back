@@ -9,7 +9,7 @@ import { ThreadImagesService } from '../thread-images/thread-images.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Thread]), ThreadImagesModule],
   controllers: [ThreadsController],
-  providers: [ThreadsService, ThreadImagesService],
+  providers: [ThreadsService],
   exports: [ThreadsService],
 })
 export class ThreadsModule {}
