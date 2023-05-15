@@ -57,7 +57,6 @@ export class ArticlesController {
   constructor(
     private readonly articlesService: ArticlesService,
     private readonly usersService: UsersService,
-    private readonly articlesRepository: ArticlesRepository,
   ) {}
 
   @Post()
@@ -94,23 +93,11 @@ export class ArticlesController {
     @Query() filterOptions: FilterOptions,
     @Query('search') search: string,
   ) {
-    if (search !== undefined) {
-      return this.articlesRepository.findSearchArticleList(
-        search,
-        paginationOptions,
-      );
-    }
-    if (filterOptions.filter == '인기') {
-      return this.articlesRepository.findHotArticleList(
-        filterOptions.articleType,
-        paginationOptions,
-      );
-    } else {
-      return this.articlesRepository.findRecentArticleList(
-        filterOptions.articleType,
-        paginationOptions,
-      );
-    }
+    return this.articlesService.findAllByFilter(
+      paginationOptions,
+      filterOptions,
+      search,
+    );
   }
 
   @Get('my-articles/pages/:page')
@@ -128,24 +115,6 @@ export class ArticlesController {
     return this.articlesService.findArticleByMe(paginationOptions, req.user.id);
   }
 
-  // @Get('/search/:page')
-  // @ApiProperty({ type: IPaginationOptions })
-  // @ApiResponse({
-  //   status: 200,
-  //   type: [ShowArticlesDto],
-  //   description: 'Article의 배열 json',
-  // })
-  // @UseInterceptors(CheckLikeInterceptor)
-  // search(
-  //   @Param() paginationOptions: IPaginationOptions,
-  //   @Query() searchTarget: SearchOptions,
-  // ) {
-  //   return this.articlesRepository.findSearchArticleList(
-  //     searchTarget.target,
-  //     paginationOptions,
-  //   );
-  // }
-
   @Get(':id')
   @ApiResponse({
     status: 200,
@@ -157,7 +126,7 @@ export class ArticlesController {
   })
   @UseInterceptors(CheckLikeInterceptor)
   async findOne(@Param('id') id: string) {
-    const article = await this.articlesRepository.findArticle(+id);
+    const article = await this.articlesService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -190,7 +159,7 @@ export class ArticlesController {
     @UploadedFiles() files,
   ) {
     const userId = req.user.id;
-    const article = await this.articlesRepository.findArticle(+id);
+    const article = await this.articlesService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -219,7 +188,7 @@ export class ArticlesController {
   @UseGuards(AuthGuard('jwt'))
   async remove(@Request() req, @Param('id') id: string) {
     const userId = req.user.id;
-    const article = await this.articlesRepository.findArticle(+id);
+    const article = await this.articlesService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -254,7 +223,7 @@ export class ArticlesController {
   ) {
     const userId = req.user.id;
     if (userId !== id) {
-      throw new NotAcceptableException(
+      throw new ForbiddenException(
         `${id}번째 유저에 대해 수정 권한이 없습니다.`,
       );
     }

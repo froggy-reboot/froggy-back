@@ -10,6 +10,7 @@ import { CreateArticleImageDto } from 'src/article-tab/article-images/dto/create
 import { Comment } from '../comments/entities/comment.entity';
 import { ArticlesRepository } from './repository/article.repository';
 import { UpdateArticleImageDto } from 'src/article-tab/article-images/dto/update-article-image.dto';
+import { FilterOptions } from '../../utils/types/filter-options';
 
 @Injectable()
 export class ArticlesService {
@@ -40,11 +41,32 @@ export class ArticlesService {
     return result;
   }
 
-  findManyWithPagination(paginationOptions: IPaginationOptions) {
-    return this.articleRepository.find({
-      skip: (paginationOptions.page - 1) * paginationOptions.limit, // offset
-      take: paginationOptions.limit, // limit
-    });
+  async findArticle(id: number) {
+    return await this.articleCustomRepository.findArticle(+id);
+  }
+
+  findAllByFilter(
+    paginationOptions: IPaginationOptions,
+    filterOptions: FilterOptions,
+    search: string,
+  ) {
+    if (search !== undefined) {
+      return this.articleCustomRepository.findSearchArticleList(
+        search,
+        paginationOptions,
+      );
+    }
+    if (filterOptions.filter == '인기') {
+      return this.articleCustomRepository.findHotArticleList(
+        filterOptions.articleType,
+        paginationOptions,
+      );
+    } else {
+      return this.articleCustomRepository.findRecentArticleList(
+        filterOptions.articleType,
+        paginationOptions,
+      );
+    }
   }
 
   findArticleByMe(paginationOptions: IPaginationOptions, userId) {

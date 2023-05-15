@@ -14,7 +14,6 @@ import { CreateArticleLikeDto } from './dto/create-article-like.dto';
 import { UpdateArticleLikeDto } from './dto/update-article-like.dto';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateArticleResDto } from '../articles/dto/create-article.dto';
 
 @ApiTags('article 좋아요')
 @Controller({
