@@ -14,6 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThreadsModule } from './threads/threads.module';
 import { ThreadImage } from './thread-images/entities/thread-image.entity';
 import { Pattern } from 'src/patterns/entities/pattern.entity';
+import { ThreadsRepository } from './threads/repository/thread.repository';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { Pattern } from 'src/patterns/entities/pattern.entity';
     ThreadsService,
     PatternsService,
     RavelryApiService,
+    ThreadsRepository,
   ],
 })
 export class ThreadTabModule {}

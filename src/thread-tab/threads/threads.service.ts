@@ -6,12 +6,15 @@ import { Thread } from './entities/thread.entity';
 import { Repository } from 'typeorm';
 import { ThreadImagesService } from '../thread-images/thread-images.service';
 import { CreateThreadImageDto } from '../thread-images/dto/create-thread-image.dto';
+import { ThreadsRepository } from './repository/thread.repository';
 
 @Injectable()
 export class ThreadsService {
   constructor(
     @InjectRepository(Thread)
     private threadRepository: Repository<Thread>,
+    private threadCustomRepository: ThreadsRepository,
+
     private threadImagesService: ThreadImagesService,
   ) {}
   async create(createThreadDto: CreateThreadDto, files) {
@@ -29,6 +32,12 @@ export class ThreadsService {
       }
     }
     return result;
+  }
+
+  async findManyByPatternIdWitPagination(paginationOptions) {
+    return this.threadCustomRepository.findManyByPatternIdWitPagination(
+      paginationOptions,
+    );
   }
 
   findAll() {

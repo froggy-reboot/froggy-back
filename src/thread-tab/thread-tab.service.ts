@@ -30,4 +30,11 @@ export class ThreadTabService {
 
     return thread;
   }
+
+  async getThreadsByPatternId(paginationOptions) {
+    const threads = await this.threadService.findManyByPatternIdWitPagination(
+      paginationOptions,
+    );
+    return threads;
+  }
 }

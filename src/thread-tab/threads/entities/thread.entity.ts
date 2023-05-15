@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -50,4 +51,8 @@ export class Thread extends EntityHelper {
     cascade: true,
   })
   images: ThreadImage[];
+
+  @ManyToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'writerId' })
+  user: User;
 }
