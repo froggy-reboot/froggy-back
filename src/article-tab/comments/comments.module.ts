@@ -1,6 +1,9 @@
 import { HttpException, HttpStatus, Module } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { CommentsController } from './comments.controller';
+import {
+  CommentsController,
+  MyCommentsController,
+} from './comments.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { CommentImagesModule } from 'src/article-tab/comment-images/comment-images.module';
@@ -19,7 +22,7 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
       useFactory: multerOptionsFactory,
     }),
   ],
-  controllers: [CommentsController],
+  controllers: [CommentsController, MyCommentsController],
   providers: [CommentsService, ConfigModule, ConfigService],
 })
 export class CommentsModule {}

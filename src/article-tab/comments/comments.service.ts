@@ -87,4 +87,12 @@ export class CommentsService {
   remove(id: number) {
     return this.commentRepository.softDelete({ id });
   }
+
+  findCommentsByMe(paginationOptions: IPaginationOptions, userId) {
+    return this.commentRepository.find({
+      where: { writerId: userId },
+      skip: (paginationOptions.page - 1) * paginationOptions.limit, // offset
+      take: paginationOptions.limit, // limit
+    });
+  }
 }

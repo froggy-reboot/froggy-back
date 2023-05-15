@@ -27,7 +27,33 @@ import { IPaginationOptions } from '../../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { ArticlesService } from '../articles/articles.service';
+import { ShowArticlesDto } from '../articles/dto/show-article.dto';
 
+@ApiTags('내 댓글들')
+@Controller({
+  path: 'comments',
+  version: '1',
+})
+export class MyCommentsController {
+  constructor(private readonly commentsService: CommentsService) {}
+
+  @Get('my-comments/pages/:page')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({
+    status: 200,
+    type: [ShowArticlesDto],
+    description: 'Comment의 배열 json',
+  })
+  async findArticleByMe(
+    @Param() paginationOptions: IPaginationOptions,
+    @Request() req,
+  ) {
+    return this.commentsService.findCommentsByMe(
+      paginationOptions,
+      req.user.id,
+    );
+  }
+}
 @ApiTags('게시판 댓글')
 @Controller({
   path: 'articles/:articleId/comments',
@@ -106,7 +132,7 @@ export class CommentsController {
         {
           status: 400,
           errors: {
-            msg: 'comment is not exist',
+            msg: 'comment does not exist',
           },
         },
         HttpStatus.FORBIDDEN,
