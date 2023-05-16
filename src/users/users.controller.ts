@@ -38,12 +38,6 @@ export class UsersController {
     public configService: ConfigService,
   ) {}
 
-  // @Post()
-  // @HttpCode(HttpStatus.CREATED)
-  // create(@Body() createProfileDto: CreateUserDto) {
-  //   return this.usersService.create(createProfileDto);
-  // }
-
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
@@ -82,24 +76,5 @@ export class UsersController {
       );
     }
     return this.usersService.update(id, updateProfileDto, file);
-  }
-
-  @Delete(':id')
-  @ApiResponse({
-    status: 200,
-    description: '삭제 성공',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'jwt의 유저 정보와 삭제를 위한 user 정보가 다른 경우',
-  })
-  remove(@Request() req, @Param('id') id: number) {
-    const userId = req.user.id;
-    if (userId !== id) {
-      throw new NotAcceptableException(
-        `${id}번째 유저에 대해 탈퇴 권한이 없습니다.`,
-      );
-    }
-    return this.usersService.softDelete(id);
   }
 }

@@ -1,8 +1,12 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
   Injectable,
+  NotAcceptableException,
+  NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { customBool, enrollType, User } from '../users/entities/user.entity';
@@ -19,6 +23,7 @@ import { UsersService } from 'src/users/users.service';
 import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthRefreshResDto } from './dto/auth-refresh.dto';
+import { AuthWithdrawDto } from './dto/auth-withdraw.dto';
 // import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
@@ -203,6 +208,7 @@ export class AuthService {
       enrollType: socialData.enrollType,
       nickname: randomNickname,
       ravelryUserId: socialData.ravelryUserId,
+      isRavelryIntegrated: customBool.Y,
       isCertified: socialData.isCertified,
     });
 
@@ -337,6 +343,35 @@ export class AuthService {
     return { token: token, refreshToken: newRefreshToken };
   }
 
+  async withdraw(userIdByToken, authWithdrawDto: AuthWithdrawDto) {
+    if (userIdByToken !== authWithdrawDto.userId) {
+      throw new BadRequestException(
+        `${authWithdrawDto.userId}번째 유저에 대해 탈퇴 권한이 없습니다.`,
+      );
+    }
+    const user = await this.usersService.findOne({
+      id: userIdByToken,
+    });
+
+    if (!user) {
+      throw new NotFoundException(
+        `${userIdByToken}번째 유저가 존재하지 않습니다.`,
+      );
+    }
+
+    if (user.enrollType === enrollType.local) {
+      const isValidPassword = await bcrypt.compare(
+        authWithdrawDto.password,
+        user.password,
+      );
+      if (!isValidPassword) {
+        throw new UnprocessableEntityException('비밀번호가 일치하지 않습니다.');
+      }
+    }
+
+    await this.usersService.softDelete(userIdByToken);
+    return true;
+  }
   // async forgotPassword(email: string): Promise<void> {
   //   const user = await this.usersService.findOne({
   //     email,

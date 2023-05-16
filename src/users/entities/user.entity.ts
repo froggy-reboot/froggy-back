@@ -73,7 +73,7 @@ export class User extends EntityHelper {
     type: 'varchar',
     nullable: true,
     default:
-      'https://froggy-image.s3.amazonaws.com/6d67457b-be7e-4e06-a3bd-c222d4415ddd.png',
+      'https://froggy-image.s3.ap-northeast-2.amazonaws.com/45d35cd9-1a32-41d3-b8ef-e475d2b61a90.png',
   })
   profileImg: string;
 

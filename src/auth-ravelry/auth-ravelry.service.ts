@@ -86,6 +86,7 @@ export class AuthRavelryService {
       );
     const { data } = await firstValueFrom(request);
     const ravelryUserInfo: ravelryUserDto = data.user;
+    console.log('ravelryUserInfo', ravelryUserInfo);
     return ravelryUserInfo;
   }
 
@@ -110,15 +111,21 @@ export class AuthRavelryService {
       ravelryId: ravelryUserInfo.id,
     });
 
-    if (ravelryUser.ravelryId === ravelryUserInfo.id) {
-      return -1;
-    } else {
+    console.log('ravelryUser', ravelryUser);
+    console.log('ravelryUserInfo', ravelryUserInfo);
+    if (!ravelryUser) {
+      console.log('create new ravelry user');
       const newRavelryUser = await this.ravelryUsersService.create({
         ravelryId: ravelryUserInfo.id,
         token: accessToken,
         username: ravelryUserInfo.username,
       });
+      console.log('newRavelryUser', newRavelryUser);
       return newRavelryUser;
+    }
+    if (ravelryUser.ravelryId === ravelryUserInfo.id) {
+      console.log('already exist ravelry user');
+      return -1;
     }
   }
 
