@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleReqDto } from './dto/update-article.dto';
+import { CreateArticleDto } from '../dto/create-article.dto';
+import { UpdateArticleReqDto } from '../dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Article } from './entities/article.entity';
-import { IPaginationOptions } from '../../utils/types/pagination-options';
+import { Article } from '../entities/article.entity';
+import { IPaginationOptions } from '../../../utils/types/pagination-options';
 import { ArticleImagesService } from 'src/article-tab/article-images/article-images.service';
 import { CreateArticleImageDto } from 'src/article-tab/article-images/dto/create-article-image.dto';
-import { Comment } from '../comments/entities/comment.entity';
-import { ArticlesRepository } from './repository/article.repository';
+import { Comment } from '../../comments/entities/comment.entity';
+import { ArticlesRepository } from '../repository/article.repository';
 import { UpdateArticleImageDto } from 'src/article-tab/article-images/dto/update-article-image.dto';
-import { FilterOptions } from '../../utils/types/filter-options';
+import { FilterOptions } from '../../../utils/types/filter-options';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 @Injectable()
 export class ArticlesService {
@@ -24,9 +26,16 @@ export class ArticlesService {
 
     private articleImagesService: ArticleImagesService,
   ) {}
-  async create(createArticleDto: CreateArticleDto, files) {
+  async create(createArticleDto: CreateArticleDto, files, userId) {
+    createArticleDto.content = this.convertToDatabaseFormat(
+      createArticleDto.content,
+    );
+    const article: Article = CreateArticleDto.mapDTOToDomain(
+      createArticleDto,
+      userId,
+    );
     const result = await this.articleRepository.save(
-      this.articleRepository.create(createArticleDto),
+      this.articleRepository.create(article),
     );
     if (files) {
       for (let i = 0; i < files.length; i++) {
@@ -39,45 +48,6 @@ export class ArticlesService {
       }
     }
     return result;
-  }
-
-  async findArticle(id: number) {
-    return await this.articleCustomRepository.findArticle(+id);
-  }
-
-  findAllByFilter(
-    paginationOptions: IPaginationOptions,
-    filterOptions: FilterOptions,
-    search: string,
-  ) {
-    if (search !== undefined) {
-      return this.articleCustomRepository.findSearchArticleList(
-        search,
-        paginationOptions,
-      );
-    }
-    if (filterOptions.filter == '인기') {
-      return this.articleCustomRepository.findHotArticleList(
-        filterOptions.articleType,
-        paginationOptions,
-      );
-    } else {
-      return this.articleCustomRepository.findRecentArticleList(
-        filterOptions.articleType,
-        paginationOptions,
-      );
-    }
-  }
-
-  findArticleByMe(paginationOptions: IPaginationOptions, userId) {
-    return this.articleCustomRepository.findArticlesByMe(
-      userId,
-      paginationOptions,
-    );
-  }
-
-  findOne(id: number) {
-    return this.articleRepository.findOne({ where: { id: id } });
   }
 
   async update(id: number, updateArticleDto: UpdateArticleReqDto, files) {
@@ -115,7 +85,7 @@ export class ArticlesService {
       await this.articleImagesService.removeMany(
         updateArticleDto.deleteImageIdList,
       );
-    }
+    } // tx test
     return result;
   }
 
@@ -143,5 +113,9 @@ export class ArticlesService {
       articleId: id,
     });
     return this.articleRepository.softDelete({ id });
+  }
+
+  convertToDatabaseFormat(input: string): string {
+    return input.replace(/\n/g, '<br>');
   }
 }

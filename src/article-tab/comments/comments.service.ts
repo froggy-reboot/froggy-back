@@ -7,7 +7,8 @@ import { Comment } from './entities/comment.entity';
 import { IPaginationOptions } from '../../utils/types/pagination-options';
 import { CommentImagesService } from 'src/article-tab/comment-images/comment-images.service';
 import { CreateCommentImageDto } from 'src/article-tab/comment-images/dto/create-comment-image.dto';
-import { ArticlesService } from 'src/article-tab/articles/articles.service';
+import { ArticlesService } from 'src/article-tab/articles/services/articles.service';
+import { ArticlesReadService } from '../articles/services/articles.read.service';
 
 @Injectable()
 export class CommentsService {
@@ -15,10 +16,11 @@ export class CommentsService {
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
     private articleService: ArticlesService,
+    private articlesReadService: ArticlesReadService,
     private commentImagesService: CommentImagesService,
   ) {}
   async create(createCommentDto: CreateCommentDto, file) {
-    const targetArticle = await this.articleService.findOne(
+    const targetArticle = await this.articlesReadService.findOne(
       createCommentDto.articleId,
     );
     if (!targetArticle) {

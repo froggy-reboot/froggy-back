@@ -4,7 +4,7 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
-import { ArticlesService } from './articles.service';
+import { ArticlesService } from './services/articles.service';
 import { ArticlesController } from './articles.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Article } from './entities/article.entity';
@@ -18,6 +18,7 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
 import { ArticleLikesService } from '../article-likes/article-likes.service';
 import { ArticleLikesModule } from '../article-likes/article-likes.module';
 import { ArticleLike } from '../article-likes/entities/article-like.entity';
+import { ArticlesReadService } from './services/articles.read.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article, Comment, ArticleLike]),
@@ -31,7 +32,12 @@ import { ArticleLike } from '../article-likes/entities/article-like.entity';
     ArticleLikesModule,
   ],
   controllers: [ArticlesController],
-  providers: [ArticlesService, ArticlesRepository, ArticleLikesService],
-  exports: [ArticlesService],
+  providers: [
+    ArticlesService,
+    ArticlesRepository,
+    ArticleLikesService,
+    ArticlesReadService,
+  ],
+  exports: [ArticlesService, ArticlesReadService],
 })
 export class ArticlesModule {}
