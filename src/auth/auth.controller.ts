@@ -190,6 +190,7 @@ export class AuthController {
   }
 
   @Post('withdraw')
+  @ApiBearerAuth()
   @ApiOperation({
     summary: '회원 탈퇴',
     description:
