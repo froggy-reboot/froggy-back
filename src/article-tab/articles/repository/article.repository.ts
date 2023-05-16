@@ -72,7 +72,7 @@ export class ArticlesRepository extends Repository<Article> {
       .select(['article', 'user.nickname', 'user.profileImg'])
       .leftJoin('article.comments', 'comment')
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
-      .where('article.writerId >= :id', { id: id })
+      .where('article.writerId = :id', { id: id })
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
