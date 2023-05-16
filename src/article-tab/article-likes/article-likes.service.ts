@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleLike } from './entities/article-like.entity';
 import { Repository } from 'typeorm';
 import { Article } from 'src/article-tab/articles/entities/article.entity';
-import { ArticlesService } from 'src/article-tab/articles/articles.service';
+import { ArticlesService } from 'src/article-tab/articles/services/articles.service';
 
 @Injectable()
 export class ArticleLikesService {

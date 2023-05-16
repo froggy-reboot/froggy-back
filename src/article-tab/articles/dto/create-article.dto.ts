@@ -1,11 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, MinLength, Validate } from 'class-validator';
-import { articleType } from '../entities/article.entity';
+import { Article, articleType } from '../entities/article.entity';
 
 export class CreateArticleDto {
-  @ApiProperty({ example: '1' })
-  writerId?: number;
-
   @ApiProperty({ example: '자유' })
   @IsNotEmpty()
   articleType: articleType;
@@ -22,6 +19,15 @@ export class CreateArticleDto {
 
   @ApiProperty({ example: '파일을 첨부해서 넣어주세요' })
   files: any;
+
+  static mapDTOToDomain(dto: CreateArticleDto, userId): Article {
+    const domainArticle = new Article();
+    domainArticle.writerId = userId;
+    domainArticle.articleType = dto.articleType;
+    domainArticle.title = dto.title;
+    domainArticle.content = dto.content;
+    return domainArticle;
+  }
 }
 
 export class CreateArticleResDto {

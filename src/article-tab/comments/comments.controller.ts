@@ -26,8 +26,9 @@ import {
 import { IPaginationOptions } from '../../utils/types/pagination-options';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
-import { ArticlesService } from '../articles/articles.service';
+import { ArticlesService } from '../articles/services/articles.service';
 import { ShowArticlesDto } from '../articles/dto/show-article.dto';
+import { ArticlesReadService } from '../articles/services/articles.read.service';
 
 @ApiTags('내 댓글들')
 @Controller({
@@ -63,6 +64,7 @@ export class CommentsController {
   constructor(
     private readonly commentsService: CommentsService,
     private readonly articlesService: ArticlesService,
+    private readonly articlesReadService: ArticlesReadService,
   ) {}
 
   @Post()
@@ -86,7 +88,7 @@ export class CommentsController {
   ) {
     createCommentDto.articleId = articleId;
     createCommentDto.writerId = req.user.id;
-    const article = this.articlesService.findOne(articleId);
+    const article = this.articlesReadService.findOne(articleId);
     if (article == null) {
       throw new ForbiddenException(
         `${articleId} 번째 글은 삭제되었거나, 없는 글입니다.`,

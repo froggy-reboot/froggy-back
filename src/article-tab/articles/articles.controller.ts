@@ -16,7 +16,7 @@ import {
   NotAcceptableException,
   UploadedFile,
 } from '@nestjs/common';
-import { ArticlesService } from './articles.service';
+import { ArticlesService } from './services/articles.service';
 import {
   CreateArticleDto,
   CreateArticleResDto,
@@ -44,6 +44,7 @@ import {
 import { UpdateUserReqDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { CheckLikeInterceptor } from '../../utils/common/interceptors/ checkLike.interceptor';
+import { ArticlesReadService } from './services/articles.read.service';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -53,6 +54,7 @@ import { CheckLikeInterceptor } from '../../utils/common/interceptors/ checkLike
 export class ArticlesController {
   constructor(
     private readonly articlesService: ArticlesService,
+    private readonly articlesReadService: ArticlesReadService,
     private readonly usersService: UsersService,
   ) {}
 
@@ -71,8 +73,7 @@ export class ArticlesController {
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFiles() files,
   ) {
-    createArticleDto.writerId = req.user.id;
-    return this.articlesService.create(createArticleDto, files);
+    return this.articlesService.create(createArticleDto, files, req.user.id);
   }
 
   @Get('/pages/:page')
@@ -90,7 +91,7 @@ export class ArticlesController {
     @Query() filterOptions: FilterOptions,
     @Query('search') search: string,
   ) {
-    return this.articlesService.findAllByFilter(
+    return this.articlesReadService.findAllByFilter(
       paginationOptions,
       filterOptions,
       search,
@@ -109,7 +110,10 @@ export class ArticlesController {
     @Param() paginationOptions: IPaginationOptions,
     @Request() req,
   ) {
-    return this.articlesService.findArticleByMe(paginationOptions, req.user.id);
+    return this.articlesReadService.findArticleByMe(
+      paginationOptions,
+      req.user.id,
+    );
   }
 
   @Get(':id')
@@ -123,7 +127,7 @@ export class ArticlesController {
   })
   @UseInterceptors(CheckLikeInterceptor)
   async findOne(@Param('id') id: string) {
-    const article = await this.articlesService.findArticle(+id);
+    const article = await this.articlesReadService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -156,7 +160,7 @@ export class ArticlesController {
     @UploadedFiles() files,
   ) {
     const userId = req.user.id;
-    const article = await this.articlesService.findArticle(+id);
+    const article = await this.articlesReadService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
@@ -185,7 +189,7 @@ export class ArticlesController {
   @UseGuards(AuthGuard('jwt'))
   async remove(@Request() req, @Param('id') id: string) {
     const userId = req.user.id;
-    const article = await this.articlesService.findArticle(+id);
+    const article = await this.articlesReadService.findArticle(+id);
     if (article == null) {
       throw new NotFoundException(`${id}는 삭제되었거나, 없는 글입니다.`);
     }
