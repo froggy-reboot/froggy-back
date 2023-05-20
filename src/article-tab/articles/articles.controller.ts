@@ -25,17 +25,16 @@ import { UpdateArticleReqDto } from './dto/update-article.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
+  ApiOperation,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { IPaginationOptions } from '../../utils/types/pagination-options';
-import { ArticlesRepository } from './repository/article.repository';
 import { ShowArticlesDto, ShowOneArticleDto } from './dto/show-article.dto';
 import { UsersService } from '../../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { SearchOptions } from 'src/utils/types/search-options';
 import {
   FilterOptions,
   articleTypes,
@@ -207,6 +206,10 @@ export class ArticlesController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({
+    summary: '유저 프로필 사진 변경',
+    description: '유저 프로필 사진을 변경합니다. (죄송합니다)',
+  })
   @ApiResponse({
     status: 200,
     type: User,

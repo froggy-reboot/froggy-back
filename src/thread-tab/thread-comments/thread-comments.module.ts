@@ -3,7 +3,7 @@ import { ThreadCommentsService } from './thread-comments.service';
 import { ThreadCommentsController } from './thread-comments.controller';
 
 @Module({
-  controllers: [ThreadCommentsController],
-  providers: [ThreadCommentsService]
+  controllers: [],
+  providers: [ThreadCommentsService],
 })
 export class ThreadCommentsModule {}
