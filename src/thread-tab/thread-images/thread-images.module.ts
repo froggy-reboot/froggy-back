@@ -6,7 +6,6 @@ import { ThreadImage } from './entities/thread-image.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ThreadImage])],
-  controllers: [ThreadImagesController],
   providers: [ThreadImagesService],
   exports: [ThreadImagesService],
 })

@@ -17,8 +17,12 @@ export class CreateArticleDto {
   @IsNotEmpty()
   content: string;
 
-  @ApiProperty({ example: '파일을 첨부해서 넣어주세요' })
-  files: any;
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: false,
+  })
+  files: Express.Multer.File[];
 
   static mapDTOToDomain(dto: CreateArticleDto, userId): Article {
     const domainArticle = new Article();
