@@ -52,9 +52,10 @@ export class CommentsService {
   findByArticleId(articleId: number, paginationOptions: IPaginationOptions) {
     return this.commentRepository
       .createQueryBuilder('comment')
+      .withDeleted()
       .where('comment.articleId = :id', { id: articleId })
       .leftJoin('comment.user', 'user')
-      .leftJoin('comment.images', 'image')
+      .andWhere('comment.deletedAt is null')
       .select([
         'comment.id',
         'comment.content',
@@ -62,7 +63,6 @@ export class CommentsService {
         'user.id',
         'user.nickname',
         'user.profileImg',
-        'image.url',
       ])
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
