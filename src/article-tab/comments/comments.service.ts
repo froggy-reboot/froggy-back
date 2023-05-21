@@ -90,11 +90,18 @@ export class CommentsService {
     return this.commentRepository.softDelete({ id });
   }
 
-  findCommentsByMe(paginationOptions: IPaginationOptions, userId) {
-    return this.commentRepository.find({
+  async findCommentsByMe(paginationOptions, userId) {
+    const comments = await this.commentRepository.find({
       where: { writerId: userId },
-      skip: (paginationOptions.page - 1) * paginationOptions.limit, // offset
-      take: paginationOptions.limit, // limit
+      skip: (paginationOptions.page - 1) * paginationOptions.limit, // 오프셋
+      take: paginationOptions.limit, // 제한
     });
+
+    for (const comment of comments) {
+      comment.article = await this.articlesReadService.findOne(
+        comment.articleId,
+      );
+    }
+    return comments;
   }
 }
