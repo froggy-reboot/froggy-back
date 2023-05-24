@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsNumberString,
   IsOptional,
+  IsString,
 } from 'class-validator';
 import { articleType } from '../entities/article.entity';
 import { Type } from 'class-transformer';
@@ -43,9 +44,11 @@ export class UpdateArticleReqDto {
   @ApiProperty({
     example: '제목입니다. 안녕하세요 저는 뜨개질을 하기 어려워해요',
   })
+  @IsNotEmpty()
   title: string;
 
   @ApiProperty({ example: '본문입니다. 어떡하죠, 도와주세요.' })
+  @IsNotEmpty()
   content: string;
 
   @ApiPropertyOptional({
