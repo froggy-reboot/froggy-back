@@ -55,6 +55,9 @@ async function bootstrap() {
   await app.listen(configService.get('app.port'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
+  app.set('view options', {
+    prettify: false,
+  });
   app.init();
 }
 void bootstrap();
