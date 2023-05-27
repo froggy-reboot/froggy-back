@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { ReportArticleDto } from 'src/article-tab/dto/article-report.dto';
 import { ReportService } from 'src/report/report.service';
 import { Report } from 'src/report/entities/reprot.entity';
-import { CreateArticleReportDto } from 'src/report/dto/create-report.dto';
+import { CreateArticleReportDto } from 'src/report/dto/create-article-report.dto';
 import { ArticlesReadService } from './articles.read.service';
 
 @Injectable()

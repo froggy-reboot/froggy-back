@@ -11,6 +11,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ArticlesModule } from '../articles/articles.module';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
+import { ReportModule } from 'src/report/report.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Comment]),
@@ -21,6 +22,7 @@ import { multerOptionsFactory } from 'src/utils/common/multer.option';
       inject: [ConfigService],
       useFactory: multerOptionsFactory,
     }),
+    ReportModule,
   ],
   controllers: [CommentsController, MyCommentsController],
   providers: [CommentsService, ConfigModule, ConfigService],
