@@ -51,6 +51,7 @@ import { ThreadCommentsModule } from './thread-tab/thread-comments/thread-commen
 
 import { PushModule } from './push/push.module';
 import { ThreadTabModule } from './thread-tab/thread-tab.module';
+import { ReportModule } from './report/report.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -125,6 +126,7 @@ import { ThreadTabModule } from './thread-tab/thread-tab.module';
     ThreadCommentsModule,
     PushModule,
     ThreadTabModule,
+    ReportModule,
   ],
 })
 export class AppModule implements NestModule {

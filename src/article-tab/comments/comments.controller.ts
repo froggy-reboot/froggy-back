@@ -20,6 +20,7 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import {
   ApiBearerAuth,
   ApiConsumes,
+  ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -29,6 +30,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ArticlesService } from '../articles/services/articles.service';
 import { ShowArticlesDto } from '../articles/dto/show-article.dto';
 import { ArticlesReadService } from '../articles/services/articles.read.service';
+import { ReportCommentDto } from '../dto/comment-report.dto';
 
 @ApiTags('내 댓글들')
 @Controller({
@@ -179,5 +181,27 @@ export class CommentsController {
       );
     }
     return this.commentsService.remove(+id);
+  }
+
+  @Post('report')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({
+    summary: '댓글 신고하기',
+    description: '댓글을 신고합니다.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: '신고 성공',
+  })
+  @ApiResponse({
+    status: 404,
+    description: '댓글이 존재하지 않는 경우',
+  })
+  async reportArticle(
+    @Request() req,
+    @Body() reportCommentDto: ReportCommentDto,
+  ) {
+    return this.commentsService.reportComment(reportCommentDto, req.user.id);
   }
 }

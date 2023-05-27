@@ -19,6 +19,9 @@ import { ArticleLikesService } from '../article-likes/article-likes.service';
 import { ArticleLikesModule } from '../article-likes/article-likes.module';
 import { ArticleLike } from '../article-likes/entities/article-like.entity';
 import { ArticlesReadService } from './services/articles.read.service';
+import { ArticlesReportService } from './services/articles.report.service';
+import { ReportService } from 'src/report/report.service';
+import { ReportModule } from 'src/report/report.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article, Comment, ArticleLike]),
@@ -30,6 +33,7 @@ import { ArticlesReadService } from './services/articles.read.service';
       useFactory: multerOptionsFactory,
     }),
     ArticleLikesModule,
+    ReportModule,
   ],
   controllers: [ArticlesController],
   providers: [
@@ -37,7 +41,8 @@ import { ArticlesReadService } from './services/articles.read.service';
     ArticlesRepository,
     ArticleLikesService,
     ArticlesReadService,
+    ArticlesReportService,
   ],
-  exports: [ArticlesService, ArticlesReadService],
+  exports: [ArticlesService, ArticlesReadService, ArticlesReportService],
 })
 export class ArticlesModule {}

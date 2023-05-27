@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,15 +14,19 @@ import { CommentImagesService } from 'src/article-tab/comment-images/comment-ima
 import { CreateCommentImageDto } from 'src/article-tab/comment-images/dto/create-comment-image.dto';
 import { ArticlesService } from 'src/article-tab/articles/services/articles.service';
 import { ArticlesReadService } from '../articles/services/articles.read.service';
+import { ReportCommentDto } from '../dto/comment-report.dto';
+import { Report } from 'src/report/entities/reprot.entity';
+import { CreateCommentReportDto } from 'src/report/dto/create-comment-report.dto';
+import { ReportService } from 'src/report/report.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
-    private articleService: ArticlesService,
     private articlesReadService: ArticlesReadService,
     private commentImagesService: CommentImagesService,
+    private reportService: ReportService,
   ) {}
   async create(createCommentDto: CreateCommentDto, file) {
     const targetArticle = await this.articlesReadService.findOne(
@@ -103,5 +112,23 @@ export class CommentsService {
       );
     }
     return comments;
+  }
+
+  async reportComment(reportCommentDto: ReportCommentDto, reporterId: number) {
+    const comment = await this.commentRepository.findOne({
+      where: { id: reportCommentDto.commentId },
+    });
+
+    if (!comment) {
+      throw new NotFoundException('Comment not found');
+    }
+    const report: Report = CreateCommentReportDto.mapDTOToDomain(
+      reportCommentDto,
+      reporterId,
+      comment,
+    );
+
+    const result = await this.reportService.create(report);
+    return result;
   }
 }
