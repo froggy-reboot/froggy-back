@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ReportCommentDto {
   @ApiProperty({ example: '1' })
@@ -7,6 +7,6 @@ export class ReportCommentDto {
   commentId: number;
 
   @ApiProperty({ example: '욕설을 사용했습니다!!!' })
-  @IsString()
+  @IsOptional()
   reason: string;
 }

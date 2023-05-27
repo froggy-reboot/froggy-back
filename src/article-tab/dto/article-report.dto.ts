@@ -7,6 +7,6 @@ export class ReportArticleDto {
   articleId: number;
 
   @ApiProperty({ example: '욕설을 사용했습니다!!!' })
-  @IsString()
+  @IsOptional()
   reason: string;
 }
