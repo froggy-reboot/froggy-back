@@ -13,7 +13,6 @@ import {
   Query,
   NotFoundException,
   ForbiddenException,
-  NotAcceptableException,
   UploadedFile,
 } from '@nestjs/common';
 import { ArticlesService } from './services/articles.service';
@@ -44,6 +43,8 @@ import { UpdateUserReqDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { CheckLikeInterceptor } from '../../utils/common/interceptors/ checkLike.interceptor';
 import { ArticlesReadService } from './services/articles.read.service';
+import { ReportArticleDto } from '../dto/article-report.dto';
+import { ArticlesReportService } from './services/articles.report.service';
 
 @ApiTags('게시판 글')
 @Controller({
@@ -54,6 +55,7 @@ export class ArticlesController {
   constructor(
     private readonly articlesService: ArticlesService,
     private readonly articlesReadService: ArticlesReadService,
+    private readonly articleReportService: ArticlesReportService,
     private readonly usersService: UsersService,
   ) {}
 
@@ -232,5 +234,30 @@ export class ArticlesController {
       );
     }
     return this.usersService.update(id, updateProfileDto, file);
+  }
+
+  @Post('report')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({
+    summary: '글 신고하기',
+    description: '글을 신고합니다.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: '신고 성공',
+  })
+  @ApiResponse({
+    status: 404,
+    description: '글이 존재하지 않는 경우',
+  })
+  async reportArticle(
+    @Request() req,
+    @Body() reportArticleDto: ReportArticleDto,
+  ) {
+    return this.articleReportService.reportArticle(
+      reportArticleDto,
+      req.user.id,
+    );
   }
 }

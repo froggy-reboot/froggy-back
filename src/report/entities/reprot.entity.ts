@@ -1,3 +1,5 @@
+import { Allow } from 'class-validator';
+import { User } from 'src/users/entities/user.entity';
 import { reportType } from 'src/utils/common/custom.enum';
 import { EntityHelper } from 'src/utils/entity-helper';
 import {
@@ -5,6 +7,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -15,6 +18,9 @@ export class Report extends EntityHelper {
 
   @Column({ nullable: false })
   reporterId: number;
+
+  @Column({ nullable: false })
+  reportedId: number;
 
   @Column({ nullable: false })
   type: reportType;
