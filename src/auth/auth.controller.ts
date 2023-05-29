@@ -46,6 +46,8 @@ import {
 import { AuthRefreshDto, AuthRefreshResDto } from './dto/auth-refresh.dto';
 import { customBool } from 'src/users/entities/user.entity';
 import { AuthWithdrawDto } from './dto/auth-withdraw.dto';
+import { AuthResetPasswordReqDto } from './dto/auth-reset-password.dto';
+import { AuthResetPasswordDto } from './dto/auth-reset-password.dto';
 
 @ApiTags('Auth')
 @Controller({
@@ -119,6 +121,67 @@ export class AuthController {
   async confirmEmail(@Param('hash') hash, @Req() req, @Res() res) {
     await this.authService.confirmEmail(hash);
     return;
+  }
+
+  @Post('email/reset-password')
+  @ApiOperation({
+    summary: '비밀번호 수정',
+    description:
+      '로컬 계정의 비밀번호를 수정할 수 있게 하는 이메일을 보냅니다. 메일을 보내느라 속도가 조금 느립니다.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '메일 전송 성공',
+  })
+  @ApiResponse({
+    status: 422,
+    description: '회원가입 되지 않은 이메일 또는 인증되지 않은 이메일',
+  })
+  async forgetPassword(@Body() resetPasswordDto: AuthResetPasswordReqDto) {
+    return this.authService.forgotPassword(resetPasswordDto.email);
+  }
+
+  @Get('reset-password/complete')
+  @Render('reset-password-complete')
+  @HttpCode(HttpStatus.OK)
+  async resetPasswordCompleteTemplate() {
+    return;
+  }
+
+  @Get('reset-password/fail')
+  @Render('reset-password-fail')
+  @HttpCode(HttpStatus.OK)
+  async resetPasswordFailTemplate() {
+    return;
+  }
+
+  @Get('reset-password/:hash')
+  @ApiOperation({
+    summary: '백 서버용',
+    description:
+      '프론트에서는 볼 필요 없습니다.',
+  })
+  @Render('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPasswordTemplate(@Param('hash') hash) {
+    console.log(hash);
+    const data = {
+      hash: hash,
+      backendUrl: process.env.BACKEND_DOMAIN,
+    };
+    return data;
+  }
+
+  @Post('reset-password')
+  @ApiOperation({
+    summary: '백 서버용',
+    description:
+      '프론트에서는 볼 필요 없습니다.',
+  })
+  @HttpCode(HttpStatus.OK)
+  async resetPasswordComplete(@Body() resetPasswordDto: AuthResetPasswordDto) {
+    const result = await this.authService.resetPassword(resetPasswordDto.hash, resetPasswordDto.password);
+    return { result: result };
   }
 
   @Get('random-nickname')

@@ -4,7 +4,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  NotAcceptableException,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -24,14 +23,16 @@ import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthRefreshResDto } from './dto/auth-refresh.dto';
 import { AuthWithdrawDto } from './dto/auth-withdraw.dto';
-// import { ForgotService } from 'src/forgot/forgot.service';
+import { ForgotService } from 'src/forgot/forgot.service';
 // import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService, // private forgotService: ForgotService, // private mailService: MailService,
+    private usersService: UsersService,
+    private forgotService: ForgotService,
+    // private mailService: MailService,
     private mailService: MailService,
     private configService: ConfigService,
   ) {}
@@ -372,64 +373,66 @@ export class AuthService {
     await this.usersService.softDelete(userIdByToken);
     return true;
   }
-  // async forgotPassword(email: string): Promise<void> {
-  //   const user = await this.usersService.findOne({
-  //     email,
-  //   });
 
-  //   if (!user) {
-  //     throw new HttpException(
-  //       {
-  //         status: HttpStatus.UNPROCESSABLE_ENTITY,
-  //         errors: {
-  //           email: 'emailNotExists',
-  //         },
-  //       },
-  //       HttpStatus.UNPROCESSABLE_ENTITY,
-  //     );
-  //   } else {
-  //     const hash = crypto
-  //       .createHash('sha256')
-  //       .update(randomStringGenerator())
-  //       .digest('hex');
-  //     await this.forgotService.create({
-  //       hash,
-  //       user,
-  //     });
+  async forgotPassword(email: string): Promise<void> {
+    const user = await this.usersService.findOne({
+      email,
+    });
 
-  //     await this.mailService.forgotPassword({
-  //       to: email,
-  //       data: {
-  //         hash,
-  //       },
-  //     });
-  //   }
-  // }
+    if (
+      !user ||
+      user.enrollType !== enrollType.local ||
+      user.isCertified !== customBool.Y
+    ) {
+      throw new UnprocessableEntityException(
+        'email not found or not certified',
+      );
+    } else {
+      const hash = crypto
+        .createHash('sha256')
+        .update(randomStringGenerator())
+        .digest('hex');
 
-  // async resetPassword(hash: string, password: string): Promise<void> {
-  //   const forgot = await this.forgotService.findOne({
-  //     where: {
-  //       hash,
-  //     },
-  //   });
+      await this.forgotService.create({
+        hash,
+        user,
+      });
 
-  //   if (!forgot) {
-  //     throw new HttpException(
-  //       {
-  //         status: HttpStatus.UNPROCESSABLE_ENTITY,
-  //         errors: {
-  //           hash: `notFound`,
-  //         },
-  //       },
-  //       HttpStatus.UNPROCESSABLE_ENTITY,
-  //     );
-  //   }
+      await this.mailService.forgotPassword({
+        to: email,
+        data: {
+          hash,
+        },
+      });
+    }
+  }
 
-  //   const user = forgot.user;
-  //   user.password = password;
-  //   await user.save();
-  //   await this.forgotService.softDelete(forgot.id);
-  // }
+  async resetPassword(hash: string, password: string): Promise<boolean> {
+    const forgot = await this.forgotService.findOne({
+      where: {
+        hash,
+      },
+    });
+
+    if (!forgot) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          errors: {
+            hash: `notFound`,
+          },
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const user = forgot.user;
+    const newPassword = await bcrypt.hash(password, 15);
+    user.password = newPassword;
+    await user.save();
+    await this.forgotService.softDelete(forgot.id);
+    return true;
+  }
 
   // async me(user: User): Promise<User> {
   //   return this.usersService.findOne({

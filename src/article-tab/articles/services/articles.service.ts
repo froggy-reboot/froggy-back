@@ -4,15 +4,11 @@ import { UpdateArticleReqDto } from '../dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Article } from '../entities/article.entity';
-import { IPaginationOptions } from '../../../utils/types/pagination-options';
 import { ArticleImagesService } from 'src/article-tab/article-images/article-images.service';
 import { CreateArticleImageDto } from 'src/article-tab/article-images/dto/create-article-image.dto';
 import { Comment } from '../../comments/entities/comment.entity';
 import { ArticlesRepository } from '../repository/article.repository';
 import { UpdateArticleImageDto } from 'src/article-tab/article-images/dto/update-article-image.dto';
-import { FilterOptions } from '../../../utils/types/filter-options';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
 
 @Injectable()
 export class ArticlesService {
