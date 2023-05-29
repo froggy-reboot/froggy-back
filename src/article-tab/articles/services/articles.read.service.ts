@@ -19,37 +19,55 @@ export class ArticlesReadService {
   ) {}
 
   async findArticle(id: number) {
-    return await this.articleCustomRepository.findArticle(+id);
+    const article = await this.articleCustomRepository.findArticle(+id);
+    article.content = this.convertFromDatabaseFormat(article.content);
+    return article;
   }
 
-  findAllByFilter(
+  async findAllByFilter(
     paginationOptions: IPaginationOptions,
     filterOptions: FilterOptions,
     search: string,
   ) {
+    let articles;
+
     if (search !== undefined) {
-      return this.articleCustomRepository.findSearchArticleList(
+      articles = await this.articleCustomRepository.findSearchArticleList(
         search,
         paginationOptions,
       );
-    }
-    if (filterOptions.filter == '인기') {
-      return this.articleCustomRepository.findHotArticleList(
+    } else if (filterOptions.filter == '인기') {
+      articles = await this.articleCustomRepository.findHotArticleList(
+        filterOptions.articleType,
+        paginationOptions,
+      );
+    } else {
+      articles = await this.articleCustomRepository.findRecentArticleList(
         filterOptions.articleType,
         paginationOptions,
       );
     }
-    return this.articleCustomRepository.findRecentArticleList(
-      filterOptions.articleType,
-      paginationOptions,
-    );
+
+    articles = articles.map((article) => ({
+      ...article,
+      content: this.convertFromDatabaseFormat(article.content),
+    }));
+
+    return articles;
   }
 
-  findArticleByMe(paginationOptions: IPaginationOptions, userId: number) {
-    return this.articleCustomRepository.findArticlesByMe(
+  async findArticleByMe(paginationOptions: IPaginationOptions, userId: number) {
+    let articles;
+    articles = await this.articleCustomRepository.findArticlesByMe(
       userId,
       paginationOptions,
     );
+    articles = articles.map((article) => ({
+      ...article,
+      content: this.convertFromDatabaseFormat(article.content),
+    }));
+
+    return articles;
   }
 
   findOne(id: number) {
