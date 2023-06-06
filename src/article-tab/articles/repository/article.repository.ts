@@ -75,6 +75,7 @@ export class ArticlesRepository extends Repository<Article> {
       .where('article.writerId = :id', { id: id })
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
+      .orderBy({ 'article.createdAt': 'DESC' })
       .getMany();
   }
 

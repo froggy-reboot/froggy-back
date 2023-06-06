@@ -104,6 +104,7 @@ export class CommentsService {
       where: { writerId: userId },
       skip: (paginationOptions.page - 1) * paginationOptions.limit, // 오프셋
       take: paginationOptions.limit, // 제한
+      order: { createdAt: 'DESC' },
     });
 
     for (const comment of comments) {
