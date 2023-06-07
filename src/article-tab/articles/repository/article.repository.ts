@@ -110,7 +110,7 @@ export class ArticlesRepository extends Repository<Article> {
       .leftJoin('article.user', 'user')
       .select(['article', 'user.nickname', 'user.profileImg'])
       .loadRelationCountAndMap('article.commentCount', 'article.comments')
-      .where('article.liked >= :liked', { liked: 1 })
+      .where('article.liked >= :liked', { liked: 5 })
       .andWhere('article.deletedAt IS NULL')
       .limit(paginationOptions.limit)
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
