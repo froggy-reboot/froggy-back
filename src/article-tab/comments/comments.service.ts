@@ -18,6 +18,9 @@ import { ReportCommentDto } from '../dto/comment-report.dto';
 import { Report } from 'src/report/entities/reprot.entity';
 import { CreateCommentReportDto } from 'src/report/dto/create-comment-report.dto';
 import { ReportService } from 'src/report/report.service';
+import { NotificationsService } from 'src/notifications/notifications.service';
+import { notificationType } from 'src/notifications/entities/notification.entity';
+import { CreateNotificationDto } from 'src/notifications/dto/create-notification.dto';
 
 @Injectable()
 export class CommentsService {
@@ -27,6 +30,7 @@ export class CommentsService {
     private articlesReadService: ArticlesReadService,
     private commentImagesService: CommentImagesService,
     private reportService: ReportService,
+    private notificationService: NotificationsService,
   ) {}
   async create(createCommentDto: CreateCommentDto, file) {
     const targetArticle = await this.articlesReadService.findOne(
@@ -47,6 +51,17 @@ export class CommentsService {
     const createCommentResult = await this.commentRepository.save(
       this.commentRepository.create(createCommentDto),
     );
+
+    if (createCommentDto.writerId !== targetArticle.writerId) {
+      const createNotificationDto: CreateNotificationDto = {
+        type: notificationType.comment,
+        targetTitle: targetArticle.title,
+        content: createCommentDto.content,
+        writerId: createCommentDto.writerId,
+        targetUserId: targetArticle.writerId,
+      };
+      await this.notificationService.create(createNotificationDto);
+    }
 
     if (file) {
       const createCommentImageDto: CreateCommentImageDto = {

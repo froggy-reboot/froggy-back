@@ -15,6 +15,7 @@ import { Comment } from '../../article-tab/comments/entities/comment.entity';
 import { RavelryUser } from 'src/ravelry-users/entities/ravelry-user.entity';
 import { ArticleLike } from 'src/article-tab/article-likes/entities/article-like.entity';
 import { Thread } from 'src/thread-tab/threads/entities/thread.entity';
+import { Notification } from 'src/notifications/entities/notification.entity';
 
 export enum enrollType {
   local = 'local',
@@ -132,6 +133,12 @@ export class User extends EntityHelper {
 
   @OneToOne(() => RavelryUser, (RavelryUser) => RavelryUser.userId)
   ravelryUser: RavelryUser;
+
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
+
+  @OneToMany(() => Notification, (notification) => notification.writerUser)
+  notificationsWriter: Notification[];
 }
 
 /*
