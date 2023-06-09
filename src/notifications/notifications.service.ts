@@ -51,16 +51,22 @@ export class NotificationsService {
         .take(paginationOptions.limit)
         .getMany();
 
-    const notificationForUpdate = notificationResult.map((notification) => {
-      const newNotification = {
-        id: notification.id,
-        isRead: customBool.Y,
-      };
-      return newNotification;
-    });
+    // const notificationForUpdate = notificationResult.map((notification) => {
+    //   const newNotification = {
+    //     id: notification.id,
+    //     isRead: customBool.Y,
+    //   };
+    //   return newNotification;
+    // });
 
-    await this.NotificationRepository.save(notificationForUpdate);
+    // await this.NotificationRepository.save(notificationForUpdate);
     return notificationResult;
+  }
+  readNotification(id: number) {
+    return this.NotificationRepository.update(
+      { id: id },
+      { isRead: customBool.Y },
+    );
   }
 
   findAll() {
