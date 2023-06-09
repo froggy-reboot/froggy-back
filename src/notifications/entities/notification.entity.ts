@@ -48,6 +48,9 @@ export class Notification extends EntityHelper {
   })
   isRead: customBool;
 
+  @Column({ nullable: true })
+  targetPostId: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

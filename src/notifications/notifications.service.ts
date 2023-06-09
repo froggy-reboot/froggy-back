@@ -43,6 +43,7 @@ export class NotificationsService {
           'notification.createdAt',
           'notification.isRead',
           'notification.writerId',
+          'notification.targetPostId',
           'writerUser.nickname',
           'writerUser.profileImg',
         ])
