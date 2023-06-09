@@ -8,4 +8,5 @@ export interface SocialInterface {
   isRavelryIntegrated?: customBool;
   ravelryUserId?: number;
   isCertified?: customBool;
+  name?: string;
 }

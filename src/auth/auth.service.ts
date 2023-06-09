@@ -116,6 +116,17 @@ export class AuthService {
       userId = createdSocialUser.id;
     } else {
       userId = userByEmail.id;
+
+      // 카카오 임시 방편
+      // 나중에 삭제하도록
+      if (socialData.enrollType === enrollType.kakao && !userByEmail.name) {
+        // 카카오 로그인인 경우에 name을 업데이트
+        if (socialData.name) {
+          await this.usersService.update(userByEmail.id, {
+            name: socialData.name,
+          });
+        }
+      }
     }
     return userId;
   }
@@ -191,6 +202,7 @@ export class AuthService {
       email: socialData.email,
       password: socialData.password,
       enrollType: socialData.enrollType,
+      name: socialData.name,
       nickname: randomNickname,
     });
 

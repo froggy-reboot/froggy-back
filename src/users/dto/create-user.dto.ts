@@ -42,4 +42,7 @@ export class CreateUserDto {
   isCertified?: customBool;
 
   isRavelryIntegrated?: customBool;
+
+  @IsOptional()
+  name?: string;
 }
