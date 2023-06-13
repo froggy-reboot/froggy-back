@@ -55,6 +55,7 @@ export class CommentsService {
     if (createCommentDto.writerId !== targetArticle.writerId) {
       const createNotificationDto: CreateNotificationDto = {
         type: notificationType.comment,
+        targetPostId: targetArticle.id,
         targetTitle: targetArticle.title,
         content: createCommentDto.content,
         writerId: createCommentDto.writerId,

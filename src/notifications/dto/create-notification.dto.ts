@@ -15,4 +15,6 @@ export class CreateNotificationDto {
   writerId: number;
 
   targetUserId: number;
+
+  targetPostId: number;
 }

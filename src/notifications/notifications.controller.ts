@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
@@ -47,5 +54,20 @@ export class NotificationsController {
     newPage.page = page;
     newPage.limit = 3;
     return this.notificationService.getNotifications(newPage, req.user.id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: '알림 읽음 처리',
+    description: '알림을 읽음 처리합니다.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '읽음 처리 성공',
+  })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  async readNotification(@Request() req, @Param('id') id: number) {
+    return this.notificationService.readNotification(id);
   }
 }
