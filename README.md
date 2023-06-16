@@ -11,9 +11,12 @@ docker compose up -d mysql
 
 현재 entity를 읽어와 이에 해당하는 쿼리 생성해줌
 npm run migration:generate -- src/database/migrations/파일이름
+npm run migration:generate:dev -- src/database/froggy-dev_migrations/파일이름
+npm run migration:generate:live -- src/database/froggy-live_migrations/파일이름
 
 database/migrations/에 있는 쿼리 실행
-npm run migration:run
+npm run migration:run:live
+npm run migration:run:dev
 
 테이블 드랍, 모든 테이블 드랍되니 조심 !
 npm run schema:drop

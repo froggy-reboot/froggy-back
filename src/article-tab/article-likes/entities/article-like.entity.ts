@@ -14,7 +14,6 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'articleLike' })
-@Index('userId_articleId_index', ['userId', 'articleId'], { unique: true })
 export class ArticleLike extends EntityHelper {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: '11' })
