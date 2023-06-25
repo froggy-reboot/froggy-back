@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ArticlesModule } from '../articles/articles.module';
 import { multerOptionsFactory } from 'src/utils/common/multer.option';
 import { ReportModule } from 'src/report/report.module';
+import { NotificationsModule } from 'src/notifications/notifications.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Comment]),
@@ -23,6 +24,7 @@ import { ReportModule } from 'src/report/report.module';
       useFactory: multerOptionsFactory,
     }),
     ReportModule,
+    NotificationsModule,
   ],
   controllers: [CommentsController, MyCommentsController],
   providers: [CommentsService, ConfigModule, ConfigService],

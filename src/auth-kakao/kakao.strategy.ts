@@ -29,12 +29,12 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   ) {
     try {
       // const email = profile._json.kakao_account.email;
-      // console.log(profile);
       //profile.emails[0].value, 에 email이 담김
       const customEmail = profile.id + '@kakaoId.com';
       return {
         provider: 'kakao',
         email: customEmail,
+        name: profile._json.kakao_account.email,
         refreshToken,
         accessToken,
       };

@@ -49,6 +49,7 @@ export class AuthKakaoController {
       enrollType: enrollType.kakao,
       email: req.user.email,
       password: null,
+      name: req.user.name,
     };
 
     const userId = await this.authService.findOrCreateUser(socialData);

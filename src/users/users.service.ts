@@ -38,8 +38,12 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateProfileDto: UpdateUserDto, file = null) {
-    if (file && file.location) {
+  update(id: number, updateProfileDto, file = null) {
+    console.log('########## updateProfileDto: ', updateProfileDto);
+    if (updateProfileDto.defaultImage === 'Y') {
+      updateProfileDto.profileImg =
+        'https://froggy-image.s3.ap-northeast-2.amazonaws.com/ad97e1f8-2565-4b2b-9555-046c5252ec77.png';
+    } else if (file && file.location) {
       updateProfileDto.profileImg = file.location;
       console.log('#### file location: ', file.location);
     }

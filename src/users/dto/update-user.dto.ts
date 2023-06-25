@@ -77,6 +77,10 @@ export class UpdateUserReqDto {
   @IsOptional()
   profileImg?: string;
 
+  @ApiProperty({ example: 'Y', enum: customBool })
+  @IsEnum(customBool)
+  defaultImage?: customBool;
+
   @ApiProperty({ type: 'string', format: 'binary', required: false })
   file: Express.Multer.File;
 }
