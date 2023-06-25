@@ -22,7 +22,7 @@ import { CreateThreadDto, CreateThreadReqDto } from './dto/create-thread-dto';
 import { ShowThreadsDto } from './threads/dto/show-thread.dto';
 import {
   IPaginationOptions,
-  threadPaginationOptions,
+  ThreadPatternIdPaginationReq,
 } from 'src/utils/types/pagination-options';
 
 @ApiTags('스레드')
@@ -56,6 +56,21 @@ export class ThreadTabController {
     return thread;
   }
 
+  @Get('/pages/:page')
+  @ApiResponse({
+    status: 200,
+    type: [ShowThreadsDto],
+    description:
+      '특정 pattern에 해당하는 threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
+  })
+  async getThreadsByAll(
+    @Param() paginationOptions: ThreadPatternIdPaginationReq,
+  ) {
+    const threads = await this.threadTabService.getThreadsByAll();
+
+    return threads;
+  }
+
   @Get('patternId/:patternId/pages/:page')
   @ApiResponse({
     status: 200,
@@ -64,7 +79,7 @@ export class ThreadTabController {
       '특정 pattern에 해당하는 threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
   })
   async getThreadsByPatternId(
-    @Param() paginationOptions: threadPaginationOptions,
+    @Param() paginationOptions: ThreadPatternIdPaginationReq,
   ) {
     const threads = await this.threadTabService.getThreadsByPatternId(
       paginationOptions,

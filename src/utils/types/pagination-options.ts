@@ -11,7 +11,7 @@ export class IPaginationOptions {
   @IsNumber()
   limit: number = 20;
 }
-export class threadPaginationOptions {
+export class ThreadPatternIdPaginationReq {
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()
