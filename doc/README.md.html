@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>README.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "README.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#">실행 방법</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#db">db 세팅</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#description">Description</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#table-of-contents">Table of Contents</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#features">Features</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#quick-run">Quick run</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#comfortable-development">Comfortable development</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#links">Links</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#automatic-update-of-dependencies">Automatic update of dependencies</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#database-utils">Database utils</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#tests">Tests</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#tests-in-docker">Tests in Docker</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#test-benchmarking">Test benchmarking</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#api-docs">API DOCS</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="">
+  <h1>
+    <a href="#" name="" class="pilcrow"></a>
+실행 방법
+  </h1>
+</div>
+<p>docker compose up -d mysql</p>
+<ol>
+<li>npm install</li>
+<li>npm run migration:run</li>
+<li>npm run seed:run</li>
+<li>npm run start:dev</li>
+</ol>
+<div class="pilwrap" id="db">
+  <h3>
+    <a href="#db" name="db" class="pilcrow"></a>
+db 세팅
+  </h3>
+</div>
+<p>현재 entity를 읽어와 이에 해당하는 쿼리 생성해줌
+npm run migration:generate -- src/database/migrations/파일이름
+npm run migration:generate:dev -- src/database/froggy-dev_migrations/파일이름
+npm run migration:generate:live -- src/database/froggy-live_migrations/파일이름</p>
+<p>database/migrations/에 있는 쿼리 실행
+npm run migration:run:live
+npm run migration:run:dev</p>
+<p>테이블 드랍, 모든 테이블 드랍되니 조심 !
+npm run schema:drop</p>
+<div class="pilwrap" id="description">
+  <h2>
+    <a href="#description" name="description" class="pilcrow"></a>
+Description
+  </h2>
+</div>
+<p>NestJS REST API boilerplate for typical project</p>
+<p><a href="https://github.com/brocoders/nestjs-boilerplate/blob/main/docs/index.md">Full documentation here</a></p>
+<div class="pilwrap" id="table-of-contents">
+  <h2>
+    <a href="#table-of-contents" name="table-of-contents" class="pilcrow"></a>
+Table of Contents
+  </h2>
+</div>
+<ul>
+<li><a href="#features.html">Features</a></li>
+<li><a href="#quick-run.html">Quick run</a></li>
+<li><a href="#comfortable-development.html">Comfortable development</a></li>
+<li><a href="#links.html">Links</a></li>
+<li><a href="#automatic-update-of-dependencies.html">Automatic update of dependencies</a></li>
+<li><a href="#database-utils.html">Database utils</a></li>
+<li><a href="#tests.html">Tests</a></li>
+</ul>
+<div class="pilwrap" id="features">
+  <h2>
+    <a href="#features" name="features" class="pilcrow"></a>
+Features
+  </h2>
+</div>
+<ul>
+<li>[x] Database (<a href="https://www.npmjs.com/package/typeorm">typeorm</a>).</li>
+<li>[x] Seeding.</li>
+<li>[x] Config Service (<a href="https://www.npmjs.com/package/@nestjs/config">@nestjs/config</a>).</li>
+<li>[x] Mailing (<a href="https://www.npmjs.com/package/nodemailer">nodemailer</a>, <a href="https://www.npmjs.com/package/@nestjs-modules/mailer">@nestjs-modules/mailer</a>).</li>
+<li>[x] Sign in and sign up via email.</li>
+<li>[x] Social sign in (Apple, Facebook, Google, Twitter).</li>
+<li>[x] Admin and User roles.</li>
+<li>[x] I18N (<a href="https://www.npmjs.com/package/nestjs-i18n">nestjs-i18n</a>).</li>
+<li>[x] File uploads. Support local and Amazon S3 drivers.</li>
+<li>[x] Swagger.</li>
+<li>[x] E2E and units tests.</li>
+<li>[x] Docker.</li>
+<li>[x] CI (Github Actions).</li>
+</ul>
+<div class="pilwrap" id="quick-run">
+  <h2>
+    <a href="#quick-run" name="quick-run" class="pilcrow"></a>
+Quick run
+  </h2>
+</div>
+<pre><code class="bash">git <span class="hljs-built_in">clone</span> --depth 1 https://github.com/brocoders/nestjs-boilerplate.git my-app
+<span class="hljs-built_in">cd</span> my-app/
+docker compose up -d
+</code></pre>
+<p>For check status run</p>
+<pre><code class="bash">docker compose logs
+</code></pre>
+<div class="pilwrap" id="comfortable-development">
+  <h2>
+    <a href="#comfortable-development" name="comfortable-development" class="pilcrow"></a>
+Comfortable development
+  </h2>
+</div>
+<pre><code class="bash">git <span class="hljs-built_in">clone</span> --depth 1 https://github.com/brocoders/nestjs-boilerplate.git my-app
+<span class="hljs-built_in">cd</span> my-app/
+</code></pre>
+<p>Change <code>DATABASE_HOST=postgres</code> to <code>DATABASE_HOST=localhost</code></p>
+<p>Change <code>MAIL_HOST=maildev</code> to <code>MAIL_HOST=localhost</code></p>
+<p>Run additional container:</p>
+<pre><code class="bash">docker compose up -d postgres adminer maildev redis
+</code></pre>
+<pre><code class="bash">npm install
+
+npm run migration:run
+
+npm run seed:run
+
+npm run start:dev
+</code></pre>
+<div class="pilwrap" id="links">
+  <h2>
+    <a href="#links" name="links" class="pilcrow"></a>
+Links
+  </h2>
+</div>
+<ul>
+<li>Swagger: http://localhost:3000/docs</li>
+<li>Adminer (client for DB): http://localhost:8080</li>
+<li>Maildev: http://localhost:1080</li>
+</ul>
+<div class="pilwrap" id="automatic-update-of-dependencies">
+  <h2>
+    <a href="#automatic-update-of-dependencies" name="automatic-update-of-dependencies" class="pilcrow"></a>
+Automatic update of dependencies
+  </h2>
+</div>
+<p>If you want to automatically update dependencies, you can connect <a href="https://github.com/marketplace/renovate">Renovate</a> for your project.</p>
+<div class="pilwrap" id="database-utils">
+  <h2>
+    <a href="#database-utils" name="database-utils" class="pilcrow"></a>
+Database utils
+  </h2>
+</div>
+<p>Generate migration</p>
+<pre><code class="bash">npm run migration:generate -- src/database/migrations/CreateNameTable
+</code></pre>
+<p>Run migration</p>
+<pre><code class="bash">npm run migration:run
+</code></pre>
+<p>Revert migration</p>
+<pre><code class="bash">npm run migration:revert
+</code></pre>
+<p>Drop all tables in database</p>
+<pre><code class="bash">npm run schema:drop
+</code></pre>
+<p>Run seed</p>
+<pre><code class="bash">npm run seed:run
+</code></pre>
+<div class="pilwrap" id="tests">
+  <h2>
+    <a href="#tests" name="tests" class="pilcrow"></a>
+Tests
+  </h2>
+</div>
+<pre><code class="bash"><span class="hljs-comment"># unit tests</span>
+npm run <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># e2e tests</span>
+npm run <span class="hljs-built_in">test</span>:e2e
+</code></pre>
+<div class="pilwrap" id="tests-in-docker">
+  <h2>
+    <a href="#tests-in-docker" name="tests-in-docker" class="pilcrow"></a>
+Tests in Docker
+  </h2>
+</div>
+<pre><code class="bash">docker compose -f docker-compose.ci.yaml --env-file .env -p ci up --build --<span class="hljs-built_in">exit</span>-code-from api &amp;&amp; docker compose -p ci rm -svf
+</code></pre>
+<div class="pilwrap" id="test-benchmarking">
+  <h2>
+    <a href="#test-benchmarking" name="test-benchmarking" class="pilcrow"></a>
+Test benchmarking
+  </h2>
+</div>
+<pre><code class="bash">docker run --rm jordi/ab -n 100 -c 100 -T application/json -H <span class="hljs-string">"Authorization: Bearer USER_TOKEN"</span> -v 2 http://&lt;server_ip&gt;:3000/api/v1/users
+</code></pre>
+<div class="pilwrap" id="api-docs">
+  <h2>
+    <a href="#api-docs" name="api-docs" class="pilcrow"></a>
+API DOCS
+  </h2>
+</div>
+<p>visit http://localhost:3000/docs</p>
+</div>
+  </div>
+</body>
+</html>

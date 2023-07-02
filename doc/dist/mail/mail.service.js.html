@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>mail.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/mail/mail.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlmail.service.js.map">sourceMappingURL=mail.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>mail.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.MailService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> mailer_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs-modules/mailer"</span>);
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">const</span> nestjs_i18n_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"nestjs-i18n"</span>);
+<span class="hljs-keyword">let</span> MailService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MailService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(i18n, mailerService, configService) {
+        <span class="hljs-keyword">this</span>.i18n = i18n;
+        <span class="hljs-keyword">this</span>.mailerService = mailerService;
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    <span class="hljs-keyword">async</span> userSignUp(mailData) {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mailerService.sendMail({
+            <span class="hljs-attr">to</span>: mailData.to,
+            <span class="hljs-attr">subject</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.confirmEmail'</span>),
+            <span class="hljs-attr">text</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.backendDomain'</span>)}</span>/api/v1/auth/email/confirm/<span class="hljs-subst">${mailData.data.hash}</span> <span class="hljs-subst">${<span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.confirmEmail'</span>)}</span>`</span>,
+            <span class="hljs-attr">template</span>: <span class="hljs-string">'activation'</span>,
+            <span class="hljs-attr">context</span>: {
+                <span class="hljs-attr">title</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.confirmEmail'</span>),
+                <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.backendDomain'</span>)}</span>/api/v1/auth/email/confirm/<span class="hljs-subst">${mailData.data.hash}</span>`</span>,
+                <span class="hljs-attr">actionTitle</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.confirmEmail'</span>),
+                <span class="hljs-attr">app_name</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.name'</span>),
+                <span class="hljs-attr">text1</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'confirm-email.text1'</span>),
+                <span class="hljs-attr">text2</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'confirm-email.text2'</span>),
+                <span class="hljs-attr">text3</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'confirm-email.text3'</span>),
+            },
+        });
+    }
+    <span class="hljs-keyword">async</span> forgotPassword(mailData) {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mailerService.sendMail({
+            <span class="hljs-attr">to</span>: mailData.to,
+            <span class="hljs-attr">subject</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.resetPassword'</span>),
+            <span class="hljs-attr">text</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.frontendDomain'</span>)}</span>/password-change/<span class="hljs-subst">${mailData.data.hash}</span> <span class="hljs-subst">${<span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.resetPassword'</span>)}</span>`</span>,
+            <span class="hljs-attr">template</span>: <span class="hljs-string">'reset-password'</span>,
+            <span class="hljs-attr">context</span>: {
+                <span class="hljs-attr">title</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.resetPassword'</span>),
+                <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.backendDomain'</span>)}</span>/api/v1/auth/reset-password/<span class="hljs-subst">${mailData.data.hash}</span>`</span>,
+                <span class="hljs-attr">actionTitle</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'common.resetPassword'</span>),
+                <span class="hljs-attr">app_name</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.name'</span>),
+                <span class="hljs-attr">text1</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'reset-password.text1'</span>),
+                <span class="hljs-attr">text2</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'reset-password.text2'</span>),
+                <span class="hljs-attr">text3</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'reset-password.text3'</span>),
+                <span class="hljs-attr">text4</span>: <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.i18n.t(<span class="hljs-string">'reset-password.text4'</span>),
+            },
+        });
+    }
+};
+MailService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, nestjs_i18n_1.I18n)()),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [nestjs_i18n_1.I18nRequestScopeService,
+        mailer_1.MailerService,
+        config_1.ConfigService])
+], MailService);
+exports.MailService = MailService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlmail.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlmail.service.js.map" name="sourcemappingurlmail.service.js.map" class="pilcrow"></a>
+sourceMappingURL=mail.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/auth/auth.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlauth.service.js.map">sourceMappingURL=auth.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>auth.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AuthService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> jwt_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/jwt"</span>);
+<span class="hljs-keyword">const</span> user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/entities/user.entity"</span>);
+<span class="hljs-keyword">const</span> bcrypt = <span class="hljs-built_in">require</span>(<span class="hljs-string">"bcryptjs"</span>);
+<span class="hljs-keyword">const</span> random_string_generator_util_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common/utils/random-string-generator.util"</span>);
+<span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">"crypto"</span>);
+<span class="hljs-keyword">const</span> users_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/users.service"</span>);
+<span class="hljs-keyword">const</span> mail_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../mail/mail.service"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">const</span> forgot_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../forgot/forgot.service"</span>);
+<span class="hljs-keyword">let</span> AuthService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(jwtService, usersService, forgotService, mailService, configService) {
+        <span class="hljs-keyword">this</span>.jwtService = jwtService;
+        <span class="hljs-keyword">this</span>.usersService = usersService;
+        <span class="hljs-keyword">this</span>.forgotService = forgotService;
+        <span class="hljs-keyword">this</span>.mailService = mailService;
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    <span class="hljs-keyword">async</span> validateLogin(loginDto) {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">email</span>: loginDto.email,
+            <span class="hljs-attr">enrollType</span>: user_entity_1.enrollType.local,
+        });
+        <span class="hljs-keyword">if</span> (!user) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.UNPROCESSABLE_ENTITY,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">email</span>: <span class="hljs-string">'notFound'</span>,
+                },
+            }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        <span class="hljs-keyword">if</span> (user.isCertified === <span class="hljs-string">'N'</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.UNAUTHORIZED,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">email</span>: <span class="hljs-string">'uncertified'</span>,
+                },
+            }, common_1.HttpStatus.UNAUTHORIZED);
+        }
+        <span class="hljs-keyword">const</span> isValidPassword = <span class="hljs-keyword">await</span> bcrypt.compare(loginDto.password, user.password);
+        <span class="hljs-keyword">if</span> (isValidPassword) {
+            <span class="hljs-keyword">const</span> { token, refreshToken } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getTokens(user.id);
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(user.id, { <span class="hljs-attr">refreshToken</span>: refreshToken });
+            <span class="hljs-keyword">return</span> { token, refreshToken, <span class="hljs-attr">user</span>: user };
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.UNPROCESSABLE_ENTITY,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">password</span>: <span class="hljs-string">'incorrectPassword'</span>,
+                },
+            }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+    <span class="hljs-keyword">async</span> updateRefreshToken(userId, refreshToken) {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(userId, {
+            <span class="hljs-attr">refreshToken</span>: refreshToken,
+        });
+    }
+    <span class="hljs-keyword">async</span> findOrCreateUser(socialData) {
+        <span class="hljs-keyword">var</span> _a;
+        <span class="hljs-keyword">let</span> user;
+        <span class="hljs-keyword">const</span> socialEmail = (_a = socialData.email) === <span class="hljs-literal">null</span> || _a === <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> : _a.toLowerCase();
+        <span class="hljs-keyword">const</span> userByEmail = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">email</span>: socialEmail,
+            <span class="hljs-attr">enrollType</span>: socialData.enrollType,
+        });
+        <span class="hljs-keyword">let</span> userId;
+        <span class="hljs-keyword">if</span> (!userByEmail) {
+            <span class="hljs-keyword">const</span> createdSocialUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.createSocialUser(socialData);
+            userId = createdSocialUser.id;
+        }
+        <span class="hljs-keyword">else</span> {
+            userId = userByEmail.id;
+            <span class="hljs-keyword">if</span> (socialData.enrollType === user_entity_1.enrollType.kakao &amp;&amp; !userByEmail.name) {
+                <span class="hljs-keyword">if</span> (socialData.name) {
+                    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(userByEmail.id, {
+                        <span class="hljs-attr">name</span>: socialData.name,
+                    });
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> userId;
+    }
+    <span class="hljs-keyword">async</span> findOrCreateUserByRavelryUserId(ravelryUser, socialData) {
+        <span class="hljs-keyword">let</span> user;
+        <span class="hljs-keyword">const</span> findUserResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">ravelryUserId</span>: ravelryUser.id,
+        });
+        <span class="hljs-keyword">let</span> userId;
+        <span class="hljs-keyword">if</span> (!findUserResult) {
+            <span class="hljs-keyword">const</span> createdSocialUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.createRavelrySocialUser(socialData);
+            userId = createdSocialUser.id;
+        }
+        <span class="hljs-keyword">else</span> {
+            userId = findUserResult.id;
+        }
+        <span class="hljs-keyword">return</span> userId;
+    }
+    <span class="hljs-keyword">async</span> getUserAuthInfoByUserId(userId) {
+        <span class="hljs-keyword">const</span> { token, refreshToken } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getTokens(userId);
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(userId, { <span class="hljs-attr">refreshToken</span>: refreshToken });
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">id</span>: userId,
+        });
+        <span class="hljs-keyword">return</span> {
+            token,
+            refreshToken,
+            user,
+        };
+    }
+    <span class="hljs-keyword">async</span> getTokens(userId) {
+        <span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.jwtService.sign({
+            <span class="hljs-attr">id</span>: userId,
+        }, {
+            <span class="hljs-attr">secret</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'JWT_ACCESS_TOKEN_SECRET'</span>),
+            <span class="hljs-attr">expiresIn</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'AUTH_JWT_TOKEN_EXPIRES_IN'</span>)}</span>`</span>,
+        });
+        <span class="hljs-keyword">const</span> refreshToken = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.jwtService.sign({
+            <span class="hljs-attr">id</span>: userId,
+        }, {
+            <span class="hljs-attr">secret</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'JWT_REFRESH_TOKEN_SECRET'</span>),
+            <span class="hljs-attr">expiresIn</span>: <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'AUTH_JWT_REFRESH_TOKEN_EXPIRATION_TIME'</span>)}</span>`</span>,
+        });
+        <span class="hljs-keyword">const</span> hashedRefreshToken = crypto
+            .createHash(<span class="hljs-string">'sha256'</span>)
+            .update(refreshToken)
+            .digest(<span class="hljs-string">'hex'</span>);
+        <span class="hljs-keyword">return</span> { token, <span class="hljs-attr">refreshToken</span>: hashedRefreshToken };
+    }
+    <span class="hljs-keyword">async</span> createSocialUser(socialData) {
+        <span class="hljs-keyword">const</span> randomNickname = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getUniqueNickName();
+        <span class="hljs-keyword">const</span> createUserResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.create({
+            <span class="hljs-attr">email</span>: socialData.email,
+            <span class="hljs-attr">password</span>: socialData.password,
+            <span class="hljs-attr">enrollType</span>: socialData.enrollType,
+            <span class="hljs-attr">name</span>: socialData.name,
+            <span class="hljs-attr">nickname</span>: randomNickname,
+        });
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">id</span>: createUserResult.id,
+        });
+        <span class="hljs-keyword">return</span> user;
+    }
+    <span class="hljs-keyword">async</span> createRavelrySocialUser(socialData) {
+        <span class="hljs-keyword">const</span> randomNickname = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getUniqueNickName();
+        <span class="hljs-keyword">const</span> createUserResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.create({
+            <span class="hljs-attr">email</span>: socialData.email,
+            <span class="hljs-attr">password</span>: socialData.password,
+            <span class="hljs-attr">enrollType</span>: socialData.enrollType,
+            <span class="hljs-attr">nickname</span>: randomNickname,
+            <span class="hljs-attr">ravelryUserId</span>: socialData.ravelryUserId,
+            <span class="hljs-attr">isRavelryIntegrated</span>: user_entity_1.customBool.Y,
+            <span class="hljs-attr">isCertified</span>: socialData.isCertified,
+        });
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">id</span>: createUserResult.id,
+        });
+        <span class="hljs-keyword">return</span> user;
+    }
+    <span class="hljs-keyword">async</span> register(dto) {
+        <span class="hljs-keyword">const</span> hash = <span class="hljs-keyword">await</span> bcrypt.hash(dto.password, <span class="hljs-number">15</span>);
+        <span class="hljs-keyword">const</span> exUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">email</span>: dto.email,
+        });
+        <span class="hljs-keyword">if</span> (exUser) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.ConflictException(<span class="hljs-string">'email already exist'</span>);
+        }
+        <span class="hljs-keyword">const</span> hash4MailCertify = crypto
+            .createHash(<span class="hljs-string">'sha256'</span>)
+            .update((<span class="hljs-number">0</span>, random_string_generator_util_1.randomStringGenerator)())
+            .digest(<span class="hljs-string">'hex'</span>);
+        <span class="hljs-keyword">const</span> randomNickname = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getUniqueNickName();
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.create({
+            <span class="hljs-attr">email</span>: dto.email,
+            <span class="hljs-attr">enrollType</span>: dto.enrollType,
+            <span class="hljs-attr">password</span>: hash,
+            <span class="hljs-attr">nickname</span>: randomNickname,
+            <span class="hljs-attr">certifyHash</span>: hash4MailCertify,
+        });
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mailService.userSignUp({
+            <span class="hljs-attr">to</span>: user.email,
+            <span class="hljs-attr">data</span>: {
+                <span class="hljs-attr">hash</span>: hash4MailCertify,
+            },
+        });
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">async</span> checkExistEmail(dto) {
+        <span class="hljs-keyword">const</span> userByEmail = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">email</span>: dto.email,
+        });
+        <span class="hljs-keyword">if</span> (userByEmail) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+    }
+    <span class="hljs-keyword">async</span> getUniqueNickName() {
+        <span class="hljs-keyword">let</span> uniqueNickname;
+        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+            <span class="hljs-keyword">const</span> tmpNickname = <span class="hljs-keyword">this</span>.genRandomNickName();
+            <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+                <span class="hljs-attr">nickname</span>: tmpNickname,
+            });
+            <span class="hljs-keyword">if</span> (!user) {
+                uniqueNickname = tmpNickname;
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> uniqueNickname;
+    }
+    genRandomNickName() {
+        <span class="hljs-keyword">const</span> adjective = <span class="hljs-keyword">this</span>.getAdjectives();
+        <span class="hljs-keyword">const</span> noun = <span class="hljs-keyword">this</span>.getNoun();
+        <span class="hljs-keyword">const</span> number = <span class="hljs-keyword">this</span>.getRandomNumber(<span class="hljs-number">1</span>, <span class="hljs-number">999</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${adjective}</span><span class="hljs-subst">${noun}</span><span class="hljs-subst">${number}</span>`</span>;
+    }
+    getRandomNumber(min, max) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * (max - min + <span class="hljs-number">1</span>) + min);
+    }
+    <span class="hljs-keyword">async</span> confirmEmail(hash) {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">certifyHash</span>: hash,
+        });
+        <span class="hljs-keyword">if</span> (!user) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.NOT_FOUND,
+                <span class="hljs-attr">error</span>: <span class="hljs-string">`notFound`</span>,
+            }, common_1.HttpStatus.NOT_FOUND);
+        }
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(user.id, { <span class="hljs-attr">isCertified</span>: user_entity_1.customBool.Y });
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">async</span> logout(user) {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(user.id, { <span class="hljs-attr">refreshToken</span>: <span class="hljs-string">''</span> });
+    }
+    <span class="hljs-keyword">async</span> getUserByRefreshToken(refreshToken) {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            refreshToken,
+        });
+        <span class="hljs-keyword">if</span> (!user) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.NOT_FOUND,
+                <span class="hljs-attr">error</span>: <span class="hljs-string">`notFound`</span>,
+            }, common_1.HttpStatus.NOT_FOUND);
+        }
+        <span class="hljs-keyword">return</span> user;
+    }
+    <span class="hljs-keyword">async</span> refreshJwtToken(refreshToken) {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getUserByRefreshToken(refreshToken);
+        <span class="hljs-keyword">const</span> { token, <span class="hljs-attr">refreshToken</span>: newRefreshToken } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getTokens(user.id);
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(user.id, {
+            <span class="hljs-attr">refreshToken</span>: newRefreshToken,
+        });
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">token</span>: token, <span class="hljs-attr">refreshToken</span>: newRefreshToken };
+    }
+    <span class="hljs-keyword">async</span> withdraw(userIdByToken, authWithdrawDto) {
+        <span class="hljs-keyword">if</span> (userIdByToken !== authWithdrawDto.userId) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.BadRequestException(<span class="hljs-string">`<span class="hljs-subst">${authWithdrawDto.userId}</span>번째 유저에 대해 탈퇴 권한이 없습니다.`</span>);
+        }
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            <span class="hljs-attr">id</span>: userIdByToken,
+        });
+        <span class="hljs-keyword">if</span> (!user) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.NotFoundException(<span class="hljs-string">`<span class="hljs-subst">${userIdByToken}</span>번째 유저가 존재하지 않습니다.`</span>);
+        }
+        <span class="hljs-keyword">if</span> (user.enrollType === user_entity_1.enrollType.local) {
+            <span class="hljs-keyword">const</span> isValidPassword = <span class="hljs-keyword">await</span> bcrypt.compare(authWithdrawDto.password, user.password);
+            <span class="hljs-keyword">if</span> (!isValidPassword) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.UnprocessableEntityException(<span class="hljs-string">'비밀번호가 일치하지 않습니다.'</span>);
+            }
+        }
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.softDelete(userIdByToken);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">async</span> forgotPassword(email) {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findOne({
+            email,
+        });
+        <span class="hljs-keyword">if</span> (!user ||
+            user.enrollType !== user_entity_1.enrollType.local ||
+            user.isCertified !== user_entity_1.customBool.Y) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.UnprocessableEntityException(<span class="hljs-string">'email not found or not certified'</span>);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">const</span> hash = crypto
+                .createHash(<span class="hljs-string">'sha256'</span>)
+                .update((<span class="hljs-number">0</span>, random_string_generator_util_1.randomStringGenerator)())
+                .digest(<span class="hljs-string">'hex'</span>);
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.forgotService.create({
+                hash,
+                user,
+            });
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mailService.forgotPassword({
+                <span class="hljs-attr">to</span>: email,
+                <span class="hljs-attr">data</span>: {
+                    hash,
+                },
+            });
+        }
+    }
+    <span class="hljs-keyword">async</span> resetPassword(hash, password) {
+        <span class="hljs-keyword">const</span> forgot = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.forgotService.findOne({
+            <span class="hljs-attr">where</span>: {
+                hash,
+            },
+        });
+        <span class="hljs-keyword">if</span> (!forgot) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.UNPROCESSABLE_ENTITY,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">hash</span>: <span class="hljs-string">`notFound`</span>,
+                },
+            }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        <span class="hljs-keyword">const</span> user = forgot.user;
+        <span class="hljs-keyword">const</span> newPassword = <span class="hljs-keyword">await</span> bcrypt.hash(password, <span class="hljs-number">15</span>);
+        user.password = newPassword;
+        <span class="hljs-keyword">await</span> user.save();
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.forgotService.softDelete(forgot.id);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    getNoun() {
+        <span class="hljs-keyword">const</span> nouns = [
+            <span class="hljs-string">'사과'</span>,
+            <span class="hljs-string">'바나나'</span>,
+            <span class="hljs-string">'딸기'</span>,
+            <span class="hljs-string">'개미'</span>,
+            <span class="hljs-string">'코끼리'</span>,
+            <span class="hljs-string">'여우'</span>,
+            <span class="hljs-string">'기린'</span>,
+            <span class="hljs-string">'하마'</span>,
+            <span class="hljs-string">'이구아나'</span>,
+            <span class="hljs-string">'해파리'</span>,
+            <span class="hljs-string">'개구리'</span>,
+            <span class="hljs-string">'복숭아'</span>,
+            <span class="hljs-string">'돼지'</span>,
+            <span class="hljs-string">'연꽃'</span>,
+            <span class="hljs-string">'치즈'</span>,
+            <span class="hljs-string">'곰'</span>,
+            <span class="hljs-string">'통닭'</span>,
+            <span class="hljs-string">'감자'</span>,
+            <span class="hljs-string">'고구마'</span>,
+            <span class="hljs-string">'라면'</span>,
+            <span class="hljs-string">'사자'</span>,
+            <span class="hljs-string">'토끼'</span>,
+            <span class="hljs-string">'애벌레'</span>,
+            <span class="hljs-string">'푸딩'</span>,
+            <span class="hljs-string">'장미'</span>,
+            <span class="hljs-string">'젤리'</span>,
+            <span class="hljs-string">'커피'</span>,
+            <span class="hljs-string">'망고'</span>,
+            <span class="hljs-string">'수박'</span>,
+            <span class="hljs-string">'조랑말'</span>,
+            <span class="hljs-string">'거북이'</span>,
+            <span class="hljs-string">'눈사람'</span>,
+            <span class="hljs-string">'문어'</span>,
+            <span class="hljs-string">'햄스터'</span>,
+            <span class="hljs-string">'리트리버'</span>,
+            <span class="hljs-string">'털뭉치'</span>,
+            <span class="hljs-string">'털실'</span>,
+            <span class="hljs-string">'고양이'</span>,
+            <span class="hljs-string">'목도리'</span>,
+            <span class="hljs-string">'장갑'</span>,
+            <span class="hljs-string">'양말'</span>,
+            <span class="hljs-string">'조끼'</span>,
+            <span class="hljs-string">'인형'</span>,
+            <span class="hljs-string">'로봇'</span>,
+            <span class="hljs-string">'브로콜리'</span>,
+            <span class="hljs-string">'귤'</span>,
+            <span class="hljs-string">'생강'</span>,
+            <span class="hljs-string">'마라탕'</span>,
+            <span class="hljs-string">'햄버거'</span>,
+            <span class="hljs-string">'어묵꼬치'</span>,
+            <span class="hljs-string">'주먹밥'</span>,
+            <span class="hljs-string">'베이컨'</span>,
+            <span class="hljs-string">'참치'</span>,
+            <span class="hljs-string">'고등어'</span>,
+        ];
+        <span class="hljs-keyword">const</span> noun = nouns[<span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * nouns.length)];
+        <span class="hljs-keyword">return</span> noun;
+    }
+    getAdjectives() {
+        <span class="hljs-keyword">const</span> adjectives = [
+            <span class="hljs-string">'멋진'</span>,
+            <span class="hljs-string">'즐거운'</span>,
+            <span class="hljs-string">'성격급한'</span>,
+            <span class="hljs-string">'졸린'</span>,
+            <span class="hljs-string">'심심한'</span>,
+            <span class="hljs-string">'화난'</span>,
+            <span class="hljs-string">'여유로운'</span>,
+            <span class="hljs-string">'노란'</span>,
+            <span class="hljs-string">'붉은'</span>,
+            <span class="hljs-string">'감동한'</span>,
+            <span class="hljs-string">'우울한'</span>,
+            <span class="hljs-string">'바쁜'</span>,
+            <span class="hljs-string">'들뜬'</span>,
+            <span class="hljs-string">'굶주린'</span>,
+            <span class="hljs-string">'무던한'</span>,
+            <span class="hljs-string">'무난한'</span>,
+            <span class="hljs-string">'용감한'</span>,
+            <span class="hljs-string">'무모한'</span>,
+            <span class="hljs-string">'깜찍한'</span>,
+            <span class="hljs-string">'따분한'</span>,
+            <span class="hljs-string">'시원한'</span>,
+            <span class="hljs-string">'멍한'</span>,
+            <span class="hljs-string">'상큼한'</span>,
+            <span class="hljs-string">'달콤한'</span>,
+            <span class="hljs-string">'상쾌한'</span>,
+            <span class="hljs-string">'미묘한'</span>,
+            <span class="hljs-string">'기묘한'</span>,
+            <span class="hljs-string">'유용한'</span>,
+        ];
+        <span class="hljs-keyword">const</span> adjective = adjectives[<span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * adjectives.length)];
+        <span class="hljs-keyword">return</span> adjective;
+    }
+};
+AuthService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [jwt_1.JwtService,
+        users_service_1.UsersService,
+        forgot_service_1.ForgotService,
+        mail_service_1.MailService,
+        config_1.ConfigService])
+], AuthService);
+exports.AuthService = AuthService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlauth.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlauth.service.js.map" name="sourcemappingurlauth.service.js.map" class="pilcrow"></a>
+sourceMappingURL=auth.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

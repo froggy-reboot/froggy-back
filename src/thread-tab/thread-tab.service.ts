@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PatternsService } from 'src/patterns/patterns.service';
 import { ThreadsService } from './threads/threads.service';
+import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
+import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
 
 @Injectable()
 export class ThreadTabService {
@@ -36,5 +38,9 @@ export class ThreadTabService {
       paginationOptions,
     );
     return threads;
+  }
+
+  async getThreadsByAll(paginationOptions: ThreadAllPaginationReq, userId) {
+    return await this.threadService.findAll(paginationOptions, userId);
   }
 }

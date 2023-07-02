@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>article-likes.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/article-likes/article-likes.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlarticle-likes.service.js.map">sourceMappingURL=article-likes.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>article-likes.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.ArticleLikesService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/typeorm"</span>);
+<span class="hljs-keyword">const</span> article_like_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./entities/article-like.entity"</span>);
+<span class="hljs-keyword">const</span> typeorm_2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"typeorm"</span>);
+<span class="hljs-keyword">const</span> articles_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../articles/articles.service"</span>);
+<span class="hljs-keyword">let</span> ArticleLikesService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticleLikesService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(articleLikesRepository, articleService) {
+        <span class="hljs-keyword">this</span>.articleLikesRepository = articleLikesRepository;
+        <span class="hljs-keyword">this</span>.articleService = articleService;
+    }
+    create(createArticleLikeDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articleLikesRepository.save(<span class="hljs-keyword">this</span>.articleLikesRepository.create(createArticleLikeDto));
+    }
+    <span class="hljs-keyword">async</span> toggleLike(createArticleLikeDto) {
+        <span class="hljs-keyword">const</span> articleLike = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleLikesRepository.findOne({
+            <span class="hljs-attr">where</span>: {
+                <span class="hljs-attr">userId</span>: createArticleLikeDto.userId,
+                <span class="hljs-attr">articleId</span>: createArticleLikeDto.articleId,
+            },
+        });
+        <span class="hljs-keyword">if</span> (articleLike) {
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleLikesRepository.delete(articleLike.id);
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleService.updateLikeCount(articleLike.articleId, <span class="hljs-string">'sub'</span>);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleLikesRepository.save(<span class="hljs-keyword">this</span>.articleLikesRepository.create(createArticleLikeDto));
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleService.updateLikeCount(createArticleLikeDto.articleId, <span class="hljs-string">'add'</span>);
+        }
+        <span class="hljs-keyword">return</span> articleLike;
+    }
+    <span class="hljs-keyword">async</span> getLikedByUser(userId, articleId) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleLikesRepository.findOne({
+            <span class="hljs-attr">where</span>: {
+                <span class="hljs-attr">userId</span>: userId,
+                <span class="hljs-attr">articleId</span>: articleId,
+            },
+        });
+    }
+    findAll() {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action returns all articleLikes`</span>;
+    }
+    findOne(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action returns a #<span class="hljs-subst">${id}</span> articleLike`</span>;
+    }
+    update(id, updateArticleLikeDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action updates a #<span class="hljs-subst">${id}</span> articleLike`</span>;
+    }
+    remove(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action removes a #<span class="hljs-subst">${id}</span> articleLike`</span>;
+    }
+};
+ArticleLikesService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, typeorm_1.InjectRepository)(article_like_entity_1.ArticleLike)),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [typeorm_2.Repository,
+        articles_service_1.ArticlesService])
+], ArticleLikesService);
+exports.ArticleLikesService = ArticleLikesService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlarticle-likes.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlarticle-likes.service.js.map" name="sourcemappingurlarticle-likes.service.js.map" class="pilcrow"></a>
+sourceMappingURL=article-likes.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

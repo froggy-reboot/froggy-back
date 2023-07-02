@@ -13,8 +13,13 @@ export const AppDataSource = new DataSource({
   dropSchema: false,
   keepConnectionAlive: true,
   logging: process.env.NODE_ENV !== 'production',
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/froggy-live_migrations/**/*{.ts,.js}'],
+  entities: [
+    __dirname + '/../**/*.entity{ThreadPatternIdPaginationReq.ts,.js}',
+  ],
+  migrations: [
+    __dirname +
+      '/froggy-live_migrations/**/*{ThreadPatternIdPaginationReq.ts,.js}',
+  ],
   cli: {
     entitiesDir: 'src',
     migrationsDir: 'src/database/froggy-live_migrations',

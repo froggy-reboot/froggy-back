@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth-ravelry.controller.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/auth-ravelry/auth-ravelry.controller.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlauth-ravelry.controller.js.map">sourceMappingURL=auth-ravelry.controller.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>auth-ravelry.controller.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AuthRavelryController = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> passport_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/passport"</span>);
+<span class="hljs-keyword">const</span> swagger_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/swagger"</span>);
+<span class="hljs-keyword">const</span> auth_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../auth/auth.service"</span>);
+<span class="hljs-keyword">const</span> auth_social_login_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../auth/dto/auth-social-login.dto"</span>);
+<span class="hljs-keyword">const</span> auth_ravelry_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth-ravelry.service"</span>);
+<span class="hljs-keyword">const</span> auth_ravelry_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-ravelry.dto"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">let</span> AuthRavelryController = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthRavelryController</span> </span>{
+    <span class="hljs-keyword">constructor</span>(authService, authRavelryService, configService) {
+        <span class="hljs-keyword">this</span>.authService = authService;
+        <span class="hljs-keyword">this</span>.authRavelryService = authRavelryService;
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    <span class="hljs-keyword">async</span> register() {
+        <span class="hljs-keyword">const</span> authorizationUri = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getRedirectUrl();
+        <span class="hljs-keyword">return</span> authorizationUri;
+    }
+    <span class="hljs-keyword">async</span> callback(req, res) {
+        <span class="hljs-keyword">const</span> accessToken = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getAccessToken(req);
+        <span class="hljs-keyword">const</span> ravelryUserInfo = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getUserInfoByAccessToken(accessToken);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ravelryUserInfoTest'</span>, ravelryUserInfo);
+        <span class="hljs-keyword">const</span> ravelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.findOrCreateRavelryUser(ravelryUserInfo, accessToken);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ravelryUserTest'</span>, ravelryUser);
+        <span class="hljs-keyword">const</span> socialData = <span class="hljs-keyword">this</span>.authRavelryService.genSocialData(ravelryUser);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'socialDataTest'</span>, socialData);
+        <span class="hljs-keyword">const</span> userId = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.findOrCreateUserByRavelryUserId(ravelryUser, socialData);
+        <span class="hljs-keyword">const</span> frontUrl = <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'FRONTEND_DOMAIN'</span>);
+        res.redirect(<span class="hljs-string">`<span class="hljs-subst">${frontUrl}</span>/sign-in/social/<span class="hljs-subst">${userId}</span>`</span>);
+    }
+    <span class="hljs-keyword">async</span> test(ravelryId) {
+        <span class="hljs-keyword">const</span> ravelryUserInfo = { <span class="hljs-attr">id</span>: ravelryId };
+        <span class="hljs-keyword">const</span> ravelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.findOrCreateRavelryUser(ravelryUserInfo, <span class="hljs-string">'ddd'</span>);
+        <span class="hljs-keyword">const</span> socialData = <span class="hljs-keyword">this</span>.authRavelryService.genSocialData(ravelryUser);
+        <span class="hljs-keyword">const</span> userId = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.findOrCreateUserByRavelryUserId(ravelryUser, socialData);
+    }
+    <span class="hljs-keyword">async</span> getRedirectUrl() {
+        <span class="hljs-keyword">const</span> authorizationUri = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getLinkRedirectUrl();
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'authorizationUri'</span>, authorizationUri);
+        <span class="hljs-keyword">return</span> authorizationUri;
+    }
+    <span class="hljs-keyword">async</span> linkCallback(req, res) {
+        <span class="hljs-keyword">const</span> accessToken = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getLinkAccessToken(req);
+        <span class="hljs-keyword">const</span> ravelryUserInfo = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.getUserInfoByAccessToken(accessToken);
+        <span class="hljs-keyword">const</span> newRavelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.saveAuthRavelryUser(ravelryUserInfo, accessToken);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'newRavelryUser'</span>, newRavelryUser);
+        <span class="hljs-keyword">const</span> frontUrl = <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'FRONTEND_DOMAIN'</span>);
+        <span class="hljs-keyword">if</span> (newRavelryUser == <span class="hljs-number">-1</span>) {
+            res.redirect(<span class="hljs-string">`<span class="hljs-subst">${frontUrl}</span>/sign-in/ravelry/-1`</span>);
+        }
+        <span class="hljs-keyword">else</span> {
+            res.redirect(<span class="hljs-string">`<span class="hljs-subst">${frontUrl}</span>/sign-in/ravelry/<span class="hljs-subst">${newRavelryUser.id}</span>`</span>);
+        }
+    }
+    <span class="hljs-keyword">async</span> linkRavelryToAnotherAccount(req, dto) {
+        <span class="hljs-keyword">const</span> updateResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authRavelryService.linkRavelryToAnotherAccount(req.user, dto);
+        <span class="hljs-keyword">return</span> updateResult;
+    }
+};
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'register'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.MOVED_PERMANENTLY),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">301</span>,
+        <span class="hljs-attr">type</span>: auth_social_login_dto_1.AuthSocialLoginUrlDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 {{front_api_url}}/sign-in/social/${userId}으로 리다이렉트 됩니다.'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, []),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"register"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'callback'</span>),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Req)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Res)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"callback"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'test'</span>),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)(<span class="hljs-string">'ravelryId'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">String</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"test"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'link/redirect-url'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.MOVED_PERMANENTLY),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">301</span>,
+        <span class="hljs-attr">type</span>: auth_social_login_dto_1.AuthSocialLoginUrlDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Ravelry 로그인 창 url을 보내줍니다. 인증을 마치면 {{front_api_url}}/link/ravelry/${socialUserId}으로 리다이렉트 됩니다. 이미 다른 계정에 연결한 라이벌리 계정인 경우에는 http://localhost:3000/sign-in/ravelry/-1 로 리다이렉트 됩니다.'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, []),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"getRedirectUrl"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'link/callback'</span>),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Req)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Res)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"linkCallback"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'link'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Ravelry계정과 계정을 연동해 줍니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">401</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'access token이 없거나 유효하지 않습니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, auth_ravelry_dto_1.AuthRavelryLoginDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthRavelryController.prototype, <span class="hljs-string">"linkRavelryToAnotherAccount"</span>, <span class="hljs-literal">null</span>);
+AuthRavelryController = __decorate([
+    (<span class="hljs-number">0</span>, swagger_1.ApiTags)(<span class="hljs-string">'ravelry 회원가입'</span>),
+    (<span class="hljs-number">0</span>, common_1.Controller)({
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'auth/ravelry'</span>,
+        <span class="hljs-attr">version</span>: <span class="hljs-string">'1'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_service_1.AuthService,
+        auth_ravelry_service_1.AuthRavelryService,
+        config_1.ConfigService])
+], AuthRavelryController);
+exports.AuthRavelryController = AuthRavelryController;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlauth-ravelry.controller.js.map">
+  <h1>
+    <a href="#sourcemappingurlauth-ravelry.controller.js.map" name="sourcemappingurlauth-ravelry.controller.js.map" class="pilcrow"></a>
+sourceMappingURL=auth-ravelry.controller.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

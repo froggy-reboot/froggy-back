@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>thread-tab.module.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/thread-tab/thread-tab.module.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlthread-tab.module.js.map">sourceMappingURL=thread-tab.module.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>thread-tab.module.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.ThreadTabModule = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> thread_tab_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab.service"</span>);
+<span class="hljs-keyword">const</span> thread_tab_controller_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab.controller"</span>);
+<span class="hljs-keyword">const</span> patterns_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../patterns/patterns.service"</span>);
+<span class="hljs-keyword">const</span> patterns_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../patterns/patterns.module"</span>);
+<span class="hljs-keyword">const</span> threads_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./threads/threads.service"</span>);
+<span class="hljs-keyword">const</span> ravelryApiService_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/api/ravelryApiService"</span>);
+<span class="hljs-keyword">const</span> platform_express_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/platform-express"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">const</span> multer_option_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/common/multer.option"</span>);
+<span class="hljs-keyword">const</span> thread_images_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-images/thread-images.module"</span>);
+<span class="hljs-keyword">const</span> thread_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./threads/entities/thread.entity"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/typeorm"</span>);
+<span class="hljs-keyword">const</span> thread_image_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-images/entities/thread-image.entity"</span>);
+<span class="hljs-keyword">const</span> pattern_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../patterns/entities/pattern.entity"</span>);
+<span class="hljs-keyword">const</span> thread_repository_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./threads/repository/thread.repository"</span>);
+<span class="hljs-keyword">let</span> ThreadTabModule = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreadTabModule</span> </span>{
+};
+ThreadTabModule = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Module)({
+        <span class="hljs-attr">imports</span>: [
+            typeorm_1.TypeOrmModule.forFeature([thread_entity_1.Thread, thread_image_entity_1.ThreadImage, pattern_entity_1.Pattern]),
+            patterns_module_1.PatternsModule,
+            thread_images_module_1.ThreadImagesModule,
+            platform_express_1.MulterModule.registerAsync({
+                <span class="hljs-attr">imports</span>: [config_1.ConfigModule],
+                <span class="hljs-attr">inject</span>: [config_1.ConfigService],
+                <span class="hljs-attr">useFactory</span>: multer_option_1.multerOptionsFactory,
+            }),
+        ],
+        <span class="hljs-attr">controllers</span>: [thread_tab_controller_1.ThreadTabController],
+        <span class="hljs-attr">providers</span>: [
+            thread_tab_service_1.ThreadTabService,
+            threads_service_1.ThreadsService,
+            patterns_service_1.PatternsService,
+            ravelryApiService_1.RavelryApiService,
+            thread_repository_1.ThreadsRepository,
+        ],
+    })
+], ThreadTabModule);
+exports.ThreadTabModule = ThreadTabModule;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlthread-tab.module.js.map">
+  <h1>
+    <a href="#sourcemappingurlthread-tab.module.js.map" name="sourcemappingurlthread-tab.module.js.map" class="pilcrow"></a>
+sourceMappingURL=thread-tab.module.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

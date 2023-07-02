@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>patterns.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/patterns/patterns.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlpatterns.service.js.map">sourceMappingURL=patterns.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>patterns.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.PatternsService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> ravelryApiService_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/api/ravelryApiService"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/typeorm"</span>);
+<span class="hljs-keyword">const</span> pattern_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./entities/pattern.entity"</span>);
+<span class="hljs-keyword">const</span> typeorm_2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"typeorm"</span>);
+<span class="hljs-keyword">let</span> PatternsService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PatternsService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(ravelryApiService, patternRepository) {
+        <span class="hljs-keyword">this</span>.ravelryApiService = ravelryApiService;
+        <span class="hljs-keyword">this</span>.patternRepository = patternRepository;
+    }
+    <span class="hljs-keyword">async</span> create(createPatternDto) {
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.patternRepository.save(<span class="hljs-keyword">this</span>.patternRepository.create(createPatternDto));
+        <span class="hljs-keyword">return</span> result;
+    }
+    findAll() {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action returns all patterns`</span>;
+    }
+    <span class="hljs-keyword">async</span> findOneByRavelryPatternId(ravelryPatternId) {
+        <span class="hljs-keyword">const</span> entity = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.patternRepository.findOne({
+            <span class="hljs-attr">where</span>: { <span class="hljs-attr">ravelryPatternId</span>: ravelryPatternId },
+        });
+        <span class="hljs-keyword">return</span> entity;
+    }
+    update(id, updatePatternDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action updates a #<span class="hljs-subst">${id}</span> pattern`</span>;
+    }
+    remove(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`This action removes a #<span class="hljs-subst">${id}</span> pattern`</span>;
+    }
+    <span class="hljs-keyword">async</span> findOrCreatePattern(createPatternDto) {
+        <span class="hljs-keyword">const</span> pattern = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.findOneByRavelryPatternId(createPatternDto.ravelryPatternId);
+        <span class="hljs-keyword">if</span> (!pattern) {
+            <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.create(createPatternDto);
+            <span class="hljs-keyword">return</span> result;
+        }
+        <span class="hljs-keyword">return</span> pattern;
+    }
+    <span class="hljs-keyword">async</span> findPatternNamesByApi(target) {
+        <span class="hljs-keyword">const</span> patternList = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ravelryApiService.searchPattern(target);
+        <span class="hljs-keyword">const</span> patternNameList = patternList.patterns.map(<span class="hljs-function">(<span class="hljs-params">pattern</span>) =&gt;</span> {
+            <span class="hljs-keyword">return</span> {
+                <span class="hljs-attr">patternName</span>: pattern.name,
+                <span class="hljs-attr">ravelryPatternId</span>: pattern.id,
+            };
+        });
+        <span class="hljs-keyword">return</span> patternNameList;
+    }
+};
+PatternsService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, typeorm_1.InjectRepository)(pattern_entity_1.Pattern)),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [ravelryApiService_1.RavelryApiService,
+        typeorm_2.Repository])
+], PatternsService);
+exports.PatternsService = PatternsService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlpatterns.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlpatterns.service.js.map" name="sourcemappingurlpatterns.service.js.map" class="pilcrow"></a>
+sourceMappingURL=patterns.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

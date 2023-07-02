@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>data-source-live.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/database/data-source-live.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurldata-source-live.js.map">sourceMappingURL=data-source-live.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>data-source-live.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> _a, _b, _c;
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AppDataSource = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-built_in">require</span>(<span class="hljs-string">"reflect-metadata"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"typeorm"</span>);
+exports.AppDataSource = <span class="hljs-keyword">new</span> typeorm_1.DataSource({
+    <span class="hljs-attr">type</span>: process.env.DATABASE_TYPE,
+    <span class="hljs-attr">url</span>: process.env.DATABASE_URL,
+    <span class="hljs-attr">host</span>: process.env.DATABASE_HOST,
+    <span class="hljs-attr">port</span>: <span class="hljs-built_in">parseInt</span>(process.env.DATABASE_PORT, <span class="hljs-number">10</span>) || <span class="hljs-number">5432</span>,
+    <span class="hljs-attr">username</span>: process.env.DATABASE_USERNAME,
+    <span class="hljs-attr">password</span>: process.env.DATABASE_PASSWORD,
+    <span class="hljs-attr">database</span>: process.env.DATABASE_NAME,
+    <span class="hljs-attr">synchronize</span>: process.env.DATABASE_SYNCHRONIZE === <span class="hljs-string">'true'</span>,
+    <span class="hljs-attr">dropSchema</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">keepConnectionAlive</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">logging</span>: process.env.NODE_ENV !== <span class="hljs-string">'production'</span>,
+    <span class="hljs-attr">entities</span>: [
+        __dirname + <span class="hljs-string">'/../**/*.entity{ThreadPatternIdPaginationReq.ts,.js}'</span>,
+    ],
+    <span class="hljs-attr">migrations</span>: [
+        __dirname +
+            <span class="hljs-string">'/froggy-live_migrations/**/*{ThreadPatternIdPaginationReq.ts,.js}'</span>,
+    ],
+    <span class="hljs-attr">cli</span>: {
+        <span class="hljs-attr">entitiesDir</span>: <span class="hljs-string">'src'</span>,
+        <span class="hljs-attr">migrationsDir</span>: <span class="hljs-string">'src/database/froggy-live_migrations'</span>,
+        <span class="hljs-attr">subscribersDir</span>: <span class="hljs-string">'subscriber'</span>,
+    },
+    <span class="hljs-attr">extra</span>: {
+        <span class="hljs-attr">max</span>: <span class="hljs-built_in">parseInt</span>(process.env.DATABASE_MAX_CONNECTIONS, <span class="hljs-number">10</span>) || <span class="hljs-number">100</span>,
+        <span class="hljs-attr">ssl</span>: process.env.DATABASE_SSL_ENABLED === <span class="hljs-string">'true'</span>
+            ? {
+                <span class="hljs-attr">rejectUnauthorized</span>: process.env.DATABASE_REJECT_UNAUTHORIZED === <span class="hljs-string">'true'</span>,
+                <span class="hljs-attr">ca</span>: (_a = process.env.DATABASE_CA) !== <span class="hljs-literal">null</span> &amp;&amp; _a !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _a : <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">key</span>: (_b = process.env.DATABASE_KEY) !== <span class="hljs-literal">null</span> &amp;&amp; _b !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _b : <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">cert</span>: (_c = process.env.DATABASE_CERT) !== <span class="hljs-literal">null</span> &amp;&amp; _c !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _c : <span class="hljs-literal">undefined</span>,
+            }
+            : <span class="hljs-literal">undefined</span>,
+    },
+});
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurldata-source-live.js.map">
+  <h1>
+    <a href="#sourcemappingurldata-source-live.js.map" name="sourcemappingurldata-source-live.js.map" class="pilcrow"></a>
+sourceMappingURL=data-source-live.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

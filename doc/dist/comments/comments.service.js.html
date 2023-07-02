@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>comments.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/comments/comments.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlcomments.service.js.map">sourceMappingURL=comments.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>comments.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.CommentsService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/typeorm"</span>);
+<span class="hljs-keyword">const</span> typeorm_2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"typeorm"</span>);
+<span class="hljs-keyword">const</span> comment_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./entities/comment.entity"</span>);
+<span class="hljs-keyword">const</span> comment_images_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../comment-images/comment-images.service"</span>);
+<span class="hljs-keyword">const</span> articles_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../articles/articles.service"</span>);
+<span class="hljs-keyword">let</span> CommentsService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CommentsService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(commentRepository, articleService, commentImagesService) {
+        <span class="hljs-keyword">this</span>.commentRepository = commentRepository;
+        <span class="hljs-keyword">this</span>.articleService = articleService;
+        <span class="hljs-keyword">this</span>.commentImagesService = commentImagesService;
+    }
+    <span class="hljs-keyword">async</span> create(createCommentDto, file) {
+        <span class="hljs-keyword">const</span> targetArticle = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articleService.findOne(createCommentDto.articleId);
+        <span class="hljs-keyword">if</span> (!targetArticle) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.UNPROCESSABLE_ENTITY,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">message</span>: <span class="hljs-string">'해당 게시글이 존재하지 않습니다.'</span>,
+                },
+            }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        <span class="hljs-keyword">const</span> createCommentResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.commentRepository.save(<span class="hljs-keyword">this</span>.commentRepository.create(createCommentDto));
+        <span class="hljs-keyword">if</span> (file) {
+            <span class="hljs-keyword">const</span> createCommentImageDto = {
+                <span class="hljs-attr">commentId</span>: createCommentResult.id,
+                <span class="hljs-attr">url</span>: file.location,
+            };
+            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.commentImagesService.create(createCommentImageDto);
+        }
+        <span class="hljs-keyword">return</span> createCommentResult;
+    }
+    findByArticleId(articleId, paginationOptions) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commentRepository
+            .createQueryBuilder(<span class="hljs-string">'comment'</span>)
+            .where(<span class="hljs-string">'comment.articleId = :id'</span>, { <span class="hljs-attr">id</span>: articleId })
+            .leftJoin(<span class="hljs-string">'comment.user'</span>, <span class="hljs-string">'user'</span>)
+            .leftJoin(<span class="hljs-string">'comment.images'</span>, <span class="hljs-string">'image'</span>)
+            .select([
+            <span class="hljs-string">'comment.id'</span>,
+            <span class="hljs-string">'comment.content'</span>,
+            <span class="hljs-string">'comment.createdAt'</span>,
+            <span class="hljs-string">'user.id'</span>,
+            <span class="hljs-string">'user.nickname'</span>,
+            <span class="hljs-string">'user.profileImg'</span>,
+            <span class="hljs-string">'image.url'</span>,
+        ])
+            .limit(paginationOptions.limit)
+            .offset(paginationOptions.limit * (paginationOptions.page - <span class="hljs-number">1</span>))
+            .getMany();
+    }
+    findAll(articleId) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commentRepository.find();
+    }
+    findOne(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commentRepository.findOne({ <span class="hljs-attr">where</span>: { <span class="hljs-attr">id</span>: id } });
+    }
+    update(id, updateCommentDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commentRepository.save(<span class="hljs-keyword">this</span>.commentRepository.create(<span class="hljs-built_in">Object</span>.assign({ id }, updateCommentDto)));
+    }
+    remove(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commentRepository.softDelete({ id });
+    }
+};
+CommentsService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, typeorm_1.InjectRepository)(comment_entity_1.Comment)),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [typeorm_2.Repository,
+        articles_service_1.ArticlesService,
+        comment_images_service_1.CommentImagesService])
+], CommentsService);
+exports.CommentsService = CommentsService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlcomments.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlcomments.service.js.map" name="sourcemappingurlcomments.service.js.map" class="pilcrow"></a>
+sourceMappingURL=comments.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

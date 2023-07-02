@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>serialization.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "docs/serialization.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#serialization">Serialization</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#table-of-contents">Table of Contents</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#hide-private-property">Hide private property</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#show-private-property-for-admins">Show private property for admins</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="serialization">
+  <h1>
+    <a href="#serialization" name="serialization" class="pilcrow"></a>
+Serialization
+  </h1>
+</div>
+<p>For serialization boilerplate use <a href="https://www.npmjs.com/package/class-transformer">class-transformer</a> and global interceptor <code>ClassSerializerInterceptor</code>.</p>
+<hr>
+<div class="pilwrap" id="table-of-contents">
+  <h2>
+    <a href="#table-of-contents" name="table-of-contents" class="pilcrow"></a>
+Table of Contents
+  </h2>
+</div>
+<ul>
+<li><a href="#hide-private-property.html">Hide private property</a></li>
+<li><a href="#show-private-property-for-admins.html">Show private property for admins</a></li>
+</ul>
+<hr>
+<div class="pilwrap" id="hide-private-property">
+  <h2>
+    <a href="#hide-private-property" name="hide-private-property" class="pilcrow"></a>
+Hide private property
+  </h2>
+</div>
+<p>If you need to hide some property in the entity you can use <code>@Exclude({ toPlainOnly: true })</code> on the column.</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/users/entities/user.entityThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-keyword">import</span> { Exclude } <span class="hljs-keyword">from</span> <span class="hljs-string">'class-transformer'</span>;
+
+<span class="hljs-meta">@Entity</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> User <span class="hljs-keyword">extends</span> EntityHelper {
+  <span class="hljs-comment">// Some code here...</span>
+
+  <span class="hljs-meta">@Column</span>({ nullable: <span class="hljs-literal">true</span> })
+  <span class="hljs-meta">@Exclude</span>({ toPlainOnly: <span class="hljs-literal">true</span> })
+  password: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-comment">// Some code here...</span>
+}
+
+</code></pre>
+<div class="pilwrap" id="show-private-property-for-admins">
+  <h2>
+    <a href="#show-private-property-for-admins" name="show-private-property-for-admins" class="pilcrow"></a>
+Show private property for admins
+  </h2>
+</div>
+<ol>
+<li>
+<p>Create a controller that returns data only for admin and add <code>@SerializeOptions({ groups: ['admin'] })</code> to method:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/users/users.controllerThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-comment">// Some code here...</span>
+
+<span class="hljs-meta">@ApiBearerAuth</span>()
+<span class="hljs-meta">@Roles</span>(RoleEnum.admin)
+<span class="hljs-meta">@UseGuards</span>(AuthGuard(<span class="hljs-string">'jwt'</span>), RolesGuard)
+<span class="hljs-meta">@Controller</span>({
+  path: <span class="hljs-string">'users'</span>,
+  version: <span class="hljs-string">'1'</span>,
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UsersController {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly usersService: UsersService</span>) {}
+
+  <span class="hljs-comment">// Some code here...</span>
+
+  <span class="hljs-meta">@SerializeOptions</span>({
+    groups: [<span class="hljs-string">'admin'</span>],
+  })
+  <span class="hljs-meta">@Get</span>(<span class="hljs-string">':id'</span>)
+  <span class="hljs-meta">@HttpCode</span>(HttpStatus.OK)
+  findOne(<span class="hljs-meta">@Param</span>(<span class="hljs-string">'id'</span>) id: <span class="hljs-built_in">string</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.usersService.findOne({ id: +id });
+  }
+
+  <span class="hljs-comment">// Some code here...</span>
+}
+</code></pre>
+</li>
+<li>
+<p>In the entity add <code>@Expose({ groups: ['admin'] })</code> to the column that should be exposed for admin:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/users/entities/user.entityThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-comment">// Some code here...</span>
+
+<span class="hljs-keyword">import</span> { Expose } <span class="hljs-keyword">from</span> <span class="hljs-string">'class-transformer'</span>;
+
+<span class="hljs-meta">@Entity</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> User <span class="hljs-keyword">extends</span> EntityHelper {
+  <span class="hljs-comment">// Some code here...</span>
+
+  <span class="hljs-meta">@Column</span>({ unique: <span class="hljs-literal">true</span>, nullable: <span class="hljs-literal">true</span> })
+  <span class="hljs-meta">@Expose</span>({ groups: [<span class="hljs-string">'admin'</span>] })
+  email: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>;
+
+  <span class="hljs-comment">// Some code here...</span>
+}
+</code></pre>
+</li>
+</ol>
+<hr>
+<p>GitHub: https://github.com/brocoders/nestjs-boilerplate</p>
+</div>
+  </div>
+</body>
+</html>

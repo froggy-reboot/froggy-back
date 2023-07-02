@@ -24,10 +24,10 @@ In NestJS Boilerplate uses [TypeORM](https://www.npmjs.com/package/typeorm) and 
 
 ### Generate migration
 
-1. Create entity file with extension `.entity.ts`. For example `post.entity.ts`:
+1. Create entity file with extension `.entityThreadPatternIdPaginationReq.ts`. For example `post.entityThreadPatternIdPaginationReq.ts`:
 
     ```ts
-    // /src/posts/entities/post.entity.ts
+    // /src/posts/entities/post.entityThreadPatternIdPaginationReq.ts
 
     import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
     import { EntityHelper } from 'src/utils/entity-helper';
@@ -80,10 +80,10 @@ npm run schema:drop
 ### Creating seeds
 
 1. Go to `src/database/seeds` and create directory for your seed. For example `post`
-1. Create 2 files: module and service. For example: `post-seed.module.ts` and `post-seed.service.ts`:
+1. Create 2 files: module and service. For example: `post-seed.moduleThreadPatternIdPaginationReq.ts` and `post-seed.serviceThreadPatternIdPaginationReq.ts`:
 
     ```ts
-    // /src/database/seeds/post/post-seed.module.ts
+    // /src/database/seeds/post/post-seed.moduleThreadPatternIdPaginationReq.ts
 
     import { Module } from '@nestjs/common';
     import { TypeOrmModule } from '@nestjs/typeorm';
@@ -99,7 +99,7 @@ npm run schema:drop
     ```
 
     ```ts
-    // /src/database/seeds/post/post-seed.service.ts
+    // /src/database/seeds/post/post-seed.serviceThreadPatternIdPaginationReq.ts
 
     import { Injectable } from '@nestjs/common';
     import { InjectRepository } from '@nestjs/typeorm';
@@ -128,10 +128,10 @@ npm run schema:drop
     }
     ```
 
-1. Go to `src/database/seeds/seed.module.ts` and add your module to `imports`. For example:
+1. Go to `src/database/seeds/seed.moduleThreadPatternIdPaginationReq.ts` and add your module to `imports`. For example:
 
     ```ts
-    // /src/database/seeds/seed.module.ts
+    // /src/database/seeds/seed.moduleThreadPatternIdPaginationReq.ts
 
     // Some code here...
     import { PostSeedModule } from './post/post-seed.module';
@@ -145,10 +145,10 @@ npm run schema:drop
     export class SeedModule {}
     ```
 
-1. Go to `src/database/seeds/run-seed.ts` and invoke method `run` from your service in `runSeed` function. For example:
+1. Go to `src/database/seeds/run-seedThreadPatternIdPaginationReq.ts` and invoke method `run` from your service in `runSeed` function. For example:
 
     ```ts
-    // /src/database/seeds/run-seed.ts
+    // /src/database/seeds/run-seedThreadPatternIdPaginationReq.ts
 
     // Some code here...
     import { PostSeedService } from './post/post-seed.service';

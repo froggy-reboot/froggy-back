@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>typeorm-config.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/database/typeorm-config.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurltypeorm-config.service.js.map">sourceMappingURL=typeorm-config.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>typeorm-config.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.TypeOrmConfigService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">let</span> TypeOrmConfigService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TypeOrmConfigService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(configService) {
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    createTypeOrmOptions() {
+        <span class="hljs-keyword">var</span> _a, _b, _c;
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-attr">type</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.type'</span>),
+            <span class="hljs-attr">url</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.url'</span>),
+            <span class="hljs-attr">host</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.host'</span>),
+            <span class="hljs-attr">port</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.port'</span>),
+            <span class="hljs-attr">username</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.username'</span>),
+            <span class="hljs-attr">password</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.password'</span>),
+            <span class="hljs-attr">database</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.name'</span>),
+            <span class="hljs-attr">synchronize</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.synchronize'</span>),
+            <span class="hljs-attr">charset</span>: <span class="hljs-string">'utf8mb4'</span>,
+            <span class="hljs-attr">dropSchema</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">keepConnectionAlive</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">logging</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'app.nodeEnv'</span>) !== <span class="hljs-string">'production'</span>,
+            <span class="hljs-attr">entities</span>: [
+                __dirname + <span class="hljs-string">'/../**/*.entity{ThreadPatternIdPaginationReq.ts,.js}'</span>,
+            ],
+            <span class="hljs-attr">migrations</span>: [
+                __dirname + <span class="hljs-string">'/migrations/**/*{ThreadPatternIdPaginationReq.ts,.js}'</span>,
+            ],
+            <span class="hljs-attr">cli</span>: {
+                <span class="hljs-attr">entitiesDir</span>: <span class="hljs-string">'src'</span>,
+                <span class="hljs-attr">migrationsDir</span>: <span class="hljs-string">'src/database/migrations'</span>,
+                <span class="hljs-attr">subscribersDir</span>: <span class="hljs-string">'subscriber'</span>,
+            },
+            <span class="hljs-attr">extra</span>: {
+                <span class="hljs-attr">max</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.maxConnections'</span>),
+                <span class="hljs-attr">ssl</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.sslEnabled'</span>)
+                    ? {
+                        <span class="hljs-attr">rejectUnauthorized</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.rejectUnauthorized'</span>),
+                        <span class="hljs-attr">ca</span>: (_a = <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.ca'</span>)) !== <span class="hljs-literal">null</span> &amp;&amp; _a !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _a : <span class="hljs-literal">undefined</span>,
+                        <span class="hljs-attr">key</span>: (_b = <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.key'</span>)) !== <span class="hljs-literal">null</span> &amp;&amp; _b !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _b : <span class="hljs-literal">undefined</span>,
+                        <span class="hljs-attr">cert</span>: (_c = <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'database.cert'</span>)) !== <span class="hljs-literal">null</span> &amp;&amp; _c !== <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> ? _c : <span class="hljs-literal">undefined</span>,
+                    }
+                    : <span class="hljs-literal">undefined</span>,
+            },
+        };
+    }
+};
+TypeOrmConfigService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [config_1.ConfigService])
+], TypeOrmConfigService);
+exports.TypeOrmConfigService = TypeOrmConfigService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurltypeorm-config.service.js.map">
+  <h1>
+    <a href="#sourcemappingurltypeorm-config.service.js.map" name="sourcemappingurltypeorm-config.service.js.map" class="pilcrow"></a>
+sourceMappingURL=typeorm-config.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

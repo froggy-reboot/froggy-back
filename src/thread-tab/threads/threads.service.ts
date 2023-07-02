@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { ThreadImagesService } from '../thread-images/thread-images.service';
 import { CreateThreadImageDto } from '../thread-images/dto/create-thread-image.dto';
 import { ThreadsRepository } from './repository/thread.repository';
+import { ThreadPatternIdPaginationReq } from '../dto/ThreadPatternIdPaginationReq';
+import { ThreadAllPaginationReq } from '../dto/ThreadAllPaginationReq';
 
 @Injectable()
 export class ThreadsService {
@@ -40,8 +42,13 @@ export class ThreadsService {
     );
   }
 
-  findAll() {
-    return `This action returns all threads`;
+  async findAll(paginationOptions: ThreadAllPaginationReq, userId: number) {
+    const { page, limit } = paginationOptions;
+
+    return await this.threadRepository.find({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   findOne(id: number) {

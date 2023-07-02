@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth-ravelry.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/auth-ravelry/auth-ravelry.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlauth-ravelry.service.js.map">sourceMappingURL=auth-ravelry.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>auth-ravelry.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AuthRavelryService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> axios_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/axios"</span>);
+<span class="hljs-keyword">const</span> rxjs_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"rxjs"</span>);
+<span class="hljs-keyword">const</span> user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/entities/user.entity"</span>);
+<span class="hljs-keyword">const</span> users_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/users.service"</span>);
+<span class="hljs-keyword">const</span> ravelry_users_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../ravelry-users/ravelry-users.service"</span>);
+<span class="hljs-keyword">const</span> ravelry_user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../ravelry-users/entities/ravelry-user.entity"</span>);
+<span class="hljs-keyword">const</span> { AuthorizationCode } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'simple-oauth2'</span>);
+<span class="hljs-keyword">const</span> randomString = <span class="hljs-built_in">require</span>(<span class="hljs-string">'randomstring'</span>);
+<span class="hljs-keyword">let</span> AuthRavelryService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthRavelryService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(http, ravelryUsersService, usersService) {
+        <span class="hljs-keyword">this</span>.http = http;
+        <span class="hljs-keyword">this</span>.ravelryUsersService = ravelryUsersService;
+        <span class="hljs-keyword">this</span>.usersService = usersService;
+    }
+    <span class="hljs-keyword">async</span> getRedirectUrl() {
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">this</span>.getClient();
+        <span class="hljs-keyword">const</span> authorizationUri = client.authorizeURL({
+            <span class="hljs-attr">redirect_uri</span>: process.env.RAVELRY_CALL_BACK_URL,
+            <span class="hljs-attr">scope</span>: <span class="hljs-string">'patternstore-read'</span>,
+            <span class="hljs-attr">state</span>: randomString.generate(),
+        });
+        <span class="hljs-keyword">return</span> authorizationUri;
+    }
+    <span class="hljs-keyword">async</span> getLinkRedirectUrl() {
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">this</span>.getLinkClient();
+        <span class="hljs-keyword">const</span> authorizationUri = client.authorizeURL({
+            <span class="hljs-attr">redirect_uri</span>: process.env.RAVELRY_LINK_CALL_BACK_URL,
+            <span class="hljs-attr">scope</span>: <span class="hljs-string">'patternstore-read'</span>,
+            <span class="hljs-attr">state</span>: randomString.generate(),
+        });
+        <span class="hljs-keyword">return</span> authorizationUri;
+    }
+    <span class="hljs-keyword">async</span> getAccessToken(req) {
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">this</span>.getClient();
+        <span class="hljs-keyword">const</span> tokenParams = {
+            <span class="hljs-attr">code</span>: req.query.code,
+            <span class="hljs-attr">redirect_uri</span>: process.env.RAVELRY_CALL_BACK_URL,
+            <span class="hljs-attr">scope</span>: <span class="hljs-string">'offline patternstore-read'</span>,
+        };
+        <span class="hljs-keyword">const</span> getTokenResult = <span class="hljs-keyword">await</span> client.getToken(tokenParams, { <span class="hljs-attr">json</span>: <span class="hljs-literal">true</span> });
+        <span class="hljs-keyword">const</span> accessToken = getTokenResult.token.access_token;
+        <span class="hljs-keyword">return</span> accessToken;
+    }
+    <span class="hljs-keyword">async</span> getLinkAccessToken(req) {
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">this</span>.getLinkClient();
+        <span class="hljs-keyword">const</span> tokenParams = {
+            <span class="hljs-attr">code</span>: req.query.code,
+            <span class="hljs-attr">redirect_uri</span>: process.env.RAVELRY_LINK_CALL_BACK_URL,
+            <span class="hljs-attr">scope</span>: <span class="hljs-string">'offline patternstore-read'</span>,
+        };
+        <span class="hljs-keyword">const</span> getTokenResult = <span class="hljs-keyword">await</span> client.getToken(tokenParams, { <span class="hljs-attr">json</span>: <span class="hljs-literal">true</span> });
+        <span class="hljs-built_in">console</span>.log(getTokenResult);
+        <span class="hljs-keyword">const</span> accessToken = getTokenResult.token.access_token;
+        <span class="hljs-keyword">return</span> accessToken;
+    }
+    <span class="hljs-keyword">async</span> getUserInfoByAccessToken(accessToken) {
+        <span class="hljs-keyword">const</span> requestConfig = {
+            <span class="hljs-attr">headers</span>: {
+                <span class="hljs-attr">Authorization</span>: <span class="hljs-string">'Bearer '</span> + accessToken,
+            },
+            <span class="hljs-attr">params</span>: {},
+        };
+        <span class="hljs-keyword">const</span> request = <span class="hljs-keyword">this</span>.http
+            .get(<span class="hljs-string">'https://api.ravelry.com/current_user.json'</span>, requestConfig)
+            .pipe(<span class="hljs-function">(<span class="hljs-params"><span class="hljs-number">0</span>, rxjs_1.catchError</span>)(<span class="hljs-params">(error</span>) =&gt;</span> {
+            <span class="hljs-keyword">throw</span> <span class="hljs-string">'ravelry get user error!'</span>;
+        }));
+        <span class="hljs-keyword">const</span> { data } = <span class="hljs-keyword">await</span> (<span class="hljs-number">0</span>, rxjs_1.firstValueFrom)(request);
+        <span class="hljs-keyword">const</span> ravelryUserInfo = data.user;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ravelryUserInfo'</span>, ravelryUserInfo);
+        <span class="hljs-keyword">return</span> ravelryUserInfo;
+    }
+    <span class="hljs-keyword">async</span> findOrCreateRavelryUser(ravelryUserInfo, accessToken) {
+        <span class="hljs-keyword">const</span> ravelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ravelryUsersService.findOne({
+            <span class="hljs-attr">ravelryId</span>: ravelryUserInfo.id,
+        });
+        <span class="hljs-keyword">if</span> (!ravelryUser) {
+            <span class="hljs-keyword">const</span> createRavelryUserResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ravelryUsersService.create({
+                <span class="hljs-attr">ravelryId</span>: ravelryUserInfo.id,
+                <span class="hljs-attr">token</span>: accessToken,
+                <span class="hljs-attr">username</span>: ravelryUserInfo.username,
+            });
+            <span class="hljs-keyword">return</span> createRavelryUserResult;
+        }
+        <span class="hljs-keyword">return</span> ravelryUser;
+    }
+    <span class="hljs-keyword">async</span> saveAuthRavelryUser(ravelryUserInfo, accessToken) {
+        <span class="hljs-keyword">const</span> ravelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ravelryUsersService.findOne({
+            <span class="hljs-attr">ravelryId</span>: ravelryUserInfo.id,
+        });
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ravelryUser'</span>, ravelryUser);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ravelryUserInfo'</span>, ravelryUserInfo);
+        <span class="hljs-keyword">if</span> (!ravelryUser) {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'create new ravelry user'</span>);
+            <span class="hljs-keyword">const</span> newRavelryUser = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ravelryUsersService.create({
+                <span class="hljs-attr">ravelryId</span>: ravelryUserInfo.id,
+                <span class="hljs-attr">token</span>: accessToken,
+                <span class="hljs-attr">username</span>: ravelryUserInfo.username,
+            });
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'newRavelryUser'</span>, newRavelryUser);
+            <span class="hljs-keyword">return</span> newRavelryUser;
+        }
+        <span class="hljs-keyword">if</span> (ravelryUser.ravelryId === ravelryUserInfo.id) {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'already exist ravelry user'</span>);
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+        }
+    }
+    <span class="hljs-keyword">async</span> linkRavelryToAnotherAccount(user, dto) {
+        <span class="hljs-keyword">const</span> { socialUserId } = dto;
+        <span class="hljs-keyword">const</span> updateResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.update(user.id, {
+            <span class="hljs-attr">ravelryUserId</span>: socialUserId,
+            <span class="hljs-attr">isRavelryIntegrated</span>: ravelry_user_entity_1.customBool.Y,
+        });
+        <span class="hljs-keyword">return</span> updateResult;
+    }
+    getClient() {
+        <span class="hljs-keyword">const</span> config = {
+            <span class="hljs-attr">client</span>: {
+                <span class="hljs-attr">id</span>: process.env.RAVELRY_CLIENT_ID,
+                <span class="hljs-attr">secret</span>: process.env.RAVELRY_CLIENT_SECRET,
+            },
+            <span class="hljs-attr">auth</span>: {
+                <span class="hljs-attr">tokenHost</span>: <span class="hljs-string">'https://www.ravelry.com'</span>,
+                <span class="hljs-attr">tokenPath</span>: <span class="hljs-string">'/oauth2/token'</span>,
+                <span class="hljs-attr">authorizePath</span>: <span class="hljs-string">'/oauth2/auth'</span>,
+            },
+        };
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> AuthorizationCode(config);
+        <span class="hljs-keyword">return</span> client;
+    }
+    getLinkClient() {
+        <span class="hljs-keyword">const</span> config = {
+            <span class="hljs-attr">client</span>: {
+                <span class="hljs-attr">id</span>: process.env.RAVELRY_LINK_CLIENT_ID,
+                <span class="hljs-attr">secret</span>: process.env.RAVELRY_LINK_CLIENT_SECRET,
+            },
+            <span class="hljs-attr">auth</span>: {
+                <span class="hljs-attr">tokenHost</span>: <span class="hljs-string">'https://www.ravelry.com'</span>,
+                <span class="hljs-attr">tokenPath</span>: <span class="hljs-string">'/oauth2/token'</span>,
+                <span class="hljs-attr">authorizePath</span>: <span class="hljs-string">'/oauth2/auth'</span>,
+            },
+        };
+        <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> AuthorizationCode(config);
+        <span class="hljs-keyword">return</span> client;
+    }
+    genSocialData(ravelryUser) {
+        <span class="hljs-keyword">const</span> ravelryEmail = ravelryUser.ravelryId + <span class="hljs-string">'@ravelry.com'</span>;
+        <span class="hljs-keyword">const</span> socialData = {
+            <span class="hljs-attr">enrollType</span>: user_entity_1.enrollType.ravelry,
+            <span class="hljs-attr">email</span>: ravelryEmail,
+            <span class="hljs-attr">password</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">isRavelryIntegrated</span>: ravelry_user_entity_1.customBool.Y,
+            <span class="hljs-attr">ravelryUserId</span>: ravelryUser.id,
+            <span class="hljs-attr">isCertified</span>: ravelry_user_entity_1.customBool.Y,
+        };
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'gen social data result :'</span>, socialData);
+        <span class="hljs-keyword">return</span> socialData;
+    }
+};
+AuthRavelryService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [axios_1.HttpService,
+        ravelry_users_service_1.RavelryUsersService,
+        users_service_1.UsersService])
+], AuthRavelryService);
+exports.AuthRavelryService = AuthRavelryService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlauth-ravelry.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlauth-ravelry.service.js.map" name="sourcemappingurlauth-ravelry.service.js.map" class="pilcrow"></a>
+sourceMappingURL=auth-ravelry.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

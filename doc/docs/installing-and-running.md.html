@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>installing-and-running.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "docs/installing-and-running.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#installation">Installation</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#table-of-contents">Table of Contents</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#comfortable-development">Comfortable development</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#quick-run">Quick run</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#links">Links</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="installation">
+  <h1>
+    <a href="#installation" name="installation" class="pilcrow"></a>
+Installation
+  </h1>
+</div>
+<hr>
+<div class="pilwrap" id="table-of-contents">
+  <h2>
+    <a href="#table-of-contents" name="table-of-contents" class="pilcrow"></a>
+Table of Contents
+  </h2>
+</div>
+<ul>
+<li><a href="#comfortable-development.html">Comfortable development</a></li>
+<li><a href="#quick-run.html">Quick run</a></li>
+<li><a href="#links.html">Links</a></li>
+</ul>
+<hr>
+<div class="pilwrap" id="comfortable-development">
+  <h2>
+    <a href="#comfortable-development" name="comfortable-development" class="pilcrow"></a>
+Comfortable development
+  </h2>
+</div>
+<ol>
+<li>
+<p>Clone repository</p>
+<pre><code class="bash">git <span class="hljs-built_in">clone</span> --depth 1 https://github.com/brocoders/nestjs-boilerplate.git my-app
+</code></pre>
+</li>
+<li>
+<p>Go to folder, and copy <code>env-example</code> as <code>.env</code>.</p>
+<pre><code class="bash"><span class="hljs-built_in">cd</span> my-app/
+cp env-example .env
+</code></pre>
+</li>
+<li>
+<p>Change <code>DATABASE_HOST=postgres</code> to <code>DATABASE_HOST=localhost</code>
+Change <code>MAIL_HOST=maildev</code> to <code>MAIL_HOST=localhost</code></p>
+</li>
+<li>
+<p>Run additional container:</p>
+<pre><code class="bash">docker compose up -d postgres adminer maildev redis
+</code></pre>
+</li>
+<li>
+<p>Install dependency</p>
+<pre><code class="bash">npm install
+</code></pre>
+</li>
+<li>
+<p>Run migrations</p>
+<pre><code class="bash">npm run migration:run
+</code></pre>
+</li>
+<li>
+<p>Run seeds</p>
+<pre><code class="bash">npm run seed:run
+</code></pre>
+</li>
+<li>
+<p>Run app in dev mode</p>
+<pre><code class="bash">npm run start:dev
+</code></pre>
+</li>
+<li>
+<p>Open http://localhost:3000</p>
+</li>
+</ol>
+<hr>
+<div class="pilwrap" id="quick-run">
+  <h2>
+    <a href="#quick-run" name="quick-run" class="pilcrow"></a>
+Quick run
+  </h2>
+</div>
+<p>If you want quick run your app, you can use following commands:</p>
+<ol>
+<li>
+<p>Clone repository</p>
+<pre><code class="bash">git <span class="hljs-built_in">clone</span> --depth 1 https://github.com/brocoders/nestjs-boilerplate.git my-app
+</code></pre>
+</li>
+<li>
+<p>Go to folder, and copy <code>env-example</code> as <code>.env</code>.</p>
+<pre><code class="bash"><span class="hljs-built_in">cd</span> my-app/
+cp env-example .env
+</code></pre>
+</li>
+<li>
+<p>Run containers</p>
+<pre><code class="bash">docker compose up -d
+</code></pre>
+</li>
+<li>
+<p>For check status run</p>
+<pre><code class="bash">docker compose logs
+</code></pre>
+</li>
+<li>
+<p>Open http://localhost:3000</p>
+</li>
+</ol>
+<hr>
+<div class="pilwrap" id="links">
+  <h2>
+    <a href="#links" name="links" class="pilcrow"></a>
+Links
+  </h2>
+</div>
+<ul>
+<li>Swagger (API docs): http://localhost:3000/docs</li>
+<li>Adminer (client for DB): http://localhost:8080</li>
+<li>Maildev: http://localhost:1080</li>
+</ul>
+<hr>
+<p>Next: <a href="database.md.html">Working with database</a></p>
+<p>GitHub: https://github.com/brocoders/nestjs-boilerplate</p>
+</div>
+  </div>
+</body>
+</html>

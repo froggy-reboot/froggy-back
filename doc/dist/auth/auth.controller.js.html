@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth.controller.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/auth/auth.controller.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlauth.controller.js.map">sourceMappingURL=auth.controller.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>auth.controller.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AuthController = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> auth_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth.service"</span>);
+<span class="hljs-keyword">const</span> swagger_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/swagger"</span>);
+<span class="hljs-keyword">const</span> auth_email_login_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-email-login.dto"</span>);
+<span class="hljs-keyword">const</span> passport_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/passport"</span>);
+<span class="hljs-keyword">const</span> auth_register_login_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-register-login.dto"</span>);
+<span class="hljs-keyword">const</span> auth_email_isExist_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-email-isExist.dto"</span>);
+<span class="hljs-keyword">const</span> auth_nickname_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-nickname.dto"</span>);
+<span class="hljs-keyword">const</span> auth_social_login_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-social-login.dto"</span>);
+<span class="hljs-keyword">const</span> auth_refresh_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-refresh.dto"</span>);
+<span class="hljs-keyword">const</span> user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/entities/user.entity"</span>);
+<span class="hljs-keyword">const</span> auth_withdraw_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-withdraw.dto"</span>);
+<span class="hljs-keyword">const</span> auth_reset_password_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-reset-password.dto"</span>);
+<span class="hljs-keyword">const</span> auth_reset_password_dto_2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/auth-reset-password.dto"</span>);
+<span class="hljs-keyword">let</span> AuthController = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthController</span> </span>{
+    <span class="hljs-keyword">constructor</span>(authService) {
+        <span class="hljs-keyword">this</span>.authService = authService;
+    }
+    <span class="hljs-keyword">async</span> register(createUserDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.register(createUserDto);
+    }
+    <span class="hljs-keyword">async</span> login(loginDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.validateLogin(loginDto);
+    }
+    <span class="hljs-keyword">async</span> checkIsEmailExist(checkEmailDto) {
+        <span class="hljs-keyword">const</span> checkResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.checkExistEmail(checkEmailDto);
+        <span class="hljs-keyword">const</span> resJson = {
+            <span class="hljs-attr">isExistEmail</span>: checkResult ? user_entity_1.customBool.Y : user_entity_1.customBool.N,
+        };
+        <span class="hljs-keyword">return</span> resJson;
+    }
+    <span class="hljs-keyword">async</span> checkIsNickNameExist(checkEmailDto) {
+        <span class="hljs-keyword">const</span> checkResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.checkExistEmail(checkEmailDto);
+        <span class="hljs-keyword">const</span> resJson = {
+            <span class="hljs-attr">isExistNickname</span>: checkResult ? user_entity_1.customBool.Y : user_entity_1.customBool.N,
+        };
+        <span class="hljs-keyword">return</span> resJson;
+    }
+    <span class="hljs-keyword">async</span> confirmEmail(hash, req, res) {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.confirmEmail(hash);
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">async</span> forgetPassword(resetPasswordDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.forgotPassword(resetPasswordDto.email);
+    }
+    <span class="hljs-keyword">async</span> resetPasswordCompleteTemplate() {
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">async</span> resetPasswordFailTemplate() {
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">async</span> resetPasswordTemplate(hash) {
+        <span class="hljs-built_in">console</span>.log(hash);
+        <span class="hljs-keyword">const</span> data = {
+            <span class="hljs-attr">hash</span>: hash,
+            <span class="hljs-attr">backendUrl</span>: process.env.BACKEND_DOMAIN,
+        };
+        <span class="hljs-keyword">return</span> data;
+    }
+    <span class="hljs-keyword">async</span> resetPasswordComplete(resetPasswordDto) {
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.resetPassword(resetPasswordDto.hash, resetPasswordDto.password);
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: result };
+    }
+    <span class="hljs-keyword">async</span> getRandomNickname() {
+        <span class="hljs-keyword">const</span> nickname = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.getUniqueNickName();
+        <span class="hljs-keyword">const</span> resJson = { nickname };
+        <span class="hljs-keyword">return</span> resJson;
+    }
+    <span class="hljs-keyword">async</span> socialLogin(authSocialLoginIngDto) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'body dto'</span>, authSocialLoginIngDto.userId);
+        <span class="hljs-keyword">const</span> getUserAuthInfoByUserIdResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.authService.getUserAuthInfoByUserId(authSocialLoginIngDto.userId);
+        <span class="hljs-keyword">const</span> { token, refreshToken, user } = getUserAuthInfoByUserIdResult;
+        <span class="hljs-keyword">const</span> resJson = {
+            <span class="hljs-attr">jwtToken</span>: token,
+            refreshToken,
+            <span class="hljs-attr">user</span>: user,
+        };
+        <span class="hljs-keyword">return</span> resJson;
+    }
+    <span class="hljs-keyword">async</span> refresh(refreshDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.refreshJwtToken(refreshDto.refreshToken);
+    }
+    logout(req) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.logout(req.user);
+    }
+    withdraw(req, authWithdrawDto) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.withdraw(req.user.id, authWithdrawDto);
+    }
+};
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'email/register'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({ <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">description</span>: <span class="hljs-string">'회원가입 성공'</span> }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({ <span class="hljs-attr">status</span>: <span class="hljs-number">409</span>, <span class="hljs-attr">description</span>: <span class="hljs-string">'이미 존재하는 이메일'</span> }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_register_login_dto_1.AuthRegisterLoginDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"register"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'email/login'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: auth_email_login_dto_1.AuthEmailLoginResDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'로그인 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">422</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'회원가입 되지 않은 이메일 또는 비밀번호 오류'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({ <span class="hljs-attr">status</span>: <span class="hljs-number">401</span>, <span class="hljs-attr">description</span>: <span class="hljs-string">'인증되지 않은 이메일'</span> }),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_email_login_dto_1.AuthEmailLoginDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"login"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'email/isExist'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'이미 존재하는 이메일: Y, 존재하지 않는 이메일:N '</span>,
+        <span class="hljs-attr">type</span>: auth_email_isExist_dto_1.AuthCheckIsExistEmailResDto,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_email_isExist_dto_1.AuthCheckIsExistEmailDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"checkIsEmailExist"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'nickname/isExist'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'이미 존재하는 닉네임: Y, 존재하지 않는 닉네임:N '</span>,
+        <span class="hljs-attr">type</span>: auth_nickname_dto_1.AuthCheckNicknameResDto,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_nickname_dto_1.AuthCheckNicknameReqDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"checkIsNickNameExist"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'email/confirm/:hash'</span>),
+    (<span class="hljs-number">0</span>, common_1.Render)(<span class="hljs-string">'certify-complete'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'hash'</span>)),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Req)()),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.Res)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">Object</span>, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"confirmEmail"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'email/reset-password'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiOperation)({
+        <span class="hljs-attr">summary</span>: <span class="hljs-string">'비밀번호 수정'</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'로컬 계정의 비밀번호를 수정할 수 있게 하는 이메일을 보냅니다. 메일을 보내느라 속도가 조금 느립니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'메일 전송 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">422</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'회원가입 되지 않은 이메일 또는 인증되지 않은 이메일'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_reset_password_dto_1.AuthResetPasswordReqDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"forgetPassword"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'reset-password/complete'</span>),
+    (<span class="hljs-number">0</span>, common_1.Render)(<span class="hljs-string">'reset-password-complete'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, []),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"resetPasswordCompleteTemplate"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'reset-password/fail'</span>),
+    (<span class="hljs-number">0</span>, common_1.Render)(<span class="hljs-string">'reset-password-fail'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, []),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"resetPasswordFailTemplate"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'reset-password/:hash'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiOperation)({
+        <span class="hljs-attr">summary</span>: <span class="hljs-string">'백 서버용'</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'프론트에서는 볼 필요 없습니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.Render)(<span class="hljs-string">'reset-password'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'hash'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"resetPasswordTemplate"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'reset-password'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiOperation)({
+        <span class="hljs-attr">summary</span>: <span class="hljs-string">'백 서버용'</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'프론트에서는 볼 필요 없습니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_reset_password_dto_2.AuthResetPasswordDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"resetPasswordComplete"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'random-nickname'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: auth_nickname_dto_1.AuthRandomNicknameResDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'랜덤 닉네임 조회 완료'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, []),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"getRandomNickname"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'social/login'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: auth_social_login_dto_1.AuthSocialLoginResDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'소셜 로그인 로그인 로직'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_social_login_dto_1.AuthSocialLoginIngDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"socialLogin"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'refresh'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: auth_refresh_dto_1.AuthRefreshResDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'refresh token을 이용하여 jwt token 발급'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">404</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'refresh token이 유효하지 않음'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_refresh_dto_1.AuthRefreshDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], AuthController.prototype, <span class="hljs-string">"refresh"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'logout'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'로그아웃 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">401</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'access token이 없거나 유효하지 않습니다.'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)
+], AuthController.prototype, <span class="hljs-string">"logout"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(<span class="hljs-string">'withdraw'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiOperation)({
+        <span class="hljs-attr">summary</span>: <span class="hljs-string">'회원 탈퇴'</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'회원을 탈퇴합니다. 소셜 로그인의 경우 password를 보내지 않아도 됩니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'삭제 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">422</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'비밀번호가 일치하지 않습니다.'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">400</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'jwt의 유저 정보와 삭제를 위한 user 정보가 다른 경우'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">404</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'존재하지 않거나, 이미 탈퇴된 유저'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, auth_withdraw_dto_1.AuthWithdrawDto]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)
+], AuthController.prototype, <span class="hljs-string">"withdraw"</span>, <span class="hljs-literal">null</span>);
+AuthController = __decorate([
+    (<span class="hljs-number">0</span>, swagger_1.ApiTags)(<span class="hljs-string">'Auth'</span>),
+    (<span class="hljs-number">0</span>, common_1.Controller)({
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'auth'</span>,
+        <span class="hljs-attr">version</span>: <span class="hljs-string">'1'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [auth_service_1.AuthService])
+], AuthController);
+exports.AuthController = AuthController;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlauth.controller.js.map">
+  <h1>
+    <a href="#sourcemappingurlauth.controller.js.map" name="sourcemappingurlauth.controller.js.map" class="pilcrow"></a>
+sourceMappingURL=auth.controller.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

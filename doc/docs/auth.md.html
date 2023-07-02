@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "docs/auth.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#auth">Auth</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#table-of-contents">Table of Contents</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#configure-auth">Configure Auth</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#auth-via-apple">Auth via Apple</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#auth-via-facebook">Auth via Facebook</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#auth-via-google">Auth via Google</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#auth-via-twitter">Auth via Twitter</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="auth">
+  <h1>
+    <a href="#auth" name="auth" class="pilcrow"></a>
+Auth
+  </h1>
+</div>
+<p>By default boilerplate used sign in and sign up via email and password.</p>
+<pre><code class="mermaid">sequenceDiagram
+    participant A as Fronted App (Web, Mobile, Desktop)
+    participant B as Backend App
+
+    A-&gt;&gt;B: 1. Sign up via email and password
+    A-&gt;&gt;B: 2. Sign in via email and password
+    B-&gt;&gt;A: 3. Get a JWT token
+    A-&gt;&gt;B: 4. Make any requests using a JWT token
+</code></pre>
+<p>Also you can sign up via another external services or social networks like Apple, Facebook, Google, and Twitter.</p>
+<pre><code class="mermaid">sequenceDiagram
+    participant B as External Auth Services (Apple, Google, etc)
+    participant A as Fronted App (Web, Mobile, Desktop)
+    participant C as Backend App
+
+    A-&gt;&gt;B: 1. Sign in through an external service
+    B-&gt;&gt;A: 2. Get Access Token
+    A-&gt;&gt;C: 3. Send Access Token to auth endpoint
+    C-&gt;&gt;A: 4. Get a JWT token
+    A-&gt;&gt;C: 5. Make any requests using a JWT token
+</code></pre>
+<p>For auth with external services or social networks you need:</p>
+<ol>
+<li>
+<p>Sign in through an external service and get access token(s).</p>
+</li>
+<li>
+<p>Call one of endpoints with access token received in frontend app on 1-st step and get JWT token from the backend app.</p>
+<pre><code class="text">POST /api/v1/auth/facebook/login
+
+POST /api/v1/auth/google/login
+
+POST /api/v1/auth/twitter/login
+
+POST /api/v1/auth/apple/login
+</code></pre>
+</li>
+<li>
+<p>Make any requests using a JWT token</p>
+</li>
+</ol>
+<hr>
+<div class="pilwrap" id="table-of-contents">
+  <h2>
+    <a href="#table-of-contents" name="table-of-contents" class="pilcrow"></a>
+Table of Contents
+  </h2>
+</div>
+<ul>
+<li><a href="#configure-auth.html">Configure Auth</a></li>
+<li><a href="#auth-via-apple.html">Auth via Apple</a></li>
+<li><a href="#auth-via-facebook.html">Auth via Facebook</a></li>
+<li><a href="#auth-via-google.html">Auth via Google</a></li>
+<li><a href="#auth-via-twitter.html">Auth via Twitter</a></li>
+</ul>
+<hr>
+<div class="pilwrap" id="configure-auth">
+  <h2>
+    <a href="#configure-auth" name="configure-auth" class="pilcrow"></a>
+Configure Auth
+  </h2>
+</div>
+<ol>
+<li>
+<p>Generate secret key</p>
+<pre><code class="bash">node -e <span class="hljs-string">"console.log(require('crypto').randomBytes(256).toString('base64'));"</span>
+</code></pre>
+</li>
+<li>
+<p>Go to <code>/.env</code> and change value in <code>AUTH_JWT_SECRET</code></p>
+<pre><code class="text">AUTH_JWT_SECRET=HERE_SECRET_KEY_FROM_STEP_1
+</code></pre>
+</li>
+</ol>
+<div class="pilwrap" id="auth-via-apple">
+  <h2>
+    <a href="#auth-via-apple" name="auth-via-apple" class="pilcrow"></a>
+Auth via Apple
+  </h2>
+</div>
+<ol>
+<li>
+<p>Set up your service on Apple</p>
+</li>
+<li>
+<p>Change <code>APPLE_APP_AUDIENCE</code> in <code>.env</code></p>
+<pre><code class="text">APPLE_APP_AUDIENCE=[&quot;com.company&quot;, &quot;com.company.web&quot;]
+</code></pre>
+</li>
+</ol>
+<div class="pilwrap" id="auth-via-facebook">
+  <h2>
+    <a href="#auth-via-facebook" name="auth-via-facebook" class="pilcrow"></a>
+Auth via Facebook
+  </h2>
+</div>
+<ol>
+<li>
+<p>Set up your service on Facebook</p>
+</li>
+<li>
+<p>Change <code>FACEBOOK_APP_ID</code> and <code>FACEBOOK_APP_SECRET</code> in <code>.env</code></p>
+<pre><code class="text">FACEBOOK_APP_ID=abc
+FACEBOOK_APP_SECRET=abc
+</code></pre>
+</li>
+</ol>
+<div class="pilwrap" id="auth-via-google">
+  <h2>
+    <a href="#auth-via-google" name="auth-via-google" class="pilcrow"></a>
+Auth via Google
+  </h2>
+</div>
+<ol>
+<li>
+<p>Set up your service on Google</p>
+</li>
+<li>
+<p>Change <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> in <code>.env</code></p>
+<pre><code class="text">GOOGLE_CLIENT_ID=abc
+GOOGLE_CLIENT_SECRET=abc
+</code></pre>
+</li>
+</ol>
+<div class="pilwrap" id="auth-via-twitter">
+  <h2>
+    <a href="#auth-via-twitter" name="auth-via-twitter" class="pilcrow"></a>
+Auth via Twitter
+  </h2>
+</div>
+<ol>
+<li>
+<p>Set up your service on Twitter</p>
+</li>
+<li>
+<p>Change <code>TWITTER_CONSUMER_KEY</code> and <code>TWITTER_CONSUMER_SECRET</code> in <code>.env</code></p>
+<pre><code class="text">TWITTER_CONSUMER_KEY=abc
+TWITTER_CONSUMER_SECRET=abc
+</code></pre>
+</li>
+</ol>
+<hr>
+<p>Next: <a href="serialization.md.html">Serialization</a></p>
+<p>GitHub: https://github.com/brocoders/nestjs-boilerplate</p>
+</div>
+  </div>
+</body>
+</html>

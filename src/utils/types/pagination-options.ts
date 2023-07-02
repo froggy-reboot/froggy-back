@@ -11,18 +11,3 @@ export class IPaginationOptions {
   @IsNumber()
   limit: number = 20;
 }
-export class ThreadPatternIdPaginationReq {
-  @ApiProperty({ example: 1 })
-  @Type(() => Number)
-  @IsNumber()
-  page: number;
-
-  @ApiProperty({ example: 5 })
-  @Type(() => Number)
-  @IsNumber()
-  patternId: number;
-
-  @Type(() => Number)
-  @IsNumber()
-  limit: number = 20;
-}

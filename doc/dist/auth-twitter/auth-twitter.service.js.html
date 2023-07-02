@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>auth-twitter.service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/auth-twitter/auth-twitter.service.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlauth-twitter.service.js.map">sourceMappingURL=auth-twitter.service.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>auth-twitter.service.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AuthTwitterService = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">const</span> Twitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">"twitter"</span>);
+<span class="hljs-keyword">const</span> user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/entities/user.entity"</span>);
+<span class="hljs-keyword">let</span> AuthTwitterService = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthTwitterService</span> </span>{
+    <span class="hljs-keyword">constructor</span>(configService) {
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    <span class="hljs-keyword">async</span> getProfileByToken(loginDto) {
+        <span class="hljs-keyword">const</span> twitter = <span class="hljs-keyword">new</span> Twitter({
+            <span class="hljs-attr">consumer_key</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'twitter.consumerKey'</span>),
+            <span class="hljs-attr">consumer_secret</span>: <span class="hljs-keyword">this</span>.configService.get(<span class="hljs-string">'twitter.consumerSecret'</span>),
+            <span class="hljs-attr">access_token_key</span>: loginDto.accessTokenKey,
+            <span class="hljs-attr">access_token_secret</span>: loginDto.accessTokenSecret,
+        });
+        <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> {
+            twitter.get(<span class="hljs-string">'account/verify_credentials'</span>, { <span class="hljs-attr">include_email</span>: <span class="hljs-literal">true</span> }, (error, profile) =&gt; {
+                resolve(profile);
+            });
+        });
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-attr">email</span>: data.email,
+            <span class="hljs-attr">enroll_type</span>: user_entity_1.enrollType.google,
+            <span class="hljs-attr">password</span>: <span class="hljs-literal">null</span>,
+        };
+    }
+};
+AuthTwitterService = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Injectable)(),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [config_1.ConfigService])
+], AuthTwitterService);
+exports.AuthTwitterService = AuthTwitterService;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlauth-twitter.service.js.map">
+  <h1>
+    <a href="#sourcemappingurlauth-twitter.service.js.map" name="sourcemappingurlauth-twitter.service.js.map" class="pilcrow"></a>
+sourceMappingURL=auth-twitter.service.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

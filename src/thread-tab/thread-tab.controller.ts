@@ -20,10 +20,8 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateThreadDto, CreateThreadReqDto } from './dto/create-thread-dto';
 import { ShowThreadsDto } from './threads/dto/show-thread.dto';
-import {
-  IPaginationOptions,
-  ThreadPatternIdPaginationReq,
-} from 'src/utils/types/pagination-options';
+import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
+import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
 
 @ApiTags('스레드')
 @Controller({
@@ -60,15 +58,14 @@ export class ThreadTabController {
   @ApiResponse({
     status: 200,
     type: [ShowThreadsDto],
-    description:
-      '특정 pattern에 해당하는 threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
+    description: 'threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
   })
-  async getThreadsByAll(
-    @Param() paginationOptions: ThreadPatternIdPaginationReq,
-  ) {
-    const threads = await this.threadTabService.getThreadsByAll();
-
-    return threads;
+  async getThreadsByAll(@Param() paginationOptions: ThreadAllPaginationReq) {
+    const userId = '';
+    return await this.threadTabService.getThreadsByAll(
+      paginationOptions,
+      userId,
+    );
   }
 
   @Get('patternId/:patternId/pages/:page')

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>database.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "docs/database.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#work-with-database">Work with database</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#table-of-contents">Table of Contents</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#working-with-database-schema">Working with database schema</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#generate-migration">Generate migration</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#run-migration">Run migration</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#revert-migration">Revert migration</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#drop-all-tables-in-database">Drop all tables in database</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#seeding">Seeding</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#creating-seeds">Creating seeds</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#run-seed">Run seed</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#performance-optimization">Performance optimization</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#indexes-and-foreign-keys">Indexes and Foreign Keys</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#max-connections">Max connections</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="work-with-database">
+  <h1>
+    <a href="#work-with-database" name="work-with-database" class="pilcrow"></a>
+Work with database
+  </h1>
+</div>
+<p>In NestJS Boilerplate uses <a href="https://www.npmjs.com/package/typeorm">TypeORM</a> and <a href="https://www.postgresql.org/">PostgreSQL</a> for working with database, and all examples will for <a href="https://www.postgresql.org/">PostgreSQL</a>, but you can use any database.</p>
+<hr>
+<div class="pilwrap" id="table-of-contents">
+  <h2>
+    <a href="#table-of-contents" name="table-of-contents" class="pilcrow"></a>
+Table of Contents
+  </h2>
+</div>
+<ul>
+<li><a href="#working-with-database-schema.html">Working with database schema</a>
+<ul>
+<li><a href="#generate-migration.html">Generate migration</a></li>
+<li><a href="#run-migration.html">Run migration</a></li>
+<li><a href="#revert-migration.html">Revert migration</a></li>
+<li><a href="#drop-all-tables-in-database.html">Drop all tables in database</a></li>
+</ul>
+</li>
+<li><a href="#seeding.html">Seeding</a>
+<ul>
+<li><a href="#creating-seeds.html">Creating seeds</a></li>
+<li><a href="#run-seed.html">Run seed</a></li>
+</ul>
+</li>
+<li><a href="#performance-optimization.html">Performance optimization</a>
+<ul>
+<li><a href="#indexes-and-foreign-keys.html">Indexes and Foreign Keys</a></li>
+<li><a href="#max-connections.html">Max connections</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<div class="pilwrap" id="working-with-database-schema">
+  <h2>
+    <a href="#working-with-database-schema" name="working-with-database-schema" class="pilcrow"></a>
+Working with database schema
+  </h2>
+</div>
+<div class="pilwrap" id="generate-migration">
+  <h3>
+    <a href="#generate-migration" name="generate-migration" class="pilcrow"></a>
+Generate migration
+  </h3>
+</div>
+<ol>
+<li>
+<p>Create entity file with extension <code>.entityThreadPatternIdPaginationReq.ts</code>. For example <code>post.entityThreadPatternIdPaginationReq.ts</code>:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/posts/entities/post.entityThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-keyword">import</span> { Column, Entity, PrimaryGeneratedColumn } <span class="hljs-keyword">from</span> <span class="hljs-string">'typeorm'</span>;
+<span class="hljs-keyword">import</span> { EntityHelper } <span class="hljs-keyword">from</span> <span class="hljs-string">'src/utils/entity-helper'</span>;
+
+<span class="hljs-meta">@Entity</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> EntityHelper {
+  <span class="hljs-meta">@PrimaryGeneratedColumn</span>()
+  id: <span class="hljs-built_in">number</span>;
+
+  <span class="hljs-meta">@Column</span>()
+  title: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-meta">@Column</span>()
+  body: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-comment">// Here any fields what you need</span>
+}
+</code></pre>
+</li>
+<li>
+<p>Next, generate migration file:</p>
+<pre><code class="bash">npm run migration:generate -- src/database/migrations/CreatePostTable
+</code></pre>
+</li>
+<li>
+<p>Apply this migration to database via <a href="#run-migration.html">npm run migration:run</a>.</p>
+</li>
+</ol>
+<div class="pilwrap" id="run-migration">
+  <h3>
+    <a href="#run-migration" name="run-migration" class="pilcrow"></a>
+Run migration
+  </h3>
+</div>
+<pre><code class="bash">npm run migration:run
+</code></pre>
+<div class="pilwrap" id="revert-migration">
+  <h3>
+    <a href="#revert-migration" name="revert-migration" class="pilcrow"></a>
+Revert migration
+  </h3>
+</div>
+<pre><code class="bash">npm run migration:revert
+</code></pre>
+<div class="pilwrap" id="drop-all-tables-in-database">
+  <h3>
+    <a href="#drop-all-tables-in-database" name="drop-all-tables-in-database" class="pilcrow"></a>
+Drop all tables in database
+  </h3>
+</div>
+<pre><code class="bash">npm run schema:drop
+</code></pre>
+<hr>
+<div class="pilwrap" id="seeding">
+  <h2>
+    <a href="#seeding" name="seeding" class="pilcrow"></a>
+Seeding
+  </h2>
+</div>
+<div class="pilwrap" id="creating-seeds">
+  <h3>
+    <a href="#creating-seeds" name="creating-seeds" class="pilcrow"></a>
+Creating seeds
+  </h3>
+</div>
+<ol>
+<li>
+<p>Go to <code>src/database/seeds</code> and create directory for your seed. For example <code>post</code></p>
+</li>
+<li>
+<p>Create 2 files: module and service. For example: <code>post-seed.moduleThreadPatternIdPaginationReq.ts</code> and <code>post-seed.serviceThreadPatternIdPaginationReq.ts</code>:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/database/seeds/post/post-seed.moduleThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> { TypeOrmModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/typeorm'</span>;
+<span class="hljs-keyword">import</span> { Post } <span class="hljs-keyword">from</span> <span class="hljs-string">'src/posts/entities/post.entity'</span>;
+<span class="hljs-keyword">import</span> { PostSeedService } <span class="hljs-keyword">from</span> <span class="hljs-string">'./post-seed.service'</span>;
+
+<span class="hljs-meta">@Module</span>({
+  imports: [TypeOrmModule.forFeature([Post])],
+  providers: [PostSeedService],
+  exports: [PostSeedService],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PostSeedModule {}
+</code></pre>
+<pre><code class="ts"><span class="hljs-comment">// /src/database/seeds/post/post-seed.serviceThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-keyword">import</span> { Injectable } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> { InjectRepository } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/typeorm'</span>;
+<span class="hljs-keyword">import</span> { Post } <span class="hljs-keyword">from</span> <span class="hljs-string">'src/posts/entities/post.entity'</span>;
+<span class="hljs-keyword">import</span> { Repository } <span class="hljs-keyword">from</span> <span class="hljs-string">'typeorm'</span>;
+
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PostSeedService {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">
+    <span class="hljs-meta">@InjectRepository</span>(Post)
+    <span class="hljs-keyword">private</span> repository: Repository&lt;Post&gt;,
+  </span>) {}
+
+  <span class="hljs-keyword">async</span> run() {
+    <span class="hljs-keyword">const</span> count = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.repository.count();
+
+    <span class="hljs-keyword">if</span> (count === <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.repository.save(
+        <span class="hljs-keyword">this</span>.repository.create({
+          title: <span class="hljs-string">'Hello'</span>,
+          body: <span class="hljs-string">'World'</span>,
+        }),
+      );
+    }
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>Go to <code>src/database/seeds/seed.moduleThreadPatternIdPaginationReq.ts</code> and add your module to <code>imports</code>. For example:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/database/seeds/seed.moduleThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-comment">// Some code here...</span>
+<span class="hljs-keyword">import</span> { PostSeedModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'./post/post-seed.module'</span>;
+
+<span class="hljs-meta">@Module</span>({
+  imports: [
+    <span class="hljs-comment">// Some code here...</span>
+    PostSeedModule,
+  ],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SeedModule {}
+</code></pre>
+</li>
+<li>
+<p>Go to <code>src/database/seeds/run-seedThreadPatternIdPaginationReq.ts</code> and invoke method <code>run</code> from your service in <code>runSeed</code> function. For example:</p>
+<pre><code class="ts"><span class="hljs-comment">// /src/database/seeds/run-seedThreadPatternIdPaginationReq.ts</span>
+
+<span class="hljs-comment">// Some code here...</span>
+<span class="hljs-keyword">import</span> { PostSeedService } <span class="hljs-keyword">from</span> <span class="hljs-string">'./post/post-seed.service'</span>;
+
+<span class="hljs-keyword">const</span> runSeed = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-comment">// Some code here...</span>
+  <span class="hljs-keyword">await</span> app.get(PostSeedService).run();
+  <span class="hljs-comment">// Some code here...</span>
+};
+<span class="hljs-comment">// Some code here...</span>
+</code></pre>
+</li>
+<li>
+<p>Run <a href="#run-seed.html">npm run seed:run</a></p>
+</li>
+</ol>
+<div class="pilwrap" id="run-seed">
+  <h3>
+    <a href="#run-seed" name="run-seed" class="pilcrow"></a>
+Run seed
+  </h3>
+</div>
+<pre><code class="bash">npm run seed:run
+</code></pre>
+<hr>
+<div class="pilwrap" id="performance-optimization">
+  <h2>
+    <a href="#performance-optimization" name="performance-optimization" class="pilcrow"></a>
+Performance optimization
+  </h2>
+</div>
+<div class="pilwrap" id="indexes-and-foreign-keys">
+  <h3>
+    <a href="#indexes-and-foreign-keys" name="indexes-and-foreign-keys" class="pilcrow"></a>
+Indexes and Foreign Keys
+  </h3>
+</div>
+<p>Don't forget to create <code>indexes</code> on the Foreign Keys (FK) columns (if needed), because by default PostgreSQL <a href="https://stackoverflow.com/a/970605/18140714">does not automatically add indexes to FK</a>.</p>
+<div class="pilwrap" id="max-connections">
+  <h3>
+    <a href="#max-connections" name="max-connections" class="pilcrow"></a>
+Max connections
+  </h3>
+</div>
+<p>Set the optimal number of <a href="https://node-postgres.com/apis/pool">max connections</a> to database for your application in <code>/.env</code>:</p>
+<pre><code class="txt">DATABASE_MAX_CONNECTIONS=100
+</code></pre>
+<p>You can think of this parameter as how many concurrent database connections your application can handle.</p>
+<hr>
+<p>Next: <a href="auth.md.html">Auth</a></p>
+<p>GitHub: https://github.com/brocoders/nestjs-boilerplate</p>
+</div>
+  </div>
+</body>
+</html>

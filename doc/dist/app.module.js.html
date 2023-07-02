@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>app.module.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "dist/app.module.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlapp.module.js.map">sourceMappingURL=app.module.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>app.module.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.AppModule = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> users_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./users/users.module"</span>);
+<span class="hljs-keyword">const</span> files_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./files/files.module"</span>);
+<span class="hljs-keyword">const</span> auth_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth/auth.module"</span>);
+<span class="hljs-keyword">const</span> auth_google_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth-google/auth-google.module"</span>);
+<span class="hljs-keyword">const</span> auth_naver_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth-naver/auth-naver.module"</span>);
+<span class="hljs-keyword">const</span> auth_ravelry_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth-ravelry/auth-ravelry.module"</span>);
+<span class="hljs-keyword">const</span> forgot_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./forgot/forgot.module"</span>);
+<span class="hljs-keyword">const</span> mail_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./mail/mail.module"</span>);
+<span class="hljs-keyword">const</span> home_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./home/home.module"</span>);
+<span class="hljs-keyword">const</span> articles_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./article-tab/articles/articles.module"</span>);
+<span class="hljs-keyword">const</span> auth_kakao_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./auth-kakao/auth-kakao.module"</span>);
+<span class="hljs-keyword">const</span> comments_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./article-tab/comments/comments.module"</span>);
+<span class="hljs-keyword">const</span> ravelry_users_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./ravelry-users/ravelry-users.module"</span>);
+<span class="hljs-keyword">const</span> mailer_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs-modules/mailer"</span>);
+<span class="hljs-keyword">const</span> i18n_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"nestjs-i18n/dist/i18n.module"</span>);
+<span class="hljs-keyword">const</span> database_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/database.config"</span>);
+<span class="hljs-keyword">const</span> auth_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/auth.config"</span>);
+<span class="hljs-keyword">const</span> app_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/app.config"</span>);
+<span class="hljs-keyword">const</span> mail_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/mail.config"</span>);
+<span class="hljs-keyword">const</span> file_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/file.config"</span>);
+<span class="hljs-keyword">const</span> kakao_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/kakao.config"</span>);
+<span class="hljs-keyword">const</span> google_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/google.config"</span>);
+<span class="hljs-keyword">const</span> naver_config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./config/naver.config"</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">const</span> typeorm_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/typeorm"</span>);
+<span class="hljs-keyword">const</span> nestjs_i18n_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"nestjs-i18n"</span>);
+<span class="hljs-keyword">const</span> typeorm_config_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./database/typeorm-config.service"</span>);
+<span class="hljs-keyword">const</span> mail_config_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./mail/mail-config.service"</span>);
+<span class="hljs-keyword">const</span> typeorm_2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"typeorm"</span>);
+<span class="hljs-keyword">const</span> article_likes_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./article-tab/article-likes/article-likes.module"</span>);
+<span class="hljs-keyword">const</span> logger_middleware_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utils/common/middleware/logger.middleware"</span>);
+<span class="hljs-keyword">const</span> jwt_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/jwt"</span>);
+<span class="hljs-keyword">const</span> article_images_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./article-tab/article-images/article-images.module"</span>);
+<span class="hljs-keyword">const</span> auth_token_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utils/common/middleware/auth.token"</span>);
+<span class="hljs-keyword">const</span> threads_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab/threads/threads.module"</span>);
+<span class="hljs-keyword">const</span> thread_images_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab/thread-images/thread-images.module"</span>);
+<span class="hljs-keyword">const</span> patterns_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./patterns/patterns.module"</span>);
+<span class="hljs-keyword">const</span> thread_comments_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab/thread-comments/thread-comments.module"</span>);
+<span class="hljs-keyword">const</span> push_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./push/push.module"</span>);
+<span class="hljs-keyword">const</span> thread_tab_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab/thread-tab.module"</span>);
+<span class="hljs-keyword">const</span> report_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./report/report.module"</span>);
+<span class="hljs-keyword">const</span> notifications_module_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./notifications/notifications.module"</span>);
+<span class="hljs-keyword">let</span> AppModule = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppModule</span> </span>{
+    configure(consumer) {
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes(<span class="hljs-string">'*'</span>);
+        consumer
+            .apply(auth_token_1.AuthTokenMiddleware)
+            .forRoutes({ <span class="hljs-attr">path</span>: <span class="hljs-string">'*'</span>, <span class="hljs-attr">method</span>: common_1.RequestMethod.ALL });
+    }
+};
+AppModule = __decorate([
+    (<span class="hljs-number">0</span>, common_1.Module)({
+        <span class="hljs-attr">imports</span>: [
+            config_1.ConfigModule.forRoot({
+                <span class="hljs-attr">isGlobal</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">load</span>: [
+                    database_config_1.default,
+                    auth_config_1.default,
+                    app_config_1.default,
+                    mail_config_1.default,
+                    file_config_1.default,
+                    kakao_config_1.default,
+                    google_config_1.default,
+                    naver_config_1.default,
+                ],
+                <span class="hljs-attr">envFilePath</span>: [<span class="hljs-string">'.env'</span>],
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                <span class="hljs-attr">useClass</span>: typeorm_config_service_1.TypeOrmConfigService,
+                <span class="hljs-attr">dataSourceFactory</span>: <span class="hljs-keyword">async</span> (options) =&gt; {
+                    <span class="hljs-keyword">const</span> dataSource = <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> typeorm_2.DataSource(options).initialize();
+                    <span class="hljs-keyword">return</span> dataSource;
+                },
+            }),
+            mailer_1.MailerModule.forRootAsync({
+                <span class="hljs-attr">useClass</span>: mail_config_service_1.MailConfigService,
+            }),
+            i18n_module_1.I18nModule.forRootAsync({
+                <span class="hljs-attr">useFactory</span>: <span class="hljs-function">(<span class="hljs-params">configService</span>) =&gt;</span> ({
+                    <span class="hljs-attr">fallbackLanguage</span>: configService.get(<span class="hljs-string">'app.fallbackLanguage'</span>),
+                    <span class="hljs-attr">loaderOptions</span>: { <span class="hljs-attr">path</span>: path.join(__dirname, <span class="hljs-string">'/i18n/'</span>), <span class="hljs-attr">watch</span>: <span class="hljs-literal">true</span> },
+                }),
+                <span class="hljs-attr">resolvers</span>: [
+                    {
+                        <span class="hljs-attr">use</span>: nestjs_i18n_1.HeaderResolver,
+                        <span class="hljs-attr">useFactory</span>: <span class="hljs-function">(<span class="hljs-params">configService</span>) =&gt;</span> {
+                            <span class="hljs-keyword">return</span> [configService.get(<span class="hljs-string">'app.headerLanguage'</span>)];
+                        },
+                        <span class="hljs-attr">inject</span>: [config_1.ConfigService],
+                    },
+                ],
+                <span class="hljs-attr">imports</span>: [config_1.ConfigModule],
+                <span class="hljs-attr">inject</span>: [config_1.ConfigService],
+            }),
+            jwt_1.JwtModule.registerAsync({
+                <span class="hljs-attr">imports</span>: [config_1.ConfigModule],
+                <span class="hljs-attr">inject</span>: [config_1.ConfigService],
+                <span class="hljs-attr">useFactory</span>: <span class="hljs-function">(<span class="hljs-params">configService</span>) =&gt;</span> ({
+                    <span class="hljs-attr">secret</span>: configService.get(<span class="hljs-string">'auth.secret'</span>),
+                    <span class="hljs-attr">signOptions</span>: {
+                        <span class="hljs-attr">expiresIn</span>: configService.get(<span class="hljs-string">'auth.expires'</span>),
+                    },
+                }),
+            }),
+            users_module_1.UsersModule,
+            files_module_1.FilesModule,
+            auth_module_1.AuthModule,
+            auth_google_module_1.AuthGoogleModule,
+            auth_naver_module_1.AuthNaverModule,
+            auth_ravelry_module_1.AuthRavelryModule,
+            auth_kakao_module_1.AuthKakaoModule,
+            forgot_module_1.ForgotModule,
+            mail_module_1.MailModule,
+            home_module_1.HomeModule,
+            articles_module_1.ArticlesModule,
+            comments_module_1.CommentsModule,
+            ravelry_users_module_1.RavelryUsersModule,
+            article_likes_module_1.ArticleLikesModule,
+            article_images_module_1.ArticleImagesModule,
+            threads_module_1.ThreadsModule,
+            thread_images_module_1.ThreadImagesModule,
+            patterns_module_1.PatternsModule,
+            thread_comments_module_1.ThreadCommentsModule,
+            push_module_1.PushModule,
+            thread_tab_module_1.ThreadTabModule,
+            report_module_1.ReportModule,
+            notifications_module_1.NotificationsModule,
+        ],
+    })
+], AppModule);
+exports.AppModule = AppModule;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlapp.module.js.map">
+  <h1>
+    <a href="#sourcemappingurlapp.module.js.map" name="sourcemappingurlapp.module.js.map" class="pilcrow"></a>
+sourceMappingURL=app.module.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>thread-tab.controller.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/thread-tab/thread-tab.controller.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlthread-tab.controller.js.map">sourceMappingURL=thread-tab.controller.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>thread-tab.controller.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.ThreadTabController = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> thread_tab_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./thread-tab.service"</span>);
+<span class="hljs-keyword">const</span> swagger_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/swagger"</span>);
+<span class="hljs-keyword">const</span> platform_express_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/platform-express"</span>);
+<span class="hljs-keyword">const</span> passport_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/passport"</span>);
+<span class="hljs-keyword">const</span> create_thread_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/create-thread-dto"</span>);
+<span class="hljs-keyword">const</span> show_thread_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./threads/dto/show-thread.dto"</span>);
+<span class="hljs-keyword">const</span> ThreadPatternIdPaginationReq_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/ThreadPatternIdPaginationReq"</span>);
+<span class="hljs-keyword">const</span> ThreadAllPaginationReq_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/ThreadAllPaginationReq"</span>);
+<span class="hljs-keyword">let</span> ThreadTabController = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreadTabController</span> </span>{
+    <span class="hljs-keyword">constructor</span>(threadTabService) {
+        <span class="hljs-keyword">this</span>.threadTabService = threadTabService;
+    }
+    <span class="hljs-keyword">async</span> createThread(req, createThreadReqDto, files) {
+        <span class="hljs-keyword">const</span> thread = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.threadTabService.createThread(createThreadReqDto, req.user, files);
+        <span class="hljs-keyword">return</span> thread;
+    }
+    <span class="hljs-keyword">async</span> getThreadsByAll(paginationOptions) {
+        <span class="hljs-keyword">const</span> userId = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.threadTabService.getThreadsByAll(paginationOptions, userId);
+    }
+    <span class="hljs-keyword">async</span> getThreadsByPatternId(paginationOptions) {
+        <span class="hljs-keyword">const</span> threads = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.threadTabService.getThreadsByPatternId(paginationOptions);
+        <span class="hljs-keyword">return</span> threads;
+    }
+};
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiConsumes)(<span class="hljs-string">'multipart/form-data'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)((<span class="hljs-number">0</span>, platform_express_1.FilesInterceptor)(<span class="hljs-string">'files'</span>)),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">201</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'스레드 작성 성공!'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.UploadedFiles)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, create_thread_dto_1.CreateThreadReqDto, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ThreadTabController.prototype, <span class="hljs-string">"createThread"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'/pages/:page'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: [show_thread_dto_1.ShowThreadsDto],
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'threads의 배열 json ( 패턴 피드를 위해 사용합니다. )'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [ThreadAllPaginationReq_1.ThreadAllPaginationReq]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ThreadTabController.prototype, <span class="hljs-string">"getThreadsByAll"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'patternId/:patternId/pages/:page'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: [show_thread_dto_1.ShowThreadsDto],
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'특정 pattern에 해당하는 threads의 배열 json ( 패턴 피드를 위해 사용합니다. )'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [ThreadPatternIdPaginationReq_1.ThreadPatternIdPaginationReq]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ThreadTabController.prototype, <span class="hljs-string">"getThreadsByPatternId"</span>, <span class="hljs-literal">null</span>);
+ThreadTabController = __decorate([
+    (<span class="hljs-number">0</span>, swagger_1.ApiTags)(<span class="hljs-string">'스레드'</span>),
+    (<span class="hljs-number">0</span>, common_1.Controller)({
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'threads'</span>,
+        <span class="hljs-attr">version</span>: <span class="hljs-string">'1'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [thread_tab_service_1.ThreadTabService])
+], ThreadTabController);
+exports.ThreadTabController = ThreadTabController;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlthread-tab.controller.js.map">
+  <h1>
+    <a href="#sourcemappingurlthread-tab.controller.js.map" name="sourcemappingurlthread-tab.controller.js.map" class="pilcrow"></a>
+sourceMappingURL=thread-tab.controller.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

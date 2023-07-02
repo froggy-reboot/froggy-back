@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>users.controller.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/users/users.controller.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlusers.controller.js.map">sourceMappingURL=users.controller.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>users.controller.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.UsersController = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> users_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./users.service"</span>);
+<span class="hljs-keyword">const</span> update_user_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/update-user.dto"</span>);
+<span class="hljs-keyword">const</span> swagger_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/swagger"</span>);
+<span class="hljs-keyword">const</span> passport_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/passport"</span>);
+<span class="hljs-keyword">const</span> platform_express_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/platform-express"</span>);
+<span class="hljs-keyword">const</span> user_entity_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./entities/user.entity"</span>);
+<span class="hljs-keyword">const</span> config_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/config"</span>);
+<span class="hljs-keyword">let</span> UsersController = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UsersController</span> </span>{
+    <span class="hljs-keyword">constructor</span>(usersService, configService) {
+        <span class="hljs-keyword">this</span>.usersService = usersService;
+        <span class="hljs-keyword">this</span>.configService = configService;
+    }
+    findOne(id) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.usersService.findOne({ <span class="hljs-attr">id</span>: +id });
+    }
+    update(req, id, updateProfileDto, file) {
+        <span class="hljs-keyword">if</span> (req.user.id !== id) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.HttpException({
+                <span class="hljs-attr">status</span>: common_1.HttpStatus.NOT_ACCEPTABLE,
+                <span class="hljs-attr">errors</span>: {
+                    <span class="hljs-attr">different</span>: <span class="hljs-string">'different user'</span>,
+                },
+            }, common_1.HttpStatus.NOT_ACCEPTABLE);
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.usersService.update(id, updateProfileDto, file);
+    }
+};
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">':id'</span>),
+    (<span class="hljs-number">0</span>, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'id'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">String</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)
+], UsersController.prototype, <span class="hljs-string">"findOne"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Patch)(<span class="hljs-string">':id'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiConsumes)(<span class="hljs-string">'multipart/form-data'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)((<span class="hljs-number">0</span>, platform_express_1.FileInterceptor)(<span class="hljs-string">'file'</span>)),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: user_entity_1.User,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'user update 성공, user 객체 반환'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">406</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'jwt의 유저 정보와 변경을 위한 user 정보가 다른 경우'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'id'</span>)),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __param(<span class="hljs-number">3</span>, (<span class="hljs-number">0</span>, common_1.UploadedFile)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">Number</span>, update_user_dto_1.UpdateUserReqDto, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)
+], UsersController.prototype, <span class="hljs-string">"update"</span>, <span class="hljs-literal">null</span>);
+UsersController = __decorate([
+    (<span class="hljs-number">0</span>, swagger_1.ApiTags)(<span class="hljs-string">'Users'</span>),
+    (<span class="hljs-number">0</span>, common_1.Controller)({
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'users'</span>,
+        <span class="hljs-attr">version</span>: <span class="hljs-string">'1'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [users_service_1.UsersService,
+        config_1.ConfigService])
+], UsersController);
+exports.UsersController = UsersController;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlusers.controller.js.map">
+  <h1>
+    <a href="#sourcemappingurlusers.controller.js.map" name="sourcemappingurlusers.controller.js.map" class="pilcrow"></a>
+sourceMappingURL=users.controller.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

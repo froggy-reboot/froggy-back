@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>articles.controller.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "dist/articles/articles.controller.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#sourcemappingurlarticles.controller.js.map">sourceMappingURL=articles.controller.js.map</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>articles.controller.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">"use strict"</span>;
+<span class="hljs-keyword">var</span> __decorate = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__decorate) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">decorators, target, key, desc</span>) </span>{
+    <span class="hljs-keyword">var</span> c = <span class="hljs-built_in">arguments</span>.length, r = c &lt; <span class="hljs-number">3</span> ? target : desc === <span class="hljs-literal">null</span> ? desc = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(target, key) : desc, d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.decorate === <span class="hljs-string">"function"</span>) r = <span class="hljs-built_in">Reflect</span>.decorate(decorators, target, key, desc);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = decorators.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-keyword">if</span> (d = decorators[i]) r = (c &lt; <span class="hljs-number">3</span> ? d(r) : c &gt; <span class="hljs-number">3</span> ? d(target, key, r) : d(target, key)) || r;
+    <span class="hljs-keyword">return</span> c &gt; <span class="hljs-number">3</span> &amp;&amp; r &amp;&amp; <span class="hljs-built_in">Object</span>.defineProperty(target, key, r), r;
+};
+<span class="hljs-keyword">var</span> __metadata = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__metadata) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k, v</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span> === <span class="hljs-string">"object"</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Reflect</span>.metadata === <span class="hljs-string">"function"</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.metadata(k, v);
+};
+<span class="hljs-keyword">var</span> __param = (<span class="hljs-keyword">this</span> &amp;&amp; <span class="hljs-keyword">this</span>.__param) || <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">paramIndex, decorator</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key</span>) </span>{ decorator(target, key, paramIndex); }
+};
+<span class="hljs-built_in">Object</span>.defineProperty(exports, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+exports.ArticlesController = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> common_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/common"</span>);
+<span class="hljs-keyword">const</span> articles_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./articles.service"</span>);
+<span class="hljs-keyword">const</span> create_article_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/create-article.dto"</span>);
+<span class="hljs-keyword">const</span> update_article_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/update-article.dto"</span>);
+<span class="hljs-keyword">const</span> swagger_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/swagger"</span>);
+<span class="hljs-keyword">const</span> pagination_options_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/types/pagination-options"</span>);
+<span class="hljs-keyword">const</span> article_repository_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./repository/article.repository"</span>);
+<span class="hljs-keyword">const</span> show_article_dto_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./dto/show-article.dto"</span>);
+<span class="hljs-keyword">const</span> users_service_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../users/users.service"</span>);
+<span class="hljs-keyword">const</span> passport_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/passport"</span>);
+<span class="hljs-keyword">const</span> platform_express_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nestjs/platform-express"</span>);
+<span class="hljs-keyword">const</span> filter_options_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/types/filter-options"</span>);
+<span class="hljs-keyword">const</span> _checkLike_interceptor_1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/common/interceptors/ checkLike.interceptor"</span>);
+<span class="hljs-keyword">let</span> ArticlesController = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticlesController</span> </span>{
+    <span class="hljs-keyword">constructor</span>(articlesService, usersService, articlesRepository) {
+        <span class="hljs-keyword">this</span>.articlesService = articlesService;
+        <span class="hljs-keyword">this</span>.usersService = usersService;
+        <span class="hljs-keyword">this</span>.articlesRepository = articlesRepository;
+    }
+    create(req, createArticleDto, files) {
+        createArticleDto.writerId = req.user.id;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articlesService.create(createArticleDto, files);
+    }
+    <span class="hljs-keyword">async</span> findAllByFilter(paginationOptions, filterOptions, search) {
+        <span class="hljs-keyword">if</span> (search !== <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articlesRepository.findSearchArticleList(search, paginationOptions);
+        }
+        <span class="hljs-keyword">if</span> (filterOptions.filter == <span class="hljs-string">'인기'</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articlesRepository.findHotArticleList(filterOptions.articleType, paginationOptions);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articlesRepository.findRecentArticleList(filterOptions.articleType, paginationOptions);
+        }
+    }
+    <span class="hljs-keyword">async</span> findArticleByMe(paginationOptions, req) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.articlesService.findArticleByMe(paginationOptions, req.user.id);
+    }
+    <span class="hljs-keyword">async</span> findOne(id) {
+        <span class="hljs-keyword">const</span> article = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articlesRepository.findArticle(+id);
+        <span class="hljs-keyword">if</span> (article == <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.NotFoundException(<span class="hljs-string">`<span class="hljs-subst">${id}</span>는 삭제되었거나, 없는 글입니다.`</span>);
+        }
+        <span class="hljs-keyword">const</span> userInfo = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.usersService.findById(+article[<span class="hljs-string">'writerId'</span>]);
+        article[<span class="hljs-string">'user'</span>] = userInfo;
+        <span class="hljs-keyword">return</span> article;
+    }
+    <span class="hljs-keyword">async</span> update(req, id, updateArticleDto, files) {
+        <span class="hljs-keyword">const</span> userId = req.user.id;
+        <span class="hljs-keyword">const</span> article = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articlesRepository.findArticle(+id);
+        <span class="hljs-keyword">if</span> (article == <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.NotFoundException(<span class="hljs-string">`<span class="hljs-subst">${id}</span>는 삭제되었거나, 없는 글입니다.`</span>);
+        }
+        <span class="hljs-keyword">if</span> (userId !== article[<span class="hljs-string">'writerId'</span>]) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.ForbiddenException(<span class="hljs-string">`<span class="hljs-subst">${id}</span>번째 글에 대해 수정/삭제 권한이 없습니다.`</span>);
+        }
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articlesService.update(+id, updateArticleDto, files);
+        <span class="hljs-keyword">return</span> result;
+    }
+    <span class="hljs-keyword">async</span> remove(req, id) {
+        <span class="hljs-keyword">const</span> userId = req.user.id;
+        <span class="hljs-keyword">const</span> article = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articlesRepository.findArticle(+id);
+        <span class="hljs-keyword">if</span> (article == <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.NotFoundException(<span class="hljs-string">`<span class="hljs-subst">${id}</span>는 삭제되었거나, 없는 글입니다.`</span>);
+        }
+        <span class="hljs-keyword">if</span> (userId !== article[<span class="hljs-string">'writerId'</span>]) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> common_1.ForbiddenException(<span class="hljs-string">`<span class="hljs-subst">${id}</span>번째 글에 대해 수정/삭제 권한이 없습니다.`</span>);
+        }
+        <span class="hljs-keyword">const</span> removeResult = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.articlesService.remove(+id);
+        <span class="hljs-keyword">return</span> removeResult;
+    }
+};
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Post)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiConsumes)(<span class="hljs-string">'multipart/form-data'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)((<span class="hljs-number">0</span>, platform_express_1.FilesInterceptor)(<span class="hljs-string">'files'</span>)),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">201</span>,
+        <span class="hljs-attr">type</span>: create_article_dto_1.CreateArticleResDto,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'글 작성 성공!'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.UploadedFiles)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, create_article_dto_1.CreateArticleDto, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)
+], ArticlesController.prototype, <span class="hljs-string">"create"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'/pages/:page'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)(_checkLike_interceptor_1.CheckLikeInterceptor),
+    (<span class="hljs-number">0</span>, swagger_1.ApiQuery)({ <span class="hljs-attr">name</span>: <span class="hljs-string">'filter'</span>, <span class="hljs-attr">enum</span>: filter_options_1.filters, <span class="hljs-attr">required</span>: <span class="hljs-literal">false</span> }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiQuery)({ <span class="hljs-attr">name</span>: <span class="hljs-string">'articleType'</span>, <span class="hljs-attr">enum</span>: filter_options_1.articleTypes, <span class="hljs-attr">required</span>: <span class="hljs-literal">false</span> }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiQuery)({ <span class="hljs-attr">name</span>: <span class="hljs-string">'search'</span>, <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">false</span> }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: [show_article_dto_1.ShowArticlesDto],
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Article의 배열 json'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Query)()),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.Query)(<span class="hljs-string">'search'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [pagination_options_1.IPaginationOptions,
+        filter_options_1.FilterOptions, <span class="hljs-built_in">String</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ArticlesController.prototype, <span class="hljs-string">"findAllByFilter"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">'my-articles/pages/:page'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)(_checkLike_interceptor_1.CheckLikeInterceptor),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: [show_article_dto_1.ShowArticlesDto],
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Article의 배열 json'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [pagination_options_1.IPaginationOptions, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ArticlesController.prototype, <span class="hljs-string">"findArticleByMe"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Get)(<span class="hljs-string">':id'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">type</span>: show_article_dto_1.ShowOneArticleDto,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">404</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'글이 존재하지 않는 경우'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)(_checkLike_interceptor_1.CheckLikeInterceptor),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'id'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">String</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ArticlesController.prototype, <span class="hljs-string">"findOne"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Patch)(<span class="hljs-string">':id'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiBearerAuth)(),
+    (<span class="hljs-number">0</span>, swagger_1.ApiConsumes)(<span class="hljs-string">'multipart/form-data'</span>),
+    (<span class="hljs-number">0</span>, common_1.UseInterceptors)((<span class="hljs-number">0</span>, platform_express_1.FilesInterceptor)(<span class="hljs-string">'files'</span>)),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">201</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'글 수정 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">403</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'jwt의 유저 정보와 글 작성자가 다른 경우'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">404</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'글이 존재하지 않는 경우'</span>,
+    }),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'id'</span>)),
+    __param(<span class="hljs-number">2</span>, (<span class="hljs-number">0</span>, common_1.Body)()),
+    __param(<span class="hljs-number">3</span>, (<span class="hljs-number">0</span>, common_1.UploadedFiles)()),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">String</span>, update_article_dto_1.UpdateArticleReqDto, <span class="hljs-built_in">Object</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ArticlesController.prototype, <span class="hljs-string">"update"</span>, <span class="hljs-literal">null</span>);
+__decorate([
+    (<span class="hljs-number">0</span>, common_1.Delete)(<span class="hljs-string">':id'</span>),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'삭제 성공'</span>,
+    }),
+    (<span class="hljs-number">0</span>, swagger_1.ApiResponse)({
+        <span class="hljs-attr">status</span>: <span class="hljs-number">403</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'jwt의 유저 정보와 글 작성자가 다른 경우'</span>,
+    }),
+    (<span class="hljs-number">0</span>, common_1.UseGuards)((<span class="hljs-number">0</span>, passport_1.AuthGuard)(<span class="hljs-string">'jwt'</span>)),
+    __param(<span class="hljs-number">0</span>, (<span class="hljs-number">0</span>, common_1.Request)()),
+    __param(<span class="hljs-number">1</span>, (<span class="hljs-number">0</span>, common_1.Param)(<span class="hljs-string">'id'</span>)),
+    __metadata(<span class="hljs-string">"design:type"</span>, <span class="hljs-built_in">Function</span>),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [<span class="hljs-built_in">Object</span>, <span class="hljs-built_in">String</span>]),
+    __metadata(<span class="hljs-string">"design:returntype"</span>, <span class="hljs-built_in">Promise</span>)
+], ArticlesController.prototype, <span class="hljs-string">"remove"</span>, <span class="hljs-literal">null</span>);
+ArticlesController = __decorate([
+    (<span class="hljs-number">0</span>, swagger_1.ApiTags)(<span class="hljs-string">'게시판 글'</span>),
+    (<span class="hljs-number">0</span>, common_1.Controller)({
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'articles'</span>,
+        <span class="hljs-attr">version</span>: <span class="hljs-string">'1'</span>,
+    }),
+    __metadata(<span class="hljs-string">"design:paramtypes"</span>, [articles_service_1.ArticlesService,
+        users_service_1.UsersService,
+        article_repository_1.ArticlesRepository])
+], ArticlesController);
+exports.ArticlesController = ArticlesController;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap" id="sourcemappingurlarticles.controller.js.map">
+  <h1>
+    <a href="#sourcemappingurlarticles.controller.js.map" name="sourcemappingurlarticles.controller.js.map" class="pilcrow"></a>
+sourceMappingURL=articles.controller.js.map
+  </h1>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
