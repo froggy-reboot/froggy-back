@@ -22,6 +22,7 @@ import { CreateThreadDto, CreateThreadReqDto } from './dto/create-thread-dto';
 import { ShowThreadsDto } from './threads/dto/show-thread.dto';
 import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
 import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
+import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
 
 @ApiTags('스레드')
 @Controller({
@@ -57,8 +58,9 @@ export class ThreadTabController {
   @Get('/pages/:page')
   @ApiResponse({
     status: 200,
-    type: [ShowThreadsDto],
-    description: 'threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
+    type: [ThreadAllPaginationRes],
+    description:
+      '사용자에게 추천되는 threads의 배열 json ( 패턴 피드를 위해 사용합니다. )',
   })
   async getThreadsByAll(@Param() paginationOptions: ThreadAllPaginationReq) {
     const userId = '';

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { Thread } from '../entities/thread.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -24,5 +24,17 @@ export class ThreadsRepository extends Repository<Thread> {
       .offset(paginationOptions.limit * (paginationOptions.page - 1))
       .getMany();
     return threads;
+  }
+
+  async countDistinctWriters(patternId: number): Promise<number | null> {
+    const knittersCountResult = await this.createQueryBuilder('thread')
+      .where('thread.patternId = :patternId', { patternId })
+      .select('COUNT(DISTINCT thread.writerId)', 'knittersCount')
+      .getRawOne();
+
+    const knittersCount = knittersCountResult
+      ? +knittersCountResult.knittersCount
+      : 0;
+    return knittersCount;
   }
 }

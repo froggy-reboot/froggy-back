@@ -3,6 +3,7 @@ import { PatternsService } from 'src/patterns/patterns.service';
 import { ThreadsService } from './threads/threads.service';
 import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
 import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
+import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
 
 @Injectable()
 export class ThreadTabService {
@@ -41,6 +42,30 @@ export class ThreadTabService {
   }
 
   async getThreadsByAll(paginationOptions: ThreadAllPaginationReq, userId) {
-    return await this.threadService.findAll(paginationOptions, userId);
+    const threads = await this.threadService.findAll(paginationOptions, userId);
+
+    // captainKnitter와 knittersCount를 가져오는 비동기 작업
+    const captainKnitterPromises = threads.map((thread) =>
+      this.threadService.findCaptainKnitter(thread.patternId),
+    );
+    const knittersCountPromises = threads.map((thread) =>
+      this.threadService.findKnittersCount(thread.patternId),
+    );
+
+    // 비동기 작업을 병렬로 실행하여 결과를 받아옴
+    const captainKnitters = await Promise.all(captainKnitterPromises);
+    const knittersCounts = await Promise.all(knittersCountPromises);
+
+    const res: ThreadAllPaginationRes[] = threads.map((thread, index) => ({
+      writerId: thread.writerId,
+      patternId: thread.patternId,
+      captainKnitter: captainKnitters[index],
+      knittersCount: knittersCounts[index],
+      liked: thread.liked,
+      content: thread.content,
+      createdAt: thread.createdAt,
+    }));
+
+    return res;
   }
 }
