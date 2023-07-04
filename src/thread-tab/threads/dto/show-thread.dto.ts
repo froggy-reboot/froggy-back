@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../../users/entities/user.entity';
+import { UserSmallProfileRes } from '../../../users/dto/UserSmallProfileRes';
 
 export class ShowThreadsDto {
   @ApiProperty({ example: '2' })
-  writerId: User;
+  writer: UserSmallProfileRes;
 
   @ApiProperty({ example: '2' })
   patternId: number;

@@ -5,6 +5,7 @@ import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq
 import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
 import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
 import { UsersService } from '../users/users.service';
+import { ShowThreadsDto } from './threads/dto/show-thread.dto';
 
 @Injectable()
 export class ThreadTabService {
@@ -40,7 +41,24 @@ export class ThreadTabService {
     const threads = await this.threadService.findManyByPatternIdWitPagination(
       paginationOptions,
     );
-    return threads;
+    const writerPromises = threads.map(async (thread) => {
+      const writer = await this.userService.findById(thread.writerId);
+      return writer;
+    });
+    const writer = await Promise.all(writerPromises);
+
+    const res: ShowThreadsDto[] = threads.map((thread, index) => ({
+      writer: {
+        name: writer[index]['writerNickname'],
+        profileImg: writer[index]['writerProfileImg'],
+      },
+      patternId: thread.patternId,
+      liked: thread.liked,
+      content: thread.content,
+      createdAt: thread.createdAt,
+    }));
+
+    return res;
   }
 
   async getThreadsByAll(paginationOptions: ThreadAllPaginationReq, userId) {
