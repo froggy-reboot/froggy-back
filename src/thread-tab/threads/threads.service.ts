@@ -64,18 +64,6 @@ export class ThreadsService {
     return `This action removes a #${id} thread`;
   }
 
-  async findCaptainKnitter(patternId: number) {
-    const thread = this.findOne(patternId);
-    if (thread) {
-      const captainKnitterId =
-        await this.threadCustomRepository.findCaptainKnitterId(patternId);
-      const captainKnitter = await this.userService.findById(captainKnitterId);
-
-      return captainKnitter.writerNickname;
-    }
-    return null;
-  }
-
   async findKnittersCount(patternId: number) {
     const thread = this.findOne(patternId);
     if (thread) {

@@ -4,11 +4,13 @@ import { ThreadsService } from './threads/threads.service';
 import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
 import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
 import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class ThreadTabService {
   constructor(
     private readonly patternService: PatternsService,
+    private userService: UsersService,
     private readonly threadService: ThreadsService,
   ) {}
 
@@ -45,9 +47,10 @@ export class ThreadTabService {
     const threads = await this.threadService.findAll(paginationOptions, userId);
 
     // captainKnitter와 knittersCount를 가져오는 비동기 작업
-    const captainKnitterPromises = threads.map((thread) =>
-      this.threadService.findCaptainKnitter(thread.patternId),
-    );
+    const captainKnitterPromises = threads.map(async (thread) => {
+      const captainKnitter = await this.userService.findById(thread.writerId);
+      return captainKnitter.writerNickname;
+    });
     const knittersCountPromises = threads.map((thread) =>
       this.threadService.findKnittersCount(thread.patternId),
     );

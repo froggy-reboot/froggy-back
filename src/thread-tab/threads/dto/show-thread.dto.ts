@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../../users/entities/user.entity';
 
 export class ShowThreadsDto {
   @ApiProperty({ example: '2' })
-  writerId: number;
+  writerId: User;
 
   @ApiProperty({ example: '2' })
   patternId: number;
