@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../users/entities/user.entity';
 
 export class ThreadAllPaginationRes {
   @ApiProperty({ example: '2' })
@@ -8,7 +9,7 @@ export class ThreadAllPaginationRes {
   patternId: number;
 
   @ApiProperty({ example: '123' })
-  captainKnitter: number;
+  captainKnitter: User;
 
   @ApiProperty({ example: '123' })
   knittersCount: number;

@@ -37,4 +37,12 @@ export class ThreadsRepository extends Repository<Thread> {
       : 0;
     return knittersCount;
   }
+
+  async findCaptainKnitterId(patternId: number) {
+    const captainKnitterResult = await this.createQueryBuilder('thread')
+      .where('thread.patternId = :patternId', { patternId })
+      .select('thread.writerId', 'captainKnitterId')
+      .getRawOne();
+    return captainKnitterResult.captainKnitterId;
+  }
 }

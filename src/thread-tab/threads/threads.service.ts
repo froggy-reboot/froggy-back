@@ -7,14 +7,15 @@ import { Repository } from 'typeorm';
 import { ThreadImagesService } from '../thread-images/thread-images.service';
 import { CreateThreadImageDto } from '../thread-images/dto/create-thread-image.dto';
 import { ThreadsRepository } from './repository/thread.repository';
-import { ThreadPatternIdPaginationReq } from '../dto/ThreadPatternIdPaginationReq';
 import { ThreadAllPaginationReq } from '../dto/ThreadAllPaginationReq';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class ThreadsService {
   constructor(
     @InjectRepository(Thread)
     private threadRepository: Repository<Thread>,
+    private userService: UsersService,
     private threadCustomRepository: ThreadsRepository,
 
     private threadImagesService: ThreadImagesService,
@@ -63,8 +64,16 @@ export class ThreadsService {
     return `This action removes a #${id} thread`;
   }
 
-  findCaptainKnitter(id: number) {
-    return undefined;
+  async findCaptainKnitter(patternId: number) {
+    const thread = this.findOne(patternId);
+    if (thread) {
+      const captainKnitterId =
+        await this.threadCustomRepository.findCaptainKnitterId(patternId);
+      const captainKnitter = await this.userService.findById(captainKnitterId);
+
+      return captainKnitter;
+    }
+    return null;
   }
 
   async findKnittersCount(patternId: number) {
@@ -72,7 +81,7 @@ export class ThreadsService {
     if (thread) {
       const knittersCount =
         await this.threadCustomRepository.countDistinctWriters(patternId);
-      console.log(knittersCount);
+      // console.log(knittersCount);
       return knittersCount;
     }
     return null;

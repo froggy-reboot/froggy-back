@@ -15,12 +15,14 @@ import { ThreadsModule } from './threads/threads.module';
 import { ThreadImage } from './thread-images/entities/thread-image.entity';
 import { Pattern } from 'src/patterns/entities/pattern.entity';
 import { ThreadsRepository } from './threads/repository/thread.repository';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Thread, ThreadImage, Pattern]),
     PatternsModule,
     ThreadImagesModule,
+    UsersModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
