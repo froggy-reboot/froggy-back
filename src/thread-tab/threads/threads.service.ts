@@ -71,7 +71,7 @@ export class ThreadsService {
         await this.threadCustomRepository.findCaptainKnitterId(patternId);
       const captainKnitter = await this.userService.findById(captainKnitterId);
 
-      return captainKnitter;
+      return captainKnitter.writerNickname;
     }
     return null;
   }

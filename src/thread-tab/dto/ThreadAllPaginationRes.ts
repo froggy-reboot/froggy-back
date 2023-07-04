@@ -8,8 +8,8 @@ export class ThreadAllPaginationRes {
   @ApiProperty({ example: '2' })
   patternId: number;
 
-  @ApiProperty({ example: '123' })
-  captainKnitter: User;
+  @ApiProperty({ example: '상쾌한통닭123' })
+  captainKnitter: string;
 
   @ApiProperty({ example: '123' })
   knittersCount: number;
