@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { ThreadImagesService } from '../thread-images/thread-images.service';
 import { CreateThreadImageDto } from '../thread-images/dto/create-thread-image.dto';
 import { ThreadsRepository } from './repository/thread.repository';
-import { ThreadAllPaginationReq } from '../dto/ThreadAllPaginationReq';
+import { ThreadAllPaginationReq } from '../dto/ThreadAllPagination';
 import { UsersService } from '../../users/users.service';
 
 @Injectable()

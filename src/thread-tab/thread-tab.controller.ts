@@ -18,11 +18,13 @@ import {
 } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateThreadDto, CreateThreadReqDto } from './dto/create-thread-dto';
+import { CreateThreadReqDto } from './dto/create-thread-dto';
 import { ShowThreadsDto } from './threads/dto/show-thread.dto';
 import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
-import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
-import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
+import {
+  ThreadAllPaginationReq,
+  ThreadAllPaginationRes,
+} from './dto/ThreadAllPagination';
 
 @ApiTags('스레드')
 @Controller({
