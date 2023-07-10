@@ -55,6 +55,10 @@ export class UsersService {
     );
   }
 
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
+
   async softDelete(id: number): Promise<void> {
     await this.usersRepository.softDelete(id);
   }

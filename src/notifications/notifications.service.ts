@@ -5,12 +5,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './entities/notification.entity';
 import { Repository } from 'typeorm';
 import { customBool } from 'src/utils/common/custom.enum';
+import { CreateAnnouncementDto } from './dto/announcement.dto';
+import { ArticlesReadService } from 'src/article-tab/articles/services/articles.read.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class NotificationsService {
   constructor(
     @InjectRepository(Notification)
     private NotificationRepository: Repository<Notification>,
+    private articleReadService: ArticlesReadService,
+    private userService: UsersService,
   ) {}
 
   create(NotificationRepository: CreateNotificationDto) {
@@ -67,6 +72,29 @@ export class NotificationsService {
     return this.NotificationRepository.update(
       { id: id },
       { isRead: customBool.Y },
+    );
+  }
+
+  async createAnnouncementNotification(
+    createAnnouncementDto: CreateAnnouncementDto,
+  ) {
+    const targetArticle = await this.articleReadService.findOne(
+      createAnnouncementDto.targetPostId,
+    );
+
+    const users = await this.userService.findAll();
+    const notifications: Notification[] = [];
+
+    for (let user of users) {
+      const notification: Notification = CreateAnnouncementDto.mapDTOToDomain(
+        createAnnouncementDto,
+        user.id,
+        targetArticle,
+      );
+      notifications.push(notification);
+    }
+    return this.NotificationRepository.save(
+      this.NotificationRepository.create(notifications),
     );
   }
 

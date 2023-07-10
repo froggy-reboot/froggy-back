@@ -13,6 +13,7 @@ import {
 
 export enum notificationType {
   comment = '댓글',
+  announcement = '공지사항',
 }
 
 @Entity()

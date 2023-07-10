@@ -1,8 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
   Patch,
+  Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -15,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { NotificationsService } from './notifications.service';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
+import { CreateAnnouncementDto } from './dto/announcement.dto';
 
 @ApiTags('알림')
 @Controller({
@@ -69,5 +72,23 @@ export class NotificationsController {
   @UseGuards(AuthGuard('jwt'))
   async readNotification(@Request() req, @Param('id') id: number) {
     return this.notificationService.readNotification(id);
+  }
+
+  @Post('announcement')
+  @ApiOperation({
+    summary: '공지사항 알림 생성(운영자용)',
+    description: '공지사항 알림을 생성합니다. postman으로 사용할 것 입니다.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: '알림 생성 성공',
+  })
+  async createAnnouncementNotification(
+    @Request() req,
+    @Body() createAnouncementDto: CreateAnnouncementDto,
+  ) {
+    return this.notificationService.createAnnouncementNotification(
+      createAnouncementDto,
+    );
   }
 }
