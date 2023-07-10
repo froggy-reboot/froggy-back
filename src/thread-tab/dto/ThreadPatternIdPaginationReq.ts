@@ -8,7 +8,7 @@ export class ThreadPatternIdPaginationReq {
   @IsNumber()
   page: number;
 
-  @ApiProperty({ example: 5 })
+  @ApiProperty({ example: 3 })
   @Type(() => Number)
   @IsNumber()
   patternId: number;

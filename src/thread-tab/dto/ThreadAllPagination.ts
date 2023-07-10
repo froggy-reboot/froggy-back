@@ -1,5 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../../users/entities/user.entity';
+import { Type } from 'class-transformer';
+import { IsNumber } from 'class-validator';
+
+export class ThreadAllPaginationReq {
+  @ApiProperty({ example: 1 })
+  @Type(() => Number)
+  @IsNumber()
+  page: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  limit: number = 20;
+}
 
 export class ThreadAllPaginationRes {
   @ApiProperty({ example: '2' })

@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PatternsService } from 'src/patterns/patterns.service';
 import { ThreadsService } from './threads/threads.service';
-import { ThreadPatternIdPaginationReq } from './dto/ThreadPatternIdPaginationReq';
-import { ThreadAllPaginationReq } from './dto/ThreadAllPaginationReq';
-import { ThreadAllPaginationRes } from './dto/ThreadAllPaginationRes';
+import {
+  ThreadAllPaginationReq,
+  ThreadAllPaginationRes,
+} from './dto/ThreadAllPagination';
 import { UsersService } from '../users/users.service';
 import { ShowThreadsDto } from './threads/dto/show-thread.dto';
 

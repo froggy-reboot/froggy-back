@@ -4,10 +4,9 @@ import { IsOptional, IsString } from 'class-validator';
 export class UserSmallProfileRes {
   @ApiProperty({ example: 'jerald' })
   @IsString()
-  name?: string | null;
+  name: string;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
-  profileImg?: string | null;
+  profileImg: string;
 }
